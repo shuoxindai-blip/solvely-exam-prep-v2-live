@@ -1082,7 +1082,7 @@
       position: relative;
       z-index: 1;
       margin: 0;
-      padding-top: 44px;
+      padding-top: 34px;
       color: #111;
       font: 800 24px/1.3 "Poppins", var(--svy-font-display);
       letter-spacing: -0.03em;
@@ -1095,8 +1095,8 @@
       z-index: 1;
       display: grid;
       justify-items: center;
-      gap: 16px;
-      padding-top: 32px;
+      gap: 14px;
+      padding-top: 18px;
     }
 
     .proof-metric {
@@ -1108,19 +1108,19 @@
 
     .proof-metric.compact {
       width: 254px;
-      min-height: 99px;
+      min-height: 86px;
     }
 
     .proof-metric.wide {
       width: 350px;
-      min-height: 70px;
+      min-height: 56px;
     }
 
     .proof-laurel {
       position: absolute;
-      top: 18px;
+      top: 12px;
       width: 32px;
-      height: 64px;
+      height: 58px;
       background: url("https://www.figma.com/api/mcp/asset/b88455b1-ad53-4410-b7ed-0f4f7e6f1ff4") center / contain no-repeat;
     }
 
@@ -1134,8 +1134,16 @@
     }
 
     .proof-metric.wide .proof-laurel {
-      top: 3px;
+      top: 0;
       background-image: url("https://www.figma.com/api/mcp/asset/dabb2705-3125-435c-9620-cc69c07eb081");
+    }
+
+    .proof-metric.plan-count .proof-laurel.left {
+      left: 28px;
+    }
+
+    .proof-metric.plan-count .proof-laurel.right {
+      right: 28px;
     }
 
     .proof-number {
@@ -1144,7 +1152,7 @@
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      font: 800 36px/1.2 "Poppins", var(--svy-font-display);
+      font: 800 34px/1.12 "Poppins", var(--svy-font-display);
       letter-spacing: -0.03em;
       text-align: center;
       text-shadow: 0 .696px 0 #fcad3e;
@@ -1152,7 +1160,7 @@
     }
 
     .proof-stars {
-      margin-top: 5px;
+      margin-top: 3px;
       color: #ffc043;
       font: 900 20px/1 var(--svy-font-body);
       letter-spacing: 2px;
@@ -1160,7 +1168,7 @@
     }
 
     .proof-caption {
-      margin: 6px 0 0;
+      margin: 3px 0 0;
       color: #111;
       font: 700 16px/1.2 var(--svy-font-body);
       text-align: center;
@@ -1173,7 +1181,8 @@
       display: grid;
       justify-items: center;
       gap: 16px;
-      padding-top: 31px;
+      margin-top: 52px;
+      padding-top: 14px;
     }
 
     .proof-review-deck {
@@ -7449,11 +7458,17 @@
             <div class="proof-stars" aria-label="Five star rating">★★★★★</div>
             <p class="proof-caption">5 star ratings</p>
           </div>
-          <div class="proof-metric wide">
+          <div class="proof-metric wide plan-count">
             <span class="proof-laurel left" aria-hidden="true"></span>
             <span class="proof-laurel right" aria-hidden="true"></span>
             <p class="proof-number">290,000+</p>
-            <p class="proof-caption">Customized Exam Prep Plans</p>
+            <p class="proof-caption">Exam prep plans created</p>
+          </div>
+          <div class="proof-metric wide">
+            <span class="proof-laurel left" aria-hidden="true"></span>
+            <span class="proof-laurel right" aria-hidden="true"></span>
+            <p class="proof-number">200,000,000+</p>
+            <p class="proof-caption">Questions solved</p>
           </div>
         </section>
         <section class="proof-slider" aria-label="Student reviews">
