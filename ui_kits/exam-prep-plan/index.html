@@ -6615,7 +6615,7 @@
     }
 
     .monetization-score-card {
-      min-height: 86px;
+      min-height: 136px;
       margin-top: 16px;
       border-radius: 16px;
       border: 1px solid rgba(0, 122, 255, .12);
@@ -6623,12 +6623,14 @@
       overflow: hidden;
       display: grid;
       grid-template-columns: 4px 86px 1px minmax(0, 1fr);
+      grid-template-rows: minmax(86px, auto) 50px;
       align-items: stretch;
     }
 
     .monetization-score-accent {
       background: #007aff;
       border-radius: 4px 0 0 4px;
+      grid-row: 1 / -1;
     }
 
     .monetization-score-metric {
@@ -6675,6 +6677,70 @@
     .monetization-score-copy span {
       color: #595c60;
       font: 400 12px/16px var(--svy-font-body);
+    }
+
+    .monetization-score-chart {
+      grid-column: 2 / -1;
+      min-height: 50px;
+      border-top: 1px solid rgba(0, 122, 255, .1);
+      position: relative;
+      padding: 4px 12px 8px 8px;
+    }
+
+    .monetization-score-chart svg {
+      width: 100%;
+      height: 38px;
+      display: block;
+      overflow: visible;
+    }
+
+    .monetization-score-chart .chart-grid {
+      stroke: rgba(0, 122, 255, .12);
+      stroke-width: 1;
+      stroke-dasharray: 4 4;
+    }
+
+    .monetization-score-chart .chart-baseline {
+      stroke: rgba(0, 122, 255, .14);
+      stroke-width: 1;
+    }
+
+    .monetization-score-chart .chart-curve {
+      fill: none;
+      stroke: #ff7a1a;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .monetization-score-chart .chart-start {
+      fill: #74a4ff;
+      stroke: #fff;
+      stroke-width: 2;
+    }
+
+    .monetization-score-chart .chart-mid {
+      fill: #e75cff;
+      stroke: #fff;
+      stroke-width: 2;
+    }
+
+    .monetization-score-chart .chart-goal {
+      fill: #ff7a1a;
+      stroke: #fff;
+      stroke-width: 2;
+    }
+
+    .monetization-score-chart .chart-label {
+      fill: #007aff;
+      font: 700 9px/1 var(--svy-font-body);
+      letter-spacing: -0.01em;
+    }
+
+    .monetization-score-chart .chart-goal-label {
+      fill: #ff4c1c;
+      font: 800 10px/1 var(--svy-font-body);
+      letter-spacing: .02em;
     }
 
     .monetization-benefits {
@@ -9186,6 +9252,19 @@
                   <strong>Solvely finds weak topics</strong>
                   <span>Then turns them into focused drills and mock exam review so you improve faster.</span>
                 </span>
+                <div class="monetization-score-chart" aria-label="Score lift curve from now to goal">
+                  <svg viewBox="0 0 220 42" role="img" aria-label="Score lift curve">
+                    <line class="chart-grid" x1="12" y1="10" x2="208" y2="10"></line>
+                    <line class="chart-baseline" x1="12" y1="32" x2="208" y2="32"></line>
+                    <path class="chart-curve" d="M18 30 C 58 30, 63 23, 88 23 S 154 19, 190 7"></path>
+                    <circle class="chart-start" cx="50" cy="27" r="5"></circle>
+                    <circle class="chart-mid" cx="92" cy="22" r="5"></circle>
+                    <circle class="chart-goal" cx="190" cy="7" r="5"></circle>
+                    <text class="chart-label" x="12" y="40">Now</text>
+                    <text class="chart-goal-label" x="174" y="40">GOAL</text>
+                    <text x="197" y="11" font-size="15">🚀</text>
+                  </svg>
+                </div>
               </div>
               <div class="monetization-benefits">
                 ${monetizationBenefit(figmaAssets.paywallPlanIcon, "Daily Study Plan", "A personalized schedule based on your exam date and progress.")}
