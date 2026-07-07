@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Solvely.ai Shadows</title>
+  <link rel="stylesheet" href="preview.css">
+  <style>
+    .shadow-tile { min-height: 140px; display: grid; align-content: center; }
+  </style>
+</head>
+<body class="preview-body">
+  <main class="preview-shell">
+    <p class="preview-kicker">Elevation</p>
+    <h1 class="preview-title">阴影与层级</h1>
+    <p class="preview-note">阴影只用于可交互卡片、sheet 和重点答案，不作为装饰铺满界面。</p>
+    <section class="preview-grid">
+      <article class="preview-panel shadow-tile" style="box-shadow:var(--svy-shadow-card)"><h2>卡片层级</h2><p class="meta">--svy-shadow-card</p></article>
+      <article class="preview-panel shadow-tile" style="box-shadow:var(--svy-shadow-sheet)"><h2>Sheet 层级</h2><p class="meta">--svy-shadow-sheet</p></article>
+      <article class="preview-panel shadow-tile" style="box-shadow:var(--svy-focus-ring)"><h2>焦点环</h2><p class="meta">--svy-focus-ring</p></article>
+    </section>
+  </main>
+</body>
+</html>

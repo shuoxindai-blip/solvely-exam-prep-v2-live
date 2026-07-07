@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "kind": "html",
+  "title": "preview/components-inputs.html",
+  "entry": "preview/components-inputs.html",
+  "renderer": "html",
+  "status": "complete",
+  "exports": [
+    "html",
+    "pdf",
+    "zip"
+  ],
+  "createdAt": "2026-06-01T15:16:28.760Z",
+  "updatedAt": "2026-06-01T15:16:28.760Z",
+  "metadata": {
+    "inferred": true,
+    "reconciled": true
+  }
+}

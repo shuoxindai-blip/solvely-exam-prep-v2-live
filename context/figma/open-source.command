@@ -1,0 +1,2 @@
+#!/bin/zsh
+open "/Users/mac/Desktop/放一下/_26 Solvely Design System Refresh.fig"

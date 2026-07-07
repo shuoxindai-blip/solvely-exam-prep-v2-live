@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Solvely.ai Dark Theme</title>
+  <link rel="stylesheet" href="../colors_and_type.css">
+  <link rel="stylesheet" href="preview.css">
+  <style>
+    :root {
+      color-scheme: dark;
+      --svy-bg: oklch(16% 0.028 235);
+      --svy-surface: oklch(20% 0.03 235);
+      --svy-surface-soft: oklch(24% 0.034 235);
+      --svy-surface-raised: oklch(27% 0.036 235);
+      --svy-fg: oklch(96% 0.006 220);
+      --svy-muted: oklch(72% 0.018 225);
+      --svy-border: oklch(34% 0.034 235);
+      --svy-border-strong: oklch(44% 0.04 235);
+    }
+    .dark-frame { padding: 18px; border-radius: var(--svy-radius-xl); background: var(--svy-surface-soft); }
+  </style>
+</head>
+<body class="preview-body">
+  <main class="preview-shell">
+    <p class="preview-kicker">Dark Theme</p>
+    <h1 class="preview-title">深色解题状态</h1>
+    <p class="preview-note">深色主题保留主行动绿色和学习蓝，用于夜间学习、投屏讲解或长时间复习。</p>
+    <section class="preview-grid dark-frame">
+      <article class="solver-card"><h2>正在检查</h2><p>核对代入结果，确认 x = 6 是否满足原方程。</p></article>
+      <article class="solver-card" style="background:var(--svy-primary-soft)"><h2>通过</h2><p>2(6) + 7 = 19，答案成立。</p></article>
+      <article class="solver-card" style="background:var(--svy-surface-raised)"><h2>追问</h2><p>“能不能换一种方法解释？”</p></article>
+    </section>
+  </main>
+</body>
+</html>

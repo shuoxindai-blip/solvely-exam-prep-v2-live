@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Solvely.ai Inputs</title>
+  <link rel="stylesheet" href="preview.css">
+  <style>
+    .composer-preview { max-width: 760px; }
+  </style>
+</head>
+<body class="preview-body">
+  <main class="preview-shell">
+    <p class="preview-kicker">Components</p>
+    <h1 class="preview-title">题目输入与校验</h1>
+    <p class="preview-note">Composer 必须支持手动输入、图片附件、学科选择和明确的恢复提示。</p>
+    <section class="solver-card stack composer-preview">
+      <div class="row">
+        <span class="svy-chip">代数</span>
+        <span class="svy-chip" style="background:var(--svy-primary-soft)">可拍照识别</span>
+        <span class="svy-chip" style="background:var(--svy-warning-soft)">图片稍模糊</span>
+      </div>
+      <input class="svy-input" value="2x + 7 = 19，说明每一步" aria-label="题目输入">
+      <div class="row">
+        <button class="svy-button svy-button-secondary">添加图片</button>
+        <button class="svy-button svy-button-primary">生成步骤</button>
+      </div>
+      <p style="color:var(--svy-danger);margin:0;font-size:13px;">图片边缘有遮挡，可以重新拍摄或继续使用手动输入。</p>
+    </section>
+  </main>
+</body>
+</html>

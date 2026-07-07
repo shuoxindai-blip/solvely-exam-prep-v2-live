@@ -1,0 +1,197 @@
+{
+  "sourcePath": "/Users/mac/Desktop/放一下/_26 Solvely Design System Refresh.fig",
+  "sourceName": "_26 Solvely Design System Refresh.fig",
+  "sourceBytes": 294947387,
+  "sourceMtime": "2026-06-01T15:10:17.984017+00:00",
+  "sha256": "dcfbdc3909b9dacd4023f3af88c11e1ceeb5776ca207629b015f19bf4dd83174",
+  "archive": {
+    "entryCount": 611,
+    "canvasFigBytes": 23524370,
+    "thumbnailBytes": 29541,
+    "imageCount": 608,
+    "imageTypeCounts": {
+      "png": 569,
+      "jpg": 39
+    },
+    "largestImages": [
+      {
+        "path": "images/f028c5e39178473efffd0aa2e6fec67c6acf4ba0",
+        "type": "png",
+        "bytes": 9124099
+      },
+      {
+        "path": "images/4192f4c746451e23f2efb47bd989b5b4d7c74830",
+        "type": "png",
+        "bytes": 6553716
+      },
+      {
+        "path": "images/e562d3ef2d8f8dd0427054616aedccb5a486eebd",
+        "type": "png",
+        "bytes": 6321900
+      },
+      {
+        "path": "images/8e9175b8f8eef57a349aa1b15dfd29f00ecbc59b",
+        "type": "png",
+        "bytes": 5942710
+      },
+      {
+        "path": "images/26c63b8378470be29b80cc5295adb716f99513bb",
+        "type": "png",
+        "bytes": 4941600
+      },
+      {
+        "path": "images/338616364a850fd98d263091e7c31f96a358802d",
+        "type": "png",
+        "bytes": 4544383
+      },
+      {
+        "path": "images/fa877cfc07970e3f1e3b8833c28ee96b4ab9c704",
+        "type": "png",
+        "bytes": 4296373
+      },
+      {
+        "path": "images/8798df6f8037fbdd6cfc66d2639bf80f65ae437f",
+        "type": "png",
+        "bytes": 4294995
+      },
+      {
+        "path": "images/df2c7a57b8c2b78d1f19d45522d1517359b97c80",
+        "type": "png",
+        "bytes": 3793353
+      },
+      {
+        "path": "images/f4b03ca8be99e544e7272c3814a6688ccf785447",
+        "type": "png",
+        "bytes": 3660855
+      },
+      {
+        "path": "images/8a73e4256556eaca3a5170aff25d0744552191c3",
+        "type": "png",
+        "bytes": 3615306
+      },
+      {
+        "path": "images/871797685b21283338d913c48cd5236fc9021ba6",
+        "type": "png",
+        "bytes": 3348570
+      },
+      {
+        "path": "images/f62ae1ff8b7d9b8b3f126cc58bc6ebc55252245b",
+        "type": "png",
+        "bytes": 3127093
+      },
+      {
+        "path": "images/fbc24905ad47464a539a9b493113919bf126ea90",
+        "type": "png",
+        "bytes": 2942489
+      },
+      {
+        "path": "images/5ff9d543cc48324586453946e22db1ba2b14f76d",
+        "type": "png",
+        "bytes": 2890791
+      },
+      {
+        "path": "images/37afdcdfe08e8e2ab6f81d66a92f2e87e20cff61",
+        "type": "png",
+        "bytes": 2869042
+      },
+      {
+        "path": "images/02f937b6d348f71e8f3707d68fbe79ed483318cd",
+        "type": "png",
+        "bytes": 2841585
+      },
+      {
+        "path": "images/adb589ef0d8c933500a9305e45072fac2726486a",
+        "type": "png",
+        "bytes": 2742134
+      },
+      {
+        "path": "images/7710de9c85069f8e39e8386131d8a05d1cec43d4",
+        "type": "png",
+        "bytes": 2735467
+      },
+      {
+        "path": "images/efdd257af1ba0f22e2a69fca566f4be98ba074c1",
+        "type": "png",
+        "bytes": 2596455
+      },
+      {
+        "path": "images/f400985f41f39d320ecf6705cdef21fca3ac8600",
+        "type": "png",
+        "bytes": 2468734
+      },
+      {
+        "path": "images/80285e5aa5ced02b849e52535e935cf2d9ac81ee",
+        "type": "png",
+        "bytes": 2420687
+      },
+      {
+        "path": "images/7eee01273e285d8ccb3dfa431f733bf2f28d339e",
+        "type": "png",
+        "bytes": 2371279
+      },
+      {
+        "path": "images/eceeb2c02fa13094b96b507cc12f600990d2f2f1",
+        "type": "png",
+        "bytes": 2335827
+      },
+      {
+        "path": "images/23eecd0d94ef75cd0033418d33d04ca410331280",
+        "type": "png",
+        "bytes": 2315137
+      },
+      {
+        "path": "images/07013a52276c9a498c7026a4f0fdd018a1f85872",
+        "type": "png",
+        "bytes": 2118847
+      },
+      {
+        "path": "images/104fc63d494758f88f20f986ea764807b0bacba8",
+        "type": "png",
+        "bytes": 2081660
+      },
+      {
+        "path": "images/6c386a1b47ba3b7b52d00423f827e1f61997c6f5",
+        "type": "png",
+        "bytes": 2020432
+      },
+      {
+        "path": "images/cb9f46faf7de0b3b79ccf657991211ebe659403c",
+        "type": "png",
+        "bytes": 1984526
+      },
+      {
+        "path": "images/69d20fbc3c5592d3e4fa42a1df2bcc8cc4919d65",
+        "type": "png",
+        "bytes": 1983051
+      }
+    ]
+  },
+  "figmaMeta": {
+    "client_meta": {
+      "background_color": {
+        "r": 0.11764705926179886,
+        "g": 0.11764705926179886,
+        "b": 0.11764705926179886,
+        "a": 1
+      },
+      "thumbnail_size": {
+        "width": 400,
+        "height": 305
+      },
+      "render_coordinates": {
+        "x": 176.14309692382812,
+        "y": -781,
+        "width": 11822.8564453125,
+        "height": 9001
+      }
+    },
+    "file_name": "*26 Solvely Design System Refresh",
+    "developer_related_links": [],
+    "exported_at": "2026-06-01T15:09:31.011Z"
+  },
+  "mcpStatus": {
+    "localOpen": "opened with macOS default Figma app",
+    "mcpReadable": false,
+    "reason": "Figma MCP requires a cloud fileKey/editor access; local .fig import returned edit-access error when probed with use_figma."
+  }
+}

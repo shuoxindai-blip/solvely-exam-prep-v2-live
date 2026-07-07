@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Solvely.ai Buttons</title>
+  <link rel="stylesheet" href="preview.css">
+  <style>
+    .ghost { background: transparent; color: var(--svy-muted); border-color: transparent; }
+    .danger { background: var(--svy-danger); color: white; }
+    .button-stage { min-height: 120px; align-content: center; }
+  </style>
+</head>
+<body class="preview-body">
+  <main class="preview-shell">
+    <p class="preview-kicker">Components</p>
+    <h1 class="preview-title">按钮状态</h1>
+    <p class="preview-note">每个屏幕只放一个主要解题行动，其余操作降级为次级或 ghost。</p>
+    <section class="preview-panel stack button-stage">
+      <div class="row">
+        <button class="svy-button svy-button-primary">开始解题</button>
+        <button class="svy-button svy-button-secondary">上传图片</button>
+        <button class="svy-button ghost">查看提示</button>
+        <button class="svy-button danger">清空输入</button>
+      </div>
+      <p class="meta">44px minimum height · pill radius · focus ring from --svy-secondary</p>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Solvely.ai Radius</title>
+  <link rel="stylesheet" href="preview.css">
+  <style>
+    .sample { height: 120px; background: var(--svy-secondary-soft); border: 1px solid var(--svy-border); }
+    .radius-panel { display: grid; gap: 10px; }
+  </style>
+</head>
+<body class="preview-body">
+  <main class="preview-shell">
+    <p class="preview-kicker">Radius</p>
+    <h1 class="preview-title">圆角系统</h1>
+    <p class="preview-note">圆角从输入控件到移动端底部 sheet 逐级增加，保持 app 化但不松散。</p>
+    <section class="preview-grid">
+      <article class="preview-panel radius-panel"><div class="sample" style="border-radius:var(--svy-radius-sm)"></div><p class="label">Small / 输入内部控件</p><p class="meta">10px</p></article>
+      <article class="preview-panel radius-panel"><div class="sample" style="border-radius:var(--svy-radius-md)"></div><p class="label">Medium / 表单与卡片</p><p class="meta">16px</p></article>
+      <article class="preview-panel radius-panel"><div class="sample" style="border-radius:var(--svy-radius-lg)"></div><p class="label">Large / 内容面板</p><p class="meta">22px</p></article>
+      <article class="preview-panel radius-panel"><div class="sample" style="border-radius:var(--svy-radius-xl)"></div><p class="label">XL / 移动端 Sheet</p><p class="meta">28px</p></article>
+    </section>
+  </main>
+</body>
+</html>

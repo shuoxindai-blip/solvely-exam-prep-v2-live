@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Solvely.ai Solver Workspace</title>
+  <link rel="stylesheet" href="preview.css">
+  <style>
+    .workspace{display:grid;grid-template-columns:260px minmax(0,1fr) 300px;gap:16px}
+    .navitem{padding:12px;border-radius:14px;background:var(--svy-surface-soft);font-weight:700}
+    .step{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start}
+    .num{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--svy-secondary-soft);font-weight:800;color:var(--svy-secondary)}
+    @media (max-width: 900px){.workspace{grid-template-columns:1fr}.rail,.inspector{display:none}}
+  </style>
+</head>
+<body class="preview-body">
+  <main class="preview-shell">
+    <p class="preview-kicker">Applied Components</p>
+    <h1 class="preview-title">Solver 工作台</h1>
+    <p class="preview-note">该卡片组合了历史栏、题目画布、步骤卡、答案卡和追问输入，供 Design System tab 快速审阅。</p>
+    <section class="workspace">
+      <aside class="solver-card rail stack">
+        <h2>最近题目</h2>
+        <div class="navitem">一次方程 · 已完成</div>
+        <div class="navitem">几何角度 · 待检查</div>
+        <div class="navitem">化学配平 · 进行中</div>
+      </aside>
+      <article class="solver-card stack">
+        <span class="svy-chip">代数 · 识别完成</span>
+        <h2>解方程 2x + 7 = 19</h2>
+        <div class="step"><span class="num">1</span><p>两边同时减 7，得到 <span class="svy-mono">2x = 12</span>。</p></div>
+        <div class="step"><span class="num">2</span><p>两边同时除以 2，得到 <span class="svy-mono">x = 6</span>。</p></div>
+        <div class="solver-card" style="background:var(--svy-primary-soft);box-shadow:none"><h3>最终答案</h3><p class="svy-mono">x = 6</p></div>
+      </article>
+      <aside class="solver-card inspector stack">
+        <h2>检查</h2>
+        <p>代入原式：2(6)+7=19，答案成立。</p>
+        <button class="svy-button svy-button-primary">生成相似练习</button>
+      </aside>
+    </section>
+  </main>
+</body>
+</html>

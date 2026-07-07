@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Solvely.ai Brand Assets</title>
+  <link rel="stylesheet" href="preview.css">
+  <style>
+    .asset-status { min-height: 140px; display: grid; align-content: center; border-style: dashed; }
+    .thumb { width: 100%; max-width: 360px; border-radius: var(--svy-radius-lg); border: 1px solid var(--svy-border); box-shadow: var(--svy-shadow-card); background: var(--svy-surface); }
+  </style>
+</head>
+<body class="preview-body">
+  <main class="preview-shell">
+    <p class="preview-kicker">Brand Assets</p>
+    <h1 class="preview-title">品牌资产状态</h1>
+    <p class="preview-note">本地 Figma archive 已接入，并保留了源文件 thumbnail。该 thumbnail 是来源证据，不是 Solvely.ai logo、app icon 或 wordmark。</p>
+    <section class="preview-grid">
+      <article class="preview-panel asset-status"><p class="label">Figma thumbnail</p><img class="thumb" src="../assets/figma-source-thumbnail.png" alt="Thumbnail extracted from the attached Solvely Figma archive"><p class="meta">来自 assets/figma-source-thumbnail.png，用于确认本地 .fig source 已接入。</p></article>
+      <article class="preview-panel asset-status"><p class="label">build/</p><p class="meta">未创建；没有 context/.../files/build/... 证据。</p></article>
+      <article class="preview-panel asset-status"><p class="label">fonts/</p><p class="meta">仅包含 README.md；没有可绑定字体文件。MCP 深度读取仍需要 Figma 云端 fileKey/editor access。</p></article>
+    </section>
+  </main>
+</body>
+</html>

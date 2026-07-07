@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "kind": "html",
+  "title": "preview/spacing-radius.html",
+  "entry": "preview/spacing-radius.html",
+  "renderer": "html",
+  "status": "complete",
+  "exports": [
+    "html",
+    "pdf",
+    "zip"
+  ],
+  "createdAt": "2026-06-01T15:16:28.239Z",
+  "updatedAt": "2026-06-01T15:16:28.239Z",
+  "metadata": {
+    "inferred": true,
+    "reconciled": true
+  }
+}

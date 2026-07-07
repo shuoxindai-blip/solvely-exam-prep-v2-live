@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/ui_kits/exam-prep-plan/index.html"
+    }
+  ]
+}
