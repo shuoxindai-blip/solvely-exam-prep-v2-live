@@ -7758,7 +7758,7 @@
       return `
         <p class="plan-input-kicker">Exam Goal</p>
         <h1 class="plan-input-title">What are you preparing for?</h1>
-        <p class="plan-input-copy">Enter a course or exam, or pick a common starting point. Solvely uses this to match relevant study structures and past prep plans.</p>
+        <p class="plan-input-copy">Enter a course or exam, or pick a common starting point. Solvely will create a personalized exam prep plan for you, aligned with proven learning standards.</p>
         <div class="wizard-input-card course-exam-input">
           <label for="custom-exam-input">Custom Course, Exam, or Topic</label>
           <input id="custom-exam-input" value="${escapeHtml(state.topic)}" oninput="updateTopicInput(this.value)" placeholder="e.g. SAT Math, AP Chemistry, NCLEX...">
@@ -7772,7 +7772,7 @@
             action: `selectTopic('${option.name}')`
           })).join("")}
         </div>
-        ${state.topic.trim() ? wizardInsight("Goal Captured", `Solvely will compare ${escapeHtml(planTopic())} with similar course and exam-prep plans, then adapt the outline to the most common topic sequence.`) : ""}
+        ${state.topic.trim() ? wizardInsight("Goal Captured", `Solvely will analyze ${escapeHtml(planTopic())}, map it to proven course and exam-prep standards, then build a personalized topic sequence and study plan for you.`) : ""}
       `;
     }
 
