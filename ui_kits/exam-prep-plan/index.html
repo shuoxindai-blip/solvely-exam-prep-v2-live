@@ -1073,7 +1073,8 @@
       position: absolute;
       inset: 0;
       background:
-        url("https://www.figma.com/api/mcp/asset/0945f22d-601d-4966-957d-d86ae7e2c054") center bottom / cover no-repeat,
+        radial-gradient(circle at 50% 18%, rgba(255, 255, 255, .92), transparent 30%),
+        linear-gradient(180deg, rgba(255, 255, 255, .72), rgba(246, 248, 250, .94)),
         #f6f8fa;
       pointer-events: none;
     }
@@ -1121,7 +1122,7 @@
       top: 12px;
       width: 32px;
       height: 58px;
-      background: url("https://www.figma.com/api/mcp/asset/b88455b1-ad53-4410-b7ed-0f4f7e6f1ff4") center / contain no-repeat;
+      background: url("data:image/svg+xml,%3Csvg width='32' height='58' viewBox='0 0 32 58' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M25 4C12 11 5 25 7 54' stroke='%23FFB043' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M23 11C16 13 12 18 10 25C18 24 23 20 23 11Z' fill='%23FFC85A'/%3E%3Cpath d='M20 25C14 27 10 33 9 40C16 39 21 34 20 25Z' fill='%23FFA53A'/%3E%3Cpath d='M26 36C19 38 15 43 14 51C22 50 27 45 26 36Z' fill='%23FFC85A'/%3E%3C/svg%3E") center / contain no-repeat;
     }
 
     .proof-laurel.left {
@@ -1135,7 +1136,7 @@
 
     .proof-metric.wide .proof-laurel {
       top: 0;
-      background-image: url("https://www.figma.com/api/mcp/asset/dabb2705-3125-435c-9620-cc69c07eb081");
+      background-image: url("data:image/svg+xml,%3Csvg width='32' height='58' viewBox='0 0 32 58' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M25 4C12 11 5 25 7 54' stroke='%23FFB043' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M23 11C16 13 12 18 10 25C18 24 23 20 23 11Z' fill='%23FFC85A'/%3E%3Cpath d='M20 25C14 27 10 33 9 40C16 39 21 34 20 25Z' fill='%23FFA53A'/%3E%3Cpath d='M26 36C19 38 15 43 14 51C22 50 27 45 26 36Z' fill='%23FFC85A'/%3E%3C/svg%3E");
     }
 
     .proof-metric.plan-count .proof-laurel.left {
@@ -1236,7 +1237,9 @@
       height: 40px;
       border-radius: 50%;
       background:
-        url("https://www.figma.com/api/mcp/asset/ef79f061-85e5-43a5-ab96-74ed29db0886") center / cover no-repeat,
+        radial-gradient(circle at 50% 60%, #111 0 2px, transparent 3px),
+        radial-gradient(circle at 38% 42%, #111 0 2px, transparent 3px),
+        radial-gradient(circle at 62% 42%, #111 0 2px, transparent 3px),
         linear-gradient(135deg, #dbeafe, #fce7f3);
       color: #007aff;
       display: grid;
@@ -7054,41 +7057,54 @@
       { name: "Solution History", sub: "Use problems you've already solved in Solvely as prep signals", icon: "🕘", file: "Solvely solution history" }
     ];
 
+    function svgData(svg) {
+      return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+    }
+
+    function iconAsset(label, bg = "#edf5ff", fg = "#007aff", extra = "") {
+      const content = extra || `<text x="24" y="29" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="800" fill="${fg}">${label}</text>`;
+      return svgData(`<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" rx="14" fill="${bg}"/>${content}</svg>`);
+    }
+
+    function cardAsset(title, bg = "#eff6ff", fg = "#1677ff") {
+      return svgData(`<svg width="128" height="92" viewBox="0 0 128 92" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="128" height="92" rx="18" fill="${bg}"/><rect x="18" y="18" width="92" height="10" rx="5" fill="${fg}" opacity=".22"/><rect x="18" y="36" width="68" height="8" rx="4" fill="${fg}" opacity=".18"/><rect x="18" y="52" width="84" height="8" rx="4" fill="${fg}" opacity=".14"/><text x="18" y="76" font-family="Arial, sans-serif" font-size="12" font-weight="800" fill="${fg}">${title}</text></svg>`);
+    }
+
     const figmaAssets = {
-      calendar: "https://www.figma.com/api/mcp/asset/a12011a3-a4d8-4506-bfe8-673f5069c5b9",
-      language: "https://www.figma.com/api/mcp/asset/ee478b64-0e7d-4f18-bf90-7ebe52be9496",
-      createMic: "https://www.figma.com/api/mcp/asset/756df114-15e4-489c-ac17-1e354f3ec7cb",
-      studyGuideA: "https://www.figma.com/api/mcp/asset/d1296f97-c6b7-4a5b-bda0-8919e6c5c0bd",
-      studyGuideB: "https://www.figma.com/api/mcp/asset/61072aea-8c97-4496-8d02-fd18f8cb79fb",
-      studyGuideC: "https://www.figma.com/api/mcp/asset/3e9295ba-0822-4822-ba44-b76e058aa212",
-      flashcards: "https://www.figma.com/api/mcp/asset/e375a4a4-fa68-48b3-8866-e3021261223a",
-      quiz: "https://www.figma.com/api/mcp/asset/96af624f-d6d2-4656-a85b-647ccec4d718",
-      podcast: "https://www.figma.com/api/mcp/asset/76fa77e4-33bf-401b-b38d-49b852ace4c3",
-      sort: "https://www.figma.com/api/mcp/asset/ad83c820-a420-405e-93bd-aa0d9086052f",
-      setMic: "https://www.figma.com/api/mcp/asset/c63c9441-8239-438e-b927-b2493b91c0ce",
-      setImage: "https://www.figma.com/api/mcp/asset/38861672-66fa-43ee-b512-8545db1a194a",
-      camera: "https://www.figma.com/api/mcp/asset/03be982c-527b-4982-aba9-674397e57ac5",
-      upload: "https://www.figma.com/api/mcp/asset/7ee8f47c-a501-4b0b-9e00-662bdbb29b23",
-      floatMic: "https://www.figma.com/api/mcp/asset/c48611d6-40c3-404e-b1a6-fc1b26f956da",
-      tabScan: "https://www.figma.com/api/mcp/asset/0dd5e56a-03ed-4267-bc5a-d4c46d92a7cb",
-      tabStudy: "https://www.figma.com/api/mcp/asset/64994c43-68d1-462b-98b8-8bd3916765c8",
-      tabMe: "https://www.figma.com/api/mcp/asset/c79e1734-582c-47e5-8ec8-83728e1c8274",
-      cellular: "https://www.figma.com/api/mcp/asset/14112f2e-efad-4642-ac7e-9ba906bb0b08",
-      wifi: "https://www.figma.com/api/mcp/asset/485bb339-bb8b-48fc-a238-402c05493ce2",
-      battery: "https://www.figma.com/api/mcp/asset/6d9e566e-ac67-4884-8f7b-b74c0a39319f",
-      solutionCheck: "https://www.figma.com/api/mcp/asset/1e30a02c-a2b0-4e2d-9277-66f1dd90daf5",
-      solutionThumb: "https://www.figma.com/api/mcp/asset/4a562a8a-c364-410a-9483-b01b7a7f2175",
-      solutionQuiz: "https://www.figma.com/api/mcp/asset/d309acf6-d680-4400-b2ec-2335fc4b7e46",
-      learnStudyGuide: "https://www.figma.com/api/mcp/asset/2a804084-8b77-4ffa-9940-3badfe3e57d4",
-      learnFlashcard: "https://www.figma.com/api/mcp/asset/1654da39-1add-4cd4-bdfe-ab5c9ba72c83",
-      learnQuiz: "https://www.figma.com/api/mcp/asset/447e95a3-ae08-4635-8299-d755f9e38a95",
-      paywallHero: "https://www.figma.com/api/mcp/asset/47f5ca1c-803a-4b33-a36d-d26317a62507",
-      paywallPlanIcon: "https://www.figma.com/api/mcp/asset/56a1d7b1-1cee-4994-b858-82eea3f4df20",
-      paywallCheckIcon: "https://www.figma.com/api/mcp/asset/6e7be667-a9ff-4832-9b0b-eb56b3f5363b",
-      paywallPracticeIcon: "https://www.figma.com/api/mcp/asset/a2f06c76-bf0e-4f20-88db-b4cfd8db4921",
-      paywallReportIcon: "https://www.figma.com/api/mcp/asset/3b0353f7-3fe1-4e77-b2cd-8470684da7dc",
-      feedbackAvatar: "https://www.figma.com/api/mcp/asset/80a77b81-c92c-4888-8f2d-9ff3b1221b55",
-      feedbackStars: "https://www.figma.com/api/mcp/asset/f20fb8eb-1eda-4f8a-aaa4-d917191eb178"
+      calendar: iconAsset("Cal", "#eef6ff", "#007aff", `<rect x="13" y="16" width="22" height="20" rx="5" stroke="#007aff" stroke-width="2.4"/><path d="M14 22H34" stroke="#007aff" stroke-width="2.4"/><path d="M19 12V18M29 12V18" stroke="#007aff" stroke-width="2.4" stroke-linecap="round"/>`),
+      language: iconAsset("Aa", "#f3f0ff", "#7452ff"),
+      createMic: iconAsset("Mic", "#eaf4ff", "#007aff", `<rect x="19" y="11" width="10" height="20" rx="5" fill="#007aff"/><path d="M15 24c0 6 4 10 9 10s9-4 9-10M24 34v5M19 39h10" stroke="#007aff" stroke-width="2.4" stroke-linecap="round"/>`),
+      studyGuideA: cardAsset("Guide", "#eef7ff", "#438cff"),
+      studyGuideB: cardAsset("Notes", "#f1edff", "#8e6cff"),
+      studyGuideC: iconAsset("SG", "#edf5ff", "#377dff"),
+      flashcards: iconAsset("FC", "#f1edff", "#8e62ff"),
+      quiz: iconAsset("QZ", "#ecfbef", "#24a148"),
+      podcast: iconAsset("A+", "#fff4d6", "#c48318"),
+      sort: iconAsset("", "transparent", "#111", `<path d="M16 18H32M19 24H29M22 30H26" stroke="#111" stroke-width="3" stroke-linecap="round"/>`),
+      setMic: iconAsset("Mic", "#eaf4ff", "#007aff"),
+      setImage: iconAsset("Img", "#fff2df", "#f0831e"),
+      camera: iconAsset("", "#eef6ff", "#007aff", `<rect x="13" y="17" width="22" height="17" rx="5" stroke="#007aff" stroke-width="2.4"/><circle cx="24" cy="26" r="5" stroke="#007aff" stroke-width="2.4"/><path d="M19 17l2-4h6l2 4" stroke="#007aff" stroke-width="2.4" stroke-linecap="round"/>`),
+      upload: iconAsset("", "#eaf4ff", "#007aff", `<path d="M24 34V14M17 21l7-7 7 7M15 35h18" stroke="#007aff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`),
+      floatMic: iconAsset("Mic", "#eef6ff", "#007aff"),
+      tabScan: iconAsset("Scan", "#f4f7fb", "#8d98a7"),
+      tabStudy: iconAsset("Study", "#eaf4ff", "#007aff"),
+      tabMe: iconAsset("Me", "#f4f7fb", "#8d98a7"),
+      cellular: svgData(`<svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="7" width="3" height="4" rx="1" fill="#111"/><rect x="6" y="5" width="3" height="6" rx="1" fill="#111"/><rect x="11" y="2" width="3" height="9" rx="1" fill="#111"/></svg>`),
+      wifi: svgData(`<svg width="17" height="12" viewBox="0 0 17 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 4.4c4-3.2 9-3.2 13 0M5 7.2c2.1-1.6 4.9-1.6 7 0M8.5 10h.1" stroke="#111" stroke-width="2.2" stroke-linecap="round"/></svg>`),
+      battery: svgData(`<svg width="26" height="12" viewBox="0 0 26 12" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="21" height="10" rx="3" stroke="#111" stroke-width="1.6"/><rect x="4" y="3.5" width="15" height="5" rx="1.6" fill="#111"/><path d="M23 4v4" stroke="#111" stroke-width="2" stroke-linecap="round"/></svg>`),
+      solutionCheck: iconAsset("", "#eaf8f0", "#25b864", `<path d="M15 24l6 6 13-14" stroke="#25b864" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`),
+      solutionThumb: cardAsset("Solution", "#f7f8fb", "#7e8ba0"),
+      solutionQuiz: cardAsset("Quiz", "#ecfbef", "#24a148"),
+      learnStudyGuide: cardAsset("Study Guide", "#eef6ff", "#438cff"),
+      learnFlashcard: cardAsset("Flashcards", "#f1edff", "#8e62ff"),
+      learnQuiz: cardAsset("Quiz 1/20", "#ecfbef", "#24a148"),
+      paywallHero: cardAsset("Premium", "#eff6ff", "#438cff"),
+      paywallPlanIcon: iconAsset("", "#eef6ff", "#2377ff", `<path d="M15 24c0-6 4-10 9-10s9 4 9 10-4 10-9 10-9-4-9-10Z" stroke="#2377ff" stroke-width="2.4"/><path d="M24 18v7l5 3" stroke="#2377ff" stroke-width="2.4" stroke-linecap="round"/>`),
+      paywallCheckIcon: svgData(`<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 12.5l4 4L18 8" stroke="#58c53b" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`),
+      paywallPracticeIcon: iconAsset("", "#eef6ff", "#2377ff", `<path d="M15 15h18v22H15z" stroke="#2377ff" stroke-width="2.4" rx="4"/><path d="M20 21h8M20 27h8M20 33h5" stroke="#2377ff" stroke-width="2.4" stroke-linecap="round"/>`),
+      paywallReportIcon: iconAsset("", "#eef6ff", "#2377ff", `<path d="M25 11L15 27h8l-1 10 11-17h-8l0-9Z" fill="#2377ff"/>`),
+      feedbackAvatar: iconAsset("A", "#eaf4ff", "#007aff"),
+      feedbackStars: svgData(`<svg width="116" height="20" viewBox="0 0 116 20" fill="none" xmlns="http://www.w3.org/2000/svg"><text x="0" y="17" font-family="Arial, sans-serif" font-size="18" font-weight="900" fill="#FFB12E">★★★★★</text></svg>`)
     };
 
     const phone = document.getElementById("phone");
