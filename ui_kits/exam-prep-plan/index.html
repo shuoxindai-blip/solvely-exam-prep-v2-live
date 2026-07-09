@@ -2465,7 +2465,60 @@
     }
 
     .wizard-input-card.course-exam-input {
-      margin-bottom: 12px;
+      min-height: 72px;
+      margin-bottom: 16px;
+      border-color: #d8e8fb;
+      background: linear-gradient(180deg, #fff 0%, #f7fbff 100%);
+      box-shadow: 0 12px 26px rgba(0, 122, 255, .07);
+    }
+
+    .wizard-input-card.course-exam-input:focus-within {
+      border-color: #007aff;
+      box-shadow: 0 14px 30px rgba(0, 122, 255, .12);
+    }
+
+    .course-shortcut-section {
+      display: grid;
+      gap: 10px;
+      margin-top: 2px;
+    }
+
+    .course-shortcut-label {
+      margin: 0;
+      color: #606b7a;
+      font: 700 12px/1.2 var(--svy-font-body);
+      letter-spacing: -0.01em;
+    }
+
+    .course-shortcut-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .course-shortcut-chip {
+      min-height: 34px;
+      border: 1px solid #dde8f4;
+      border-radius: 999px;
+      background: #fff;
+      color: #1d2430;
+      padding: 0 13px;
+      font: 700 13px/1 var(--svy-font-body);
+      letter-spacing: -0.01em;
+      cursor: pointer;
+      box-shadow: 0 6px 14px rgba(45, 67, 112, .04);
+      transition: border-color 160ms var(--ease), background 160ms var(--ease), color 160ms var(--ease), transform 160ms var(--ease);
+    }
+
+    .course-shortcut-chip:active {
+      transform: scale(.97);
+    }
+
+    .course-shortcut-chip.selected {
+      border-color: #007aff;
+      background: #eef6ff;
+      color: #007aff;
+      box-shadow: 0 8px 18px rgba(0, 122, 255, .1);
     }
 
     .wizard-input-card.prefilled-topic-card {
@@ -7806,31 +7859,23 @@
     }
 
     function courseExamPage() {
-      const options = [
-        { name: "Biology", sub: "Plan by core concepts, diagrams, lab topics, and high-yield review", icon: "🧬" },
-        { name: "Math", sub: "Build from equations, functions, proofs, and word-problem patterns", icon: "🔢" },
-        { name: "Business / Economics", sub: "Organize concepts, formulas, cases, and exam-style applications", icon: "📊" },
-        { name: "Nursing / Health Professions", sub: "Connect clinical concepts, terminology, and certification-style practice", icon: "🏥" },
-        { name: "History / Social Studies", sub: "Review timelines, concepts, documents, and essay-ready evidence", icon: "📝" }
-      ];
+      const shortcuts = ["SAT Math", "AP Biology", "GCSE", "NCLEX", "TEAS", "MCAT", "Business", "Accounting", "History", "Algebra", "Calculus", "Statistics", "Social Studies", "Law", "Organic Chemistry"];
       return `
         <p class="plan-input-kicker">Exam Goal</p>
         <h1 class="plan-input-title">What are you preparing for?</h1>
-        <p class="plan-input-copy">Enter a course or exam, or pick a common starting point. Solvely will create a personalized exam prep plan for you, aligned with proven learning standards.</p>
+        <p class="plan-input-copy">Enter your course, exam, or subject. Solvely will create a personalized exam prep plan for you, or you can start with a quick pick below.</p>
         <div class="wizard-input-card course-exam-input">
-          <label for="custom-exam-input">Custom Course, Exam, or Topic</label>
-          <input id="custom-exam-input" value="${escapeHtml(state.topic)}" oninput="updateTopicInput(this.value)" placeholder="e.g. SAT Math, AP Chemistry, NCLEX...">
+          <label for="custom-exam-input">Course, Exam, or Subject</label>
+          <input id="custom-exam-input" value="${escapeHtml(state.topic)}" oninput="updateTopicInput(this.value)" placeholder="Type here, e.g. SAT Math, Organic Chemistry, NCLEX">
         </div>
-        <div class="wizard-options">
-          ${options.map((option) => wizardOption({
-            selected: state.topic === option.name,
-            icon: option.icon,
-            title: option.name,
-            sub: option.sub,
-            action: `selectTopic('${option.name}')`
-          })).join("")}
-        </div>
-        ${state.topic.trim() ? wizardInsight("Goal Captured", `Solvely will analyze ${escapeHtml(planTopic())}, map it to proven course and exam-prep standards, then build a personalized topic sequence and study plan for you.`) : ""}
+        <section class="course-shortcut-section" aria-label="Common exam and subject shortcuts">
+          <p class="course-shortcut-label">Quick picks</p>
+          <div class="course-shortcut-grid">
+            ${shortcuts.map((shortcut) => `
+              <button class="course-shortcut-chip ${state.topic === shortcut ? "selected" : ""}" type="button" onclick="selectTopic('${shortcut}')">${shortcut}</button>
+            `).join("")}
+          </div>
+        </section>
       `;
     }
 
@@ -7872,7 +7917,7 @@
         <p class="plan-input-copy">Add textbooks, notes, practice exams, solution history, or an exam outline. Solvely checks coverage before building your plan.</p>
         <div class="wizard-input-card prefilled-topic-card">
           <label for="upload-topic-input">Course, Exam, or Topic</label>
-          <input id="upload-topic-input" value="${escapeHtml(state.topic)}" oninput="updateTopicInput(this.value)" placeholder="e.g. Biology, SAT Math, AP Chemistry">
+          <input id="upload-topic-input" value="${escapeHtml(state.topic)}" oninput="updateTopicInput(this.value)" placeholder="e.g. Biology, SAT Math, Organic Chemistry">
         </div>
         ${state.uploadedFiles.length ? "" : `<div class="wizard-options">
           ${materialOptions.map((material) => wizardOption({
