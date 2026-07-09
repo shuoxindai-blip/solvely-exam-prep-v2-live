@@ -2453,6 +2453,86 @@
       display: none;
     }
 
+    .material-entry-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .material-entry-card {
+      min-height: 72px;
+      border: 1px solid #dce8f5;
+      border-radius: 18px;
+      background: #fff;
+      color: #111;
+      padding: 14px 16px;
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+      text-align: left;
+      box-shadow: 0 10px 22px rgba(45, 67, 112, .05);
+      cursor: pointer;
+      transition: transform 160ms var(--ease), border-color 160ms var(--ease), background 160ms var(--ease), box-shadow 160ms var(--ease);
+    }
+
+    .material-entry-card:active {
+      transform: scale(.985);
+    }
+
+    .material-entry-card.selected {
+      border-color: #007aff;
+      background: #eef6ff;
+      box-shadow: 0 12px 26px rgba(0, 122, 255, .1);
+    }
+
+    .material-entry-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: #eef6ff;
+      color: #007aff;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+    }
+
+    .material-entry-copy {
+      display: grid;
+      gap: 5px;
+      min-width: 0;
+    }
+
+    .material-entry-copy strong {
+      color: #111;
+      font: 700 16px/1.25 var(--svy-font-body);
+      letter-spacing: -0.01em;
+    }
+
+    .material-entry-copy small {
+      color: #6a7483;
+      font: 500 12px/1.35 var(--svy-font-body);
+    }
+
+    .material-type-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding-top: 3px;
+    }
+
+    .material-type-tags span {
+      min-height: 24px;
+      border-radius: 999px;
+      background: #f2f6fb;
+      color: #566273;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 9px;
+      font: 700 11px/1 var(--svy-font-body);
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+
     .wizard-input-card {
       min-height: 56px;
       border-radius: 16px;
@@ -7103,12 +7183,11 @@
     let generatingScrollTimers = [];
 
     const materialOptions = [
-      { name: "Lecture Slides / Notes", sub: "Use slides, notes, class emphasis, and teacher explanations to shape the prep plan", icon: "📒", file: "lecture-slides-notes.pdf" },
-      { name: "Practice Exam / Quiz", sub: "Use practice exams and quizzes to target likely test gaps", icon: "📝", file: "practice-exam-quiz.pdf" },
-      { name: "Syllabus / Course Outline", sub: "Use the official scope, rubric, or syllabus as the plan backbone", icon: "📄", file: "syllabus-course-outline.pdf" },
-      { name: "Textbook / Chapter", sub: "Map the plan to the exact units and examples you need to know", icon: "📘", file: "textbook-chapter.pdf" },
+      { name: "Upload Photos/Files", sub: "Upload photos or files Solvely can read before building your prep plan", icon: "📎", file: "study-material.pdf" },
       { name: "Solution History", sub: "Use problems you've already solved in Solvely as prep signals", icon: "🕘", file: "Solvely solution history" }
     ];
+
+    const uploadFileTypeTags = ["Lecture Slides", "Textbook", "Practice Exam", "Notes", "Exam Outline", "Syllabus"];
 
     function svgData(svg) {
       return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
@@ -7914,26 +7993,42 @@
       return `
         <p class="plan-input-kicker">Study Materials</p>
         <h1 class="plan-input-title">Upload your study materials</h1>
-        <p class="plan-input-copy">Add textbooks, notes, practice exams, solution history, or an exam outline. Solvely checks coverage before building your plan.</p>
+        <p class="plan-input-copy">Upload photos or files, or use Solution History. Solvely checks coverage before building your plan.</p>
         <div class="wizard-input-card prefilled-topic-card">
           <label for="upload-topic-input">Course, Exam, or Topic</label>
           <input id="upload-topic-input" value="${escapeHtml(state.topic)}" oninput="updateTopicInput(this.value)" placeholder="e.g. Biology, SAT Math, Organic Chemistry">
         </div>
-        ${state.uploadedFiles.length ? "" : `<div class="wizard-options">
-          ${materialOptions.map((material) => wizardOption({
-            selected: state.materials.has(material.name),
-            icon: material.icon,
-            title: material.name,
-            sub: material.sub,
-            action: `selectMaterial('${material.name}')`
-          })).join("")}
-        </div>`}
+        ${state.uploadedFiles.length ? "" : materialEntryList()}
         ${materialUploadStatus()}
         <div class="wizard-input-card ${hasUploadedMaterial ? "" : "locked-note-card"}">
           <label for="material-note-input">Optional: Add any study requirements</label>
           <textarea id="material-note-input" rows="2" oninput="updateMaterialQuestion(this.value)" placeholder="${hasUploadedMaterial ? "e.g. Focus on cell division, genetics, and the topics I keep missing on quizzes" : "Upload a file first, then add optional focus areas or requirements."}" ${hasUploadedMaterial ? "" : "disabled"}>${escapeHtml(state.materialQuestion)}</textarea>
         </div>
         ${hasMaterial ? wizardInsight("Materials Captured", "Solvely will diagnose coverage gaps, identify high-priority exam topics, and keep the daily study plan tied to your actual materials.") : ""}
+      `;
+    }
+
+    function materialEntryList() {
+      return `
+        <div class="material-entry-list">
+          <button class="material-entry-card ${state.materials.has("Upload Photos/Files") ? "selected" : ""}" type="button" onclick="selectMaterial('Upload Photos/Files')">
+            <span class="material-entry-icon" aria-hidden="true">📎</span>
+            <span class="material-entry-copy">
+              <strong>Upload Photos/Files</strong>
+              <small>Add your study sources so Solvely can check coverage before building your plan.</small>
+              <span class="material-type-tags" aria-label="Supported study material examples">
+                ${uploadFileTypeTags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}
+              </span>
+            </span>
+          </button>
+          <button class="material-entry-card ${state.materials.has("Solution History") ? "selected" : ""}" type="button" onclick="selectMaterial('Solution History')">
+            <span class="material-entry-icon" aria-hidden="true">🕘</span>
+            <span class="material-entry-copy">
+              <strong>Solution History</strong>
+              <small>Use solved Solvely questions to help target your exam prep plan.</small>
+            </span>
+          </button>
+        </div>
       `;
     }
 
@@ -8199,13 +8294,20 @@
       if (!state.uploadSheet) return "";
       const material = state.uploadSheet;
       const isAdditional = material.name === "Additional Material";
+      const isUploadFiles = material.name === "Upload Photos/Files";
+      const sheetTitle = isAdditional ? "Add more study material" : isUploadFiles ? "Upload photos/files" : `Add ${material.name.toLowerCase()}`;
+      const sheetCopy = isAdditional
+        ? "Upload another input so Solvely can make your exam prep plan more targeted."
+        : isUploadFiles
+          ? "Upload photos, notes, textbooks, practice exams, or outlines so Solvely can check coverage before building your plan."
+          : "Choose a source. Solvely will read it before drafting your outline.";
       return `
         <div class="sheet-backdrop" onclick="closeMaterialSheet()">
-          <section class="upload-sheet" onclick="event.stopPropagation()" role="dialog" aria-label="Upload ${material.name}">
+          <section class="upload-sheet" onclick="event.stopPropagation()" role="dialog" aria-label="${isUploadFiles ? "Upload study material" : `Upload ${material.name}`}">
             <button class="sheet-close" type="button" onclick="closeMaterialSheet()" aria-label="Close upload options">×</button>
             <div class="sheet-handle"></div>
-            <h2>${isAdditional ? "Add more study material" : `Add ${material.name.toLowerCase()}`}</h2>
-            <p>${isAdditional ? "Upload another input so Solvely can make your exam prep plan more targeted." : "Choose a source. Solvely will read it before drafting your outline."}</p>
+            <h2>${sheetTitle}</h2>
+            <p>${sheetCopy}</p>
             <div class="sheet-options">
               ${uploadSheetOptions(material).map((option) => `
                 <button class="sheet-option" type="button" onclick="${option.action || `startMaterialUpload('${material.name}', '${option.label}')`}">
