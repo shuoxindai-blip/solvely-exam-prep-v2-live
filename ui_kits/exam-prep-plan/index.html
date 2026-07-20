@@ -3927,27 +3927,6 @@
       line-height: 1.38;
     }
 
-    .outline-meta {
-      display: flex;
-      flex-wrap: nowrap;
-      gap: 5px;
-      margin-top: 4px;
-    }
-
-    .outline-meta span {
-      min-height: 26px;
-      border-radius: 999px;
-      border: 1px solid color-mix(in oklch, var(--svy-secondary) 18%, var(--svy-border));
-      background: color-mix(in oklch, var(--svy-secondary) 7%, white);
-      color: color-mix(in oklch, var(--svy-secondary) 68%, var(--svy-fg));
-      display: inline-flex;
-      align-items: center;
-      padding: 0 8px;
-      font-size: 11px;
-      font-weight: 650;
-      white-space: nowrap;
-    }
-
     .outline-tabs {
       width: fit-content;
       min-height: 42px;
@@ -4022,48 +4001,34 @@
       line-height: 1.4;
     }
 
-    .coverage-score {
-      width: 58px;
-      height: 58px;
-      border-radius: 20px;
-      background: color-mix(in oklch, var(--svy-secondary) 11%, white);
-      border: 1px solid color-mix(in oklch, var(--svy-secondary) 24%, var(--svy-border));
+    .plan-diagnostic-metrics {
       display: grid;
-      place-items: center;
-      color: var(--blue);
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .plan-diagnostic-metric {
+      min-height: 64px;
+      border-radius: 16px;
+      background: #f6f9fc;
+      border: 1px solid #e1eaf4;
+      display: grid;
+      align-content: center;
+      gap: 5px;
+      padding: 10px 8px;
+      text-align: center;
+    }
+
+    .plan-diagnostic-metric strong {
+      color: var(--svy-fg);
       font: 850 18px/1 var(--svy-font-display);
+      letter-spacing: -0.02em;
     }
 
-    .coverage-bars {
-      display: grid;
-      gap: 10px;
-    }
-
-    .coverage-bar {
-      display: grid;
-      gap: 6px;
-    }
-
-    .coverage-bar label {
-      display: flex;
-      justify-content: space-between;
-      color: #334155;
-      font-size: 12px;
-      font-weight: 680;
-    }
-
-    .coverage-track {
-      height: 7px;
-      border-radius: 999px;
-      background: #e7eef7;
-      overflow: hidden;
-    }
-
-    .coverage-track span {
-      display: block;
-      height: 100%;
-      border-radius: inherit;
-      background: linear-gradient(90deg, var(--blue), #68b7ff);
+    .plan-diagnostic-metric span {
+      color: #667282;
+      font: 650 10.5px/1.15 var(--svy-font-body);
+      letter-spacing: -0.01em;
     }
 
     .study-plan-timeline {
@@ -4107,27 +4072,11 @@
       box-shadow: 0 0 0 5px rgba(255, 176, 32, .14);
     }
 
-    .study-check-list {
-      display: grid;
-      gap: 9px;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .study-check-list li {
-      display: grid;
-      grid-template-columns: 18px minmax(0, 1fr);
-      gap: 8px;
-      color: #334155;
-      font-size: 13px;
-      line-height: 1.3;
-    }
-
-    .study-check-list li::before {
-      content: "✓";
-      color: var(--svy-primary-ink);
-      font-weight: 900;
+    .study-day-card p {
+      margin: -3px 0 0;
+      color: var(--svy-muted);
+      font-size: 12px;
+      line-height: 1.42;
     }
 
     .study-focus-card {
@@ -8687,11 +8636,6 @@
           <div class="course-outline-head">
             <h1>${planTopic()} Exam Prep Preview</h1>
             <p>Solvely reviewed your materials and mapped coverage, priority topics, and the first study actions before building the full plan.</p>
-            <div class="outline-meta">
-              <span>${uploadedMaterialCount()} source${uploadedMaterialCount() === 1 ? "" : "s"} reviewed</span>
-              <span>${sections.length} topic groups</span>
-              <span>3-day starter plan</span>
-            </div>
           </div>
           <div class="outline-tabs" role="tablist" aria-label="Exam prep preview views">
             <button class="outline-tab ${state.outlineView === "studyPlan" ? "active" : ""}" type="button" onclick="setOutlineView('studyPlan')">Study plan</button>
@@ -8705,11 +8649,6 @@
       `, { loading: true, outline: true });
     }
 
-    function uploadedMaterialCount() {
-      const typed = state.materialQuestion.trim() ? 1 : 0;
-      return Math.max(1, state.uploadedFiles.length + typed);
-    }
-
     function setOutlineView(view) {
       state.outlineView = view;
       state.editingTopicIndex = null;
@@ -8717,69 +8656,50 @@
     }
 
     function studyPlanPreview() {
+      const priorityGroupCount = outlineSections().length;
+      const planWindow = compactExamPrepWindow();
       return `
         <div class="study-plan-preview">
           <section class="coverage-card">
             <div class="coverage-head">
               <div>
-                <h2>Personalized Exam Prep Path</h2>
-                <p>Solvely turns your materials into topic-by-topic study, checks, memory review, quizzes, and tutor feedback.</p>
+                <h2>Your ${planWindow} plan preview is ready</h2>
+                <p>Solvely found ${priorityGroupCount} priority topic groups from your materials.</p>
               </div>
-              <span class="coverage-score">82%</span>
             </div>
-            <div class="coverage-bars">
-              ${coverageBar("Topic mastery coverage", "92%")}
-              ${coverageBar("Self-check questions", "76%")}
-              ${coverageBar("Mock exam readiness", "64%")}
+            <div class="plan-diagnostic-metrics" aria-label="Plan diagnostic summary">
+              ${planMetric(`${priorityGroupCount}`, "priority groups")}
+              ${planMetric("12", "self-checks")}
+              ${planMetric("64%", "exam readiness")}
             </div>
           </section>
           <div class="study-plan-timeline">
-            ${studyDayCard("Study Each Topic", true, [
-              "Learn the must-know ideas and examples first",
-              "Focus on the concepts your materials emphasize",
-              "Get guided feedback from a personal tutor"
-            ])}
-            ${studyDayCard("Check Understanding", false, [
-              "Answer quick questions after each topic",
-              "See what you understand and what needs review",
-              "Use feedback to repair weak spots immediately"
-            ])}
+            ${studyPathCard("Day 1 · Start with priority topics", true, "Study the concepts your materials emphasize most, then answer 6 quick checks.")}
+            ${studyPathCard("Next study day · Repair weak spots", false, "Review missed concepts, revisit flashcards, and take short quizzes on the topics that need recovery.")}
             <section class="study-focus-card">
-              <span class="study-focus-icon">↻</span>
-              <span><h2>Flashcards + Spaced Repetition</h2><p>Turn key knowledge into flashcards and revisit it on a memory schedule.</p></span>
+              <span class="study-focus-icon">★</span>
+              <span><h2>Exam-eve · Mock exam</h2><p>Take the mock exam the day before your test, then use the score report for final review.</p></span>
             </section>
-            ${studyDayCard("Topic Quizzes", false, [
-              "Practice quiz questions for each topic",
-              "Review explanations for every miss",
-              "Keep tutor feedback attached to the next step"
-            ])}
-            ${studyDayCard("Final Mock Exam", false, [
-              `Finish all ${planTopic()} topics, then take a full mock exam`,
-              "Use the final score report to review remaining gaps",
-              "Get guided tutor feedback across the whole subject"
-            ])}
           </div>
         </div>
       `;
     }
 
-    function coverageBar(label, value) {
-      return `
-        <div class="coverage-bar">
-          <label><span>${label}</span><span>${value}</span></label>
-          <div class="coverage-track"><span style="width:${value}"></span></div>
-        </div>
-      `;
+    function compactExamPrepWindow() {
+      const [amount, unit = "days"] = state.onboardingExamDays.split(" ");
+      return `${amount}-${unit.replace(/s$/, "")}`;
     }
 
-    function studyDayCard(title, current, items) {
+    function planMetric(value, label) {
+      return `<div class="plan-diagnostic-metric" aria-label="${escapeHtml(`${value} ${label}`)}"><strong>${value}</strong><span>${label}</span></div>`;
+    }
+
+    function studyPathCard(title, current, copy) {
       return `
         <section class="study-day-card ${current ? "current" : ""}">
           <span class="study-day-dot"></span>
           <h2>${title}</h2>
-          <ul class="study-check-list">
-            ${items.map((item) => `<li>${item}</li>`).join("")}
-          </ul>
+          <p>${copy}</p>
         </section>
       `;
     }
