@@ -7243,7 +7243,17 @@
       "Australia": ["ATAR", "HSC", "VCE", "QCE", "WACE", "IELTS", "PTE Academic", "TOEFL", "OET", "UCAT ANZ", "GAMSAT", "NAATI CCL", "CPA Australia"]
     };
 
-    const generalSubjectOptions = ["Organic Chemistry", "Biology", "Chemistry", "Physics", "Algebra", "Calculus", "Statistics", "History", "Business", "Accounting", "Law"];
+    const localizedSubjectOptions = {
+      "United States": ["Organic Chemistry", "Biology", "Chemistry", "Physics", "Algebra", "Calculus", "Statistics", "History", "Business", "Accounting", "Law"],
+      "Deutschland": ["Organische Chemie", "Biologie", "Chemie", "Physik", "Algebra", "Analysis", "Statistik", "Geschichte", "Wirtschaft", "Rechnungswesen", "Rechtswissenschaft"],
+      "France": ["Chimie organique", "Biologie", "Chimie", "Physique", "Algèbre", "Calcul", "Statistiques", "Histoire", "Commerce", "Comptabilité", "Droit"],
+      "Italia": ["Chimica organica", "Biologia", "Chimica", "Fisica", "Algebra", "Analisi matematica", "Statistica", "Storia", "Economia aziendale", "Contabilità", "Diritto"],
+      "대한민국": ["유기화학", "생물학", "화학", "물리학", "대수학", "미적분학", "통계학", "역사", "경영학", "회계학", "법학"],
+      "日本": ["有機化学", "生物学", "化学", "物理", "代数", "微積分", "統計", "歴史", "ビジネス", "会計", "法律"],
+      "United Kingdom": ["Organic Chemistry", "Biology", "Chemistry", "Physics", "Algebra", "Calculus", "Statistics", "History", "Business", "Accounting", "Law"],
+      "Canada": ["Organic Chemistry", "Biology", "Chemistry", "Physics", "Algebra", "Calculus", "Statistics", "History", "Business", "Accounting", "Law"],
+      "Australia": ["Organic Chemistry", "Biology", "Chemistry", "Physics", "Algebra", "Calculus", "Statistics", "History", "Business", "Accounting", "Law"]
+    };
 
     function svgData(svg) {
       return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
@@ -8007,7 +8017,8 @@
 
     function selectedExamShortcuts() {
       const localizedExams = countryExamOptions[state.examCountry] || countryExamOptions["United States"];
-      return [...localizedExams, ...generalSubjectOptions];
+      const localizedSubjects = localizedSubjectOptions[state.examCountry] || localizedSubjectOptions["United States"];
+      return [...localizedExams, ...localizedSubjects];
     }
 
     function renderSetup() {
