@@ -2553,26 +2553,6 @@
       font: 500 12px/1.35 var(--svy-font-body);
     }
 
-    .material-type-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      padding-top: 3px;
-    }
-
-    .material-type-tags span {
-      min-height: 24px;
-      border-radius: 999px;
-      background: #f2f6fb;
-      color: #566273;
-      display: inline-flex;
-      align-items: center;
-      padding: 0 9px;
-      font: 700 11px/1 var(--svy-font-body);
-      letter-spacing: -0.01em;
-      white-space: nowrap;
-    }
-
     .wizard-input-card {
       min-height: 56px;
       border-radius: 16px;
@@ -7225,11 +7205,9 @@
     let generatingScrollTimers = [];
 
     const materialOptions = [
-      { name: "Upload Photos/Files", sub: "Upload photos or files Solvely can read before building your prep plan", icon: "📎", file: "study-material.pdf" },
+      { name: "Upload Photos/Files", sub: "Add slides, textbooks, practice exams, notes, outlines, or syllabi.", icon: "📎", file: "study-material.pdf" },
       { name: "Solution History", sub: "Use problems you've already solved in Solvely as prep signals", icon: "🕘", file: "Solvely solution history" }
     ];
-
-    const uploadFileTypeTags = ["Lecture Slides", "Textbook", "Practice Exam", "Notes", "Exam Outline", "Syllabus"];
 
     const countryExamOptions = {
       "United States": ["SAT", "ACT", "AP Exams", "TOEFL", "IELTS", "GRE", "GMAT", "LSAT", "MCAT", "USMLE", "NCLEX", "CPA"],
@@ -8089,11 +8067,10 @@
 
     function materialsPage() {
       const hasUploadedMaterial = state.uploadedFiles.length > 0;
-      const hasMaterial = hasUploadedMaterial || Boolean(state.uploadingFile);
       return `
         <p class="plan-input-kicker">Study Materials</p>
         <h1 class="plan-input-title">Upload your study materials</h1>
-        <p class="plan-input-copy">Upload photos or files, or use Solution History. Solvely checks coverage before building your plan.</p>
+        <p class="plan-input-copy">Solvely uses your files or Solution History to spot coverage gaps and prioritize high-impact exam topics.</p>
         <div class="wizard-input-card prefilled-topic-card">
           <label for="upload-topic-input">Course, Exam, or Topic</label>
           <input id="upload-topic-input" value="${escapeHtml(state.topic)}" oninput="updateTopicInput(this.value)" placeholder="e.g. Biology, SAT Math, Organic Chemistry">
@@ -8104,7 +8081,6 @@
           <label for="material-note-input">Optional: Add any study requirements</label>
           <textarea id="material-note-input" rows="2" oninput="updateMaterialQuestion(this.value)" placeholder="${hasUploadedMaterial ? "e.g. Focus on cell division, genetics, and the topics I keep missing on quizzes" : "Upload a file first, then add optional focus areas or requirements."}" ${hasUploadedMaterial ? "" : "disabled"}>${escapeHtml(state.materialQuestion)}</textarea>
         </div>
-        ${hasMaterial ? wizardInsight("Materials Captured", "Solvely will diagnose coverage gaps, identify high-priority exam topics, and keep the daily study plan tied to your actual materials.") : ""}
       `;
     }
 
@@ -8115,10 +8091,7 @@
             <span class="material-entry-icon" aria-hidden="true">📎</span>
             <span class="material-entry-copy">
               <strong>Upload Photos/Files</strong>
-              <small>Add your study sources so Solvely can check coverage before building your plan.</small>
-              <span class="material-type-tags" aria-label="Supported study material examples">
-                ${uploadFileTypeTags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}
-              </span>
+              <small>Add slides, textbooks, practice exams, notes, outlines, or syllabi.</small>
             </span>
           </button>
           <button class="material-entry-card ${state.materials.has("Solution History") ? "selected" : ""}" type="button" onclick="selectMaterial('Solution History')">
