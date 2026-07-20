@@ -63,6 +63,46 @@
       margin: 0;
     }
 
+    .country-switcher {
+      display: grid;
+      gap: 10px;
+      padding: 14px;
+      border: 1px solid var(--svy-border);
+      border-radius: 20px;
+      background: color-mix(in oklch, var(--svy-surface) 92%, transparent);
+      box-shadow: var(--svy-shadow-card);
+    }
+
+    .country-switcher label {
+      display: grid;
+      gap: 6px;
+      color: var(--svy-fg);
+      font: 800 13px/1.2 var(--svy-font-body);
+    }
+
+    .country-switcher select {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid var(--svy-border);
+      border-radius: 14px;
+      background: var(--svy-surface);
+      color: var(--svy-fg);
+      padding: 0 12px;
+      font: 750 14px/1 var(--svy-font-body);
+      outline: none;
+      cursor: pointer;
+    }
+
+    .country-switcher select:focus {
+      border-color: color-mix(in oklch, var(--svy-primary) 52%, var(--svy-border));
+      box-shadow: 0 0 0 3px color-mix(in oklch, var(--svy-primary) 12%, transparent);
+    }
+
+    .country-switcher small {
+      color: var(--svy-muted);
+      font: 700 12px/1.35 var(--svy-font-body);
+    }
+
     .flow-rail {
       display: grid;
       gap: 10px;
@@ -7120,6 +7160,7 @@
       <h1>Exam Prep Plan Creation</h1>
       <p>This prototype combines the Solvely Study surface with the reference app's guided course-creation flow.</p>
       <p>Use the rail or tap inside the phone. The primary flow moves from Study home to personalized questions, outline confirmation, plan generation, and the final study set.</p>
+      <div class="country-switcher" id="country-switcher"></div>
       <div class="flow-rail" id="rail"></div>
     </aside>
 
@@ -7159,6 +7200,7 @@
       uploadSheet: null,
       uploadingFile: null,
       uploadedFiles: [],
+      examCountry: "United States",
       lastMaterialName: "",
       loadingPhase: "reviewing",
       loadingRunId: 0,
@@ -7188,6 +7230,20 @@
     ];
 
     const uploadFileTypeTags = ["Lecture Slides", "Textbook", "Practice Exam", "Notes", "Exam Outline", "Syllabus"];
+
+    const countryExamOptions = {
+      "United States": ["SAT", "ACT", "AP Exams", "TOEFL", "IELTS", "GRE", "GMAT", "LSAT", "MCAT", "USMLE", "NCLEX", "CPA"],
+      "Deutschland": ["Abitur", "TestDaF", "DSH", "Goethe-Zertifikat", "telc Deutsch", "TestAS", "TMS", "GMAT", "GRE"],
+      "France": ["Baccalauréat", "DELF", "DALF", "TCF", "TEF", "TAGE MAGE", "Concours Grandes Écoles", "Sciences Po", "GMAT", "GRE"],
+      "Italia": ["TOLC", "TOLC-I", "TOLC-E", "TOLC-F", "IMAT", "TOLC-MED", "CILS", "CELI", "PLIDA", "Bocconi Test", "GMAT", "GRE"],
+      "대한민국": ["대학수학능력시험", "TOPIK", "TOEIC", "TEPS", "TOEFL", "IELTS", "LEET", "PSAT", "공무원 시험", "의사 국가시험"],
+      "日本": ["大学入学共通テスト", "日本留学試験 EJU", "日本語能力試験 JLPT", "TOEIC", "英検", "SPI", "各大学の個別試験", "司法試験", "医師国家試験", "情報処理技術者試験"],
+      "United Kingdom": ["GCSE", "A-levels", "IELTS", "TOEFL", "PTE Academic", "UCAT", "LNAT", "STEP", "TSA", "GMAT", "GRE", "SQE", "ACCA"],
+      "Canada": ["IELTS", "CELPIP", "TEF Canada", "TCF Canada", "SAT", "ACT", "AP Exams", "International Baccalaureate", "MCAT", "LSAT", "CASPer", "NCLEX-RN", "CPA Canada"],
+      "Australia": ["ATAR", "HSC", "VCE", "QCE", "WACE", "IELTS", "PTE Academic", "TOEFL", "OET", "UCAT ANZ", "GAMSAT", "NAATI CCL", "CPA Australia"]
+    };
+
+    const generalSubjectOptions = ["Organic Chemistry", "Biology", "Chemistry", "Physics", "Algebra", "Calculus", "Statistics", "History", "Business", "Accounting", "Law"];
 
     function svgData(svg) {
       return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
@@ -7241,6 +7297,7 @@
 
     const phone = document.getElementById("phone");
     const rail = document.getElementById("rail");
+    const countrySwitcher = document.getElementById("country-switcher");
     const visibleSetupStages = [2];
 
     function setStep(step) {
@@ -7480,6 +7537,28 @@
           <span>${step.label}</span>
         </button>
       `).join("");
+    }
+
+    function renderCountrySwitcher() {
+      const selectedCountry = countryExamOptions[state.examCountry] ? state.examCountry : "United States";
+      const exams = selectedExamShortcuts();
+      countrySwitcher.innerHTML = `
+        <label for="country-select">
+          Country / Exam Region
+          <select id="country-select" onchange="setExamCountry(this.value)" aria-label="Change exam country">
+            ${Object.keys(countryExamOptions).map((country) => `
+              <option value="${escapeHtml(country)}" ${country === selectedCountry ? "selected" : ""}>${escapeHtml(country)}</option>
+            `).join("")}
+          </select>
+        </label>
+        <small>${exams.length} localized exams and subject picks update the Exam Goal page.</small>
+      `;
+    }
+
+    function setExamCountry(country) {
+      if (!countryExamOptions[country]) return;
+      state.examCountry = country;
+      render();
     }
 
     function startOnboarding() {
@@ -7922,6 +8001,15 @@
         .replace(/'/g, "&#39;");
     }
 
+    function escapeJsArg(value) {
+      return escapeHtml(JSON.stringify(String(value ?? "")));
+    }
+
+    function selectedExamShortcuts() {
+      const localizedExams = countryExamOptions[state.examCountry] || countryExamOptions["United States"];
+      return [...localizedExams, ...generalSubjectOptions];
+    }
+
     function renderSetup() {
       const canContinue = setupCanContinue();
       shell(`
@@ -7938,20 +8026,21 @@
     }
 
     function courseExamPage() {
-      const shortcuts = ["SAT Math", "AP Biology", "GCSE", "NCLEX", "TEAS", "MCAT", "Business", "Accounting", "History", "Algebra", "Calculus", "Statistics", "Social Studies", "Law", "Organic Chemistry"];
+      const shortcuts = selectedExamShortcuts();
+      const placeholderExamples = shortcuts.slice(0, 3).join(", ");
       return `
         <p class="plan-input-kicker">Exam Goal</p>
         <h1 class="plan-input-title">What are you preparing for?</h1>
         <p class="plan-input-copy">Enter your course, exam, or subject, or choose a quick pick below. Solvely will use it to create a personalized exam prep plan for you.</p>
         <div class="wizard-input-card course-exam-input">
           <label for="custom-exam-input">Course, Exam, or Subject</label>
-          <input id="custom-exam-input" value="${escapeHtml(state.topic)}" oninput="updateTopicInput(this.value)" placeholder="Type here, e.g. SAT Math, Organic Chemistry, NCLEX">
+          <input id="custom-exam-input" value="${escapeHtml(state.topic)}" oninput="updateTopicInput(this.value)" placeholder="Type here, e.g. ${escapeHtml(placeholderExamples)}">
         </div>
         <section class="course-shortcut-section" aria-label="Common exam and subject shortcuts">
           <p class="course-shortcut-label">Quick picks</p>
           <div class="course-shortcut-grid">
             ${shortcuts.map((shortcut) => `
-              <button class="course-shortcut-chip ${state.topic === shortcut ? "selected" : ""}" type="button" onclick="selectTopic('${shortcut}')">${shortcut}</button>
+              <button class="course-shortcut-chip ${state.topic === shortcut ? "selected" : ""}" type="button" onclick="selectTopic(${escapeJsArg(shortcut)})">${escapeHtml(shortcut)}</button>
             `).join("")}
           </div>
         </section>
@@ -9546,6 +9635,7 @@
     }
 
     function render() {
+      renderCountrySwitcher();
       renderRail();
       if (state.step === "onboarding") renderOnboarding();
       if (state.step === "home") renderHome();
@@ -9561,6 +9651,7 @@
 
     window.setStep = setStep;
     window.startOnboarding = startOnboarding;
+    window.setExamCountry = setExamCountry;
     window.selectOnboardingGoal = selectOnboardingGoal;
     window.selectExamDays = selectExamDays;
     window.selectStudyTime = selectStudyTime;
