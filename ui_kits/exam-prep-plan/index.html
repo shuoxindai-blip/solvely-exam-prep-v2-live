@@ -6180,6 +6180,234 @@
       box-shadow: 0 10px 22px rgba(0, 122, 255, .14);
     }
 
+    .study-plan-sheet-mask {
+      position: absolute;
+      inset: 0;
+      z-index: 95;
+      background: rgba(17, 17, 17, .5);
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .study-plan-sheet {
+      width: 100%;
+      border-radius: 24px 24px 0 0;
+      background: #fff;
+      color: #111;
+      overflow: hidden;
+      box-shadow: 0 -18px 44px rgba(17, 24, 39, .16);
+    }
+
+    .study-plan-sheet-cell {
+      height: 52px;
+      position: relative;
+      border-radius: 30px 30px 0 0;
+    }
+
+    .study-plan-sheet-handle {
+      position: absolute;
+      left: 50%;
+      top: 12px;
+      width: 32px;
+      height: 4px;
+      border-radius: 2px;
+      background: #c4c6c9;
+      transform: translateX(-50%);
+    }
+
+    .study-plan-sheet-close {
+      position: absolute;
+      right: 16px;
+      top: 16px;
+      width: 28px;
+      height: 28px;
+      border: 0;
+      border-radius: 15px;
+      background: #f9fafa;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+    }
+
+    .study-plan-sheet-close img {
+      width: 10px;
+      height: 10px;
+      display: block;
+    }
+
+    .study-plan-sheet-content {
+      padding: 0 24px 44px;
+      display: grid;
+      gap: 24px;
+    }
+
+    .study-plan-sheet-title {
+      display: grid;
+      gap: 8px;
+      padding-bottom: 16px;
+    }
+
+    .study-plan-sheet-title h2 {
+      margin: 0;
+      color: #111;
+      font: 600 20px/27px "Poppins", var(--svy-font-display);
+      letter-spacing: 0;
+    }
+
+    .study-plan-sheet-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #595c60;
+      font: 400 12px/1.4 var(--svy-font-body);
+      text-align: center;
+    }
+
+    .study-plan-mini-calendar {
+      display: grid;
+      gap: 16px;
+      justify-items: center;
+    }
+
+    .study-plan-calendar-month {
+      width: 135px;
+      height: 24px;
+      padding: 0 5px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .study-plan-calendar-month strong {
+      width: 111px;
+      color: #595c60;
+      text-align: center;
+      font: 600 16px/24px var(--svy-font-body);
+    }
+
+    .study-plan-calendar-month img {
+      width: 24px;
+      height: 24px;
+      display: block;
+    }
+
+    .study-plan-calendar-grid {
+      width: 100%;
+      display: grid;
+      gap: 10px;
+    }
+
+    .study-plan-weekdays,
+    .study-plan-days {
+      display: grid;
+      grid-template-columns: repeat(7, 30px);
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .study-plan-weekdays span {
+      color: #989b9e;
+      text-align: center;
+      font: 400 12px/18px var(--svy-font-body);
+    }
+
+    .study-plan-days {
+      row-gap: 12px;
+    }
+
+    .study-plan-day {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      color: #595c60;
+      font: 400 12px/18px var(--svy-font-body);
+    }
+
+    .study-plan-day.muted {
+      color: #111;
+      opacity: .2;
+    }
+
+    .study-plan-day.done {
+      background: #007aff;
+      color: #fff;
+    }
+
+    .study-plan-day.current {
+      background: #f7f7f7;
+      border: 1px solid #007aff;
+      color: #595c60;
+    }
+
+    .study-plan-day.future {
+      background: #f7f7f7;
+    }
+
+    .study-plan-day.exam {
+      background: #f5edfe;
+      border: 1px solid #b180ee;
+    }
+
+    .study-plan-day.exam img {
+      width: 18px;
+      height: 18px;
+      display: block;
+    }
+
+    .study-plan-goal-card {
+      width: 100%;
+      border-radius: 20px;
+      border: .5px solid #e6e8ea;
+      background: #fbfcff;
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+      box-shadow: 0 6px 7.45px rgba(0, 0, 0, .06);
+    }
+
+    .study-plan-goal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      color: #111;
+    }
+
+    .study-plan-goal-head h3 {
+      margin: 0;
+      font: 500 16px/24px var(--svy-font-body);
+    }
+
+    .study-plan-goal-count {
+      color: #111;
+      font: 400 14px/24px var(--svy-font-body);
+      white-space: nowrap;
+    }
+
+    .study-plan-goal-count strong {
+      color: #007aff;
+      font: 700 italic 20px/24px var(--svy-font-body);
+    }
+
+    .study-plan-goal-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-left: 12px;
+      color: #111;
+      font: 400 14px/22px var(--svy-font-body);
+      white-space: nowrap;
+    }
+
+    .study-plan-goal-item img {
+      width: 22px;
+      height: 22px;
+      display: block;
+      flex: 0 0 auto;
+    }
+
     .set-header {
       padding: 10px 0 12px;
     }
@@ -7851,6 +8079,7 @@
       requestChangeText: "",
       learnToolSheet: false,
       monetizationSheet: false,
+      studyPlanSheet: false,
       selectedLearnTool: "Study Guide",
       courseView: "topics",
       studySetVariant: "scheme1",
@@ -9502,7 +9731,6 @@
         <div class="course-outline-screen">
           <div class="course-outline-head">
             <h1>${planTopic()} Exam Prep Preview</h1>
-            <p>Solvely reviewed your materials and mapped coverage, priority topics, and the first study actions before building the full plan.</p>
           </div>
           <div class="outline-tabs" role="tablist" aria-label="Exam prep preview views">
             <button class="outline-tab ${state.outlineView === "studyPlan" ? "active" : ""}" type="button" onclick="setOutlineView('studyPlan')">Study plan</button>
@@ -9531,11 +9759,11 @@
             <div class="coverage-head">
               <div>
                 <h2>Your ${planWindow} plan preview is ready</h2>
-                <p>Solvely prioritized the highest-impact topics, built in mastery checks, and scheduled mock exams before test day.</p>
+                <p>Solvely prioritized the highest-impact topics, built in mastery checks, and scheduled mock tests that mirror the real exam.</p>
               </div>
             </div>
             <div class="plan-diagnostic-metrics" aria-label="Plan diagnostic summary">
-              ${planMetric(`${priorityGroupCount}`, "priority topic groups")}
+              ${planMetric(`${priorityGroupCount}`, "high-yield topic groups")}
               ${planMetric("12", "mastery checks")}
               ${planMetric("2", "mock exams")}
             </div>
@@ -9839,7 +10067,12 @@
       scheme2ToolBg: "/ui_kits/exam-prep-plan/assets/study-set/scheme2-tool-bg.svg",
       scheme2ToolStudy: "/ui_kits/exam-prep-plan/assets/study-set/scheme2-tool-study.svg",
       scheme2ToolQuiz: "/ui_kits/exam-prep-plan/assets/study-set/scheme2-tool-quiz.svg",
-      scheme2ToolEmpty: "/ui_kits/exam-prep-plan/assets/study-set/scheme2-tool-empty.png"
+      scheme2ToolEmpty: "/ui_kits/exam-prep-plan/assets/study-set/scheme2-tool-empty.png",
+      todaySheetChevronLeft: "/ui_kits/exam-prep-plan/assets/study-set/today-sheet-chevron-left.svg",
+      todaySheetChevronRight: "/ui_kits/exam-prep-plan/assets/study-set/today-sheet-chevron-right.svg",
+      todaySheetClose: "/ui_kits/exam-prep-plan/assets/study-set/today-sheet-close.svg",
+      todaySheetLabProfile: "/ui_kits/exam-prep-plan/assets/study-set/today-sheet-lab-profile.svg",
+      todaySheetProcessEmpty: "/ui_kits/exam-prep-plan/assets/study-set/today-sheet-process-empty.svg"
     };
 
     function studySetStarRow(count = 3) {
@@ -9865,18 +10098,28 @@
         <button
           class="set-day-pill ${done ? "done" : ""}"
           type="button"
-          onclick="toggleStudySetToday()"
+          onclick="openStudyPlanSheet()"
           aria-pressed="${done}"
           aria-label="${done ? "Done Today" : "Today 1 of 3"}"
         >
           <span class="check"><img src="${studySetAssets.scheme1Check}" alt="" aria-hidden="true"></span>
-          <span>${done ? "Done Today ☑️" : "Today 1/3"}</span>
+          <span>${done ? "Done Today" : "Today 1/3"}</span>
         </button>
       `;
     }
 
     function toggleStudySetToday() {
       state.studySetTodayDone = !state.studySetTodayDone;
+      render();
+    }
+
+    function openStudyPlanSheet() {
+      state.studyPlanSheet = true;
+      render();
+    }
+
+    function closeStudyPlanSheet() {
+      state.studyPlanSheet = false;
       render();
     }
 
@@ -9909,6 +10152,7 @@
       `, { result: true, back: false });
       if (state.learnToolSheet) appendLearnToolSheet();
       if (state.monetizationSheet) appendMonetizationSheet();
+      if (state.studyPlanSheet) appendStudyPlanSheet();
       requestAnimationFrame(() => phone.querySelector(".screen")?.scrollTo({ top: 0 }));
     }
 
@@ -9939,6 +10183,7 @@
       `, { result: true, back: false });
       if (state.learnToolSheet) appendLearnToolSheet();
       if (state.monetizationSheet) appendMonetizationSheet();
+      if (state.studyPlanSheet) appendStudyPlanSheet();
       requestAnimationFrame(() => phone.querySelector(".screen")?.scrollTo({ top: 0 }));
     }
 
@@ -9989,12 +10234,102 @@
               </div>
               <div class="scheme-two-card-foot">
                 <span class="scheme-two-stars" aria-label="3 star priority">${studySetStarRow(3)}</span>
-                <button class="mock-exam-btn" type="button">Start</button>
+                <button class="mock-exam-btn" type="button">
+                  Start
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M5 12h12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+                    <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
               </div>
             </article>
           </section>
         </div>
       `;
+    }
+
+    function appendStudyPlanSheet() {
+      phone.insertAdjacentHTML("beforeend", `
+        <div class="study-plan-sheet-mask" onclick="closeStudyPlanSheet()" role="presentation">
+          <section class="study-plan-sheet" onclick="event.stopPropagation()" role="dialog" aria-label="Study Plan">
+            <div class="study-plan-sheet-cell">
+              <span class="study-plan-sheet-handle" aria-hidden="true"></span>
+              <button class="study-plan-sheet-close" type="button" onclick="closeStudyPlanSheet()" aria-label="Close study plan">
+                <img src="${studySetAssets.todaySheetClose}" alt="" aria-hidden="true">
+              </button>
+            </div>
+            <div class="study-plan-sheet-content">
+              <div class="study-plan-sheet-title">
+                <h2>Study Plan</h2>
+                <div class="study-plan-sheet-meta">
+                  <span>Exam: Jul 19, 2026</span>
+                  <span>|</span>
+                  <span>14-day-plan</span>
+                </div>
+              </div>
+              ${studyPlanMiniCalendar()}
+              ${studyPlanDailyGoalCard()}
+            </div>
+          </section>
+        </div>
+      `);
+    }
+
+    function studyPlanMiniCalendar() {
+      const cells = [
+        { label: "28", state: "muted" }, { label: "29", state: "muted" }, { label: "30", state: "muted" },
+        { label: "1" }, { label: "2" }, { label: "3" }, { label: "4" },
+        { label: "5" }, { label: "6", state: "done" }, { label: "7", state: "done" }, { label: "8", state: "current" },
+        { label: "9", state: "future" }, { label: "10", state: "future" }, { label: "11", state: "future" },
+        { label: "12", state: "future" }, { label: "13", state: "future" }, { label: "14", state: "future" },
+        { label: "15", state: "future" }, { label: "16", state: "future" }, { label: "17", state: "future" }, { label: "18", state: "future" },
+        { label: "", state: "exam" }, { label: "20" }, { label: "21" }, { label: "22" }, { label: "23" }, { label: "24" }, { label: "25" },
+        { label: "26" }, { label: "27" }, { label: "28" }, { label: "29" }, { label: "30" }, { label: "31" }, { label: "1", state: "muted" }
+      ];
+      return `
+        <div class="study-plan-mini-calendar">
+          <div class="study-plan-calendar-month">
+            <img src="${studySetAssets.todaySheetChevronLeft}" alt="" aria-hidden="true">
+            <strong>July</strong>
+            <img src="${studySetAssets.todaySheetChevronRight}" alt="" aria-hidden="true">
+          </div>
+          <div class="study-plan-calendar-grid">
+            <div class="study-plan-weekdays" aria-hidden="true">
+              ${["M", "T", "W", "T", "F", "S", "S"].map((day) => `<span>${day}</span>`).join("")}
+            </div>
+            <div class="study-plan-days">
+              ${cells.map((cell) => studyPlanCalendarDay(cell)).join("")}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function studyPlanCalendarDay(cell) {
+      const stateClass = cell.state || "";
+      if (cell.state === "exam") {
+        return `<span class="study-plan-day exam"><img src="${studySetAssets.todaySheetLabProfile}" alt="" aria-hidden="true"></span>`;
+      }
+      return `<span class="study-plan-day ${stateClass}">${cell.label}</span>`;
+    }
+
+    function studyPlanDailyGoalCard() {
+      return `
+        <section class="study-plan-goal-card">
+          <div class="study-plan-goal-head">
+            <h3>Your daily goal</h3>
+            <span class="study-plan-goal-count"><strong>1</strong>/3 Topics</span>
+          </div>
+          ${studyPlanGoalItem("Verbs & Conjugations", true)}
+          ${studyPlanGoalItem("Verbs & Conjugations", false)}
+          ${studyPlanGoalItem("Verbs & Conjugations", false)}
+        </section>
+      `;
+    }
+
+    function studyPlanGoalItem(label, done) {
+      const icon = done ? studySetAssets.scheme1Check : studySetAssets.todaySheetProcessEmpty;
+      return `<div class="study-plan-goal-item"><img src="${icon}" alt="" aria-hidden="true"><span>${escapeHtml(label)}</span></div>`;
     }
 
     function setCourseView(view) {
@@ -10574,6 +10909,8 @@
     window.startOnboarding = startOnboarding;
     window.setExamCountry = setExamCountry;
     window.setStudySetVariant = setStudySetVariant;
+    window.openStudyPlanSheet = openStudyPlanSheet;
+    window.closeStudyPlanSheet = closeStudyPlanSheet;
     window.selectOnboardingGoal = selectOnboardingGoal;
     window.selectExamDays = selectExamDays;
     window.selectExamDate = selectExamDate;
