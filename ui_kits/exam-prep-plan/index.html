@@ -1017,6 +1017,95 @@
       box-shadow: 0 10px 22px rgba(0, 122, 255, .1);
     }
 
+    .exam-date-card {
+      margin-top: 22px;
+      border: 1px solid #dce8f5;
+      border-radius: 28px;
+      background: #fff;
+      padding: 18px;
+      box-shadow: 0 18px 38px rgba(45, 67, 112, .08);
+    }
+
+    .exam-date-month {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      color: #111827;
+    }
+
+    .exam-date-month strong {
+      font: 800 18px/1.2 var(--svy-font-display);
+      letter-spacing: -0.02em;
+    }
+
+    .exam-date-nav {
+      width: 34px;
+      height: 34px;
+      border: 0;
+      border-radius: 50%;
+      background: #f1f6fd;
+      color: #007aff;
+      display: grid;
+      place-items: center;
+      font: 900 22px/1 var(--svy-font-display);
+      cursor: pointer;
+    }
+
+    .exam-date-weekdays,
+    .exam-date-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      text-align: center;
+    }
+
+    .exam-date-weekdays {
+      margin-bottom: 8px;
+      color: #8d96a3;
+      font: 800 12px/1 var(--svy-font-body);
+    }
+
+    .exam-date-day {
+      height: 38px;
+      border: 0;
+      border-radius: 14px;
+      background: transparent;
+      color: #111827;
+      font: 780 15px/1 var(--svy-font-body);
+      cursor: pointer;
+    }
+
+    .exam-date-day.muted {
+      color: #c2cad5;
+      cursor: default;
+    }
+
+    .exam-date-day.today {
+      background: #eef6ff;
+      color: #007aff;
+    }
+
+    .exam-date-day.selected {
+      background: #007aff;
+      color: #fff;
+      box-shadow: 0 10px 20px rgba(0, 122, 255, .22);
+    }
+
+    .exam-date-summary {
+      margin: 16px 0 0;
+      min-height: 44px;
+      border-radius: 18px;
+      background: #f6f9fd;
+      color: #526070;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 14px;
+      text-align: center;
+      font: 760 13px/1.35 var(--svy-font-body);
+    }
+
     .onboarding-plan-card {
       border: 1px solid #dce8f5;
       border-radius: 26px;
@@ -7731,6 +7820,9 @@
       onboardingStage: 0,
       onboardingGoal: "",
       onboardingExamDays: "3 days",
+      onboardingExamDate: "",
+      onboardingDatePicker: false,
+      onboardingDateMonthOffset: 0,
       onboardingStudyTime: "30 min/day",
       setupStage: 0,
       topic: "",
@@ -7798,6 +7890,15 @@
       "Canada": ["Organic Chemistry", "Biology", "Chemistry", "Physics", "Algebra", "Calculus", "Statistics", "History", "Business", "Accounting", "Law"],
       "Australia": ["Organic Chemistry", "Biology", "Chemistry", "Physics", "Algebra", "Calculus", "Statistics", "History", "Business", "Accounting", "Law"]
     };
+
+    function onboardingExamDayOptions() {
+      return [
+        { label: "Tomorrow", value: "1 day" },
+        { label: "In 2 days", value: "2 days" },
+        { label: "In 3 days", value: "3 days" },
+        { label: selectedExamDateLabel() || "Pick a date", value: "custom" }
+      ];
+    }
 
     function svgData(svg) {
       return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
@@ -8057,6 +8158,12 @@
     }
 
     function goBack() {
+      if (state.step === "onboarding" && state.onboardingDatePicker) {
+        state.onboardingDatePicker = false;
+        render();
+        return;
+      }
+
       if (state.step === "onboarding" && state.onboardingStage > 0) {
         state.onboardingStage -= 1;
         render();
@@ -8130,7 +8237,6 @@
             `).join("")}
           </div>
         </label>
-        <small>方案一复刻 Figma 20:4166；方案二复刻 Figma 20:4572。</small>
       `;
     }
 
@@ -8181,7 +8287,7 @@
           </header>
           ${state.onboardingStage === 0 ? onboardingGoalPage() : ""}
           ${state.onboardingStage === 1 ? onboardingCourseExamPage() : ""}
-          ${state.onboardingStage === 2 ? onboardingExamPage() : ""}
+          ${state.onboardingStage === 2 ? state.onboardingDatePicker ? onboardingExamDatePage() : onboardingExamPage() : ""}
           ${state.onboardingStage === 3 ? onboardingPlanPage() : ""}
         </div>
         <div class="onboarding-bottom">
@@ -8226,10 +8332,7 @@
           <section class="onboarding-picker-group">
             <h2>Days until exam</h2>
             <div class="onboarding-chip-grid">
-              ${onboardingChip("examDays", "3 days")}
-              ${onboardingChip("examDays", "7 days")}
-              ${onboardingChip("examDays", "2 weeks")}
-              ${onboardingChip("examDays", "1 month")}
+              ${onboardingExamDayOptions().map((option) => onboardingChip("examDays", option.label, option.value)).join("")}
             </div>
           </section>
           <section class="onboarding-picker-group">
@@ -8245,10 +8348,69 @@
       `;
     }
 
-    function onboardingChip(type, value) {
-      const selected = type === "examDays" ? state.onboardingExamDays === value : state.onboardingStudyTime === value;
+    function onboardingExamDatePage() {
+      return `
+        <h1 class="onboarding-title" style="text-align:center">When is your exam?</h1>
+        <p class="onboarding-copy" style="text-align:center">Pick the exact date so Solvely can pace your daily study plan.</p>
+        ${examDateCalendar()}
+      `;
+    }
+
+    function onboardingChip(type, label, value = label) {
+      const selected = type === "examDays"
+        ? value === "custom" ? Boolean(state.onboardingExamDate) : state.onboardingExamDays === value && !state.onboardingExamDate
+        : state.onboardingStudyTime === value;
       const handler = type === "examDays" ? "selectExamDays" : "selectStudyTime";
-      return `<button class="onboarding-chip ${selected ? "selected" : ""}" type="button" onclick="${handler}('${value}')">${value}</button>`;
+      return `<button class="onboarding-chip ${selected ? "selected" : ""}" type="button" onclick="${handler}(${escapeJsArg(value)})">${escapeHtml(label)}</button>`;
+    }
+
+    function examDateCalendar() {
+      const today = new Date(2026, 6, 21);
+      const visibleMonth = new Date(today.getFullYear(), today.getMonth() + state.onboardingDateMonthOffset, 1);
+      const selected = state.onboardingExamDate || "2026-07-31";
+      const monthLabel = visibleMonth.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+      const firstDay = visibleMonth.getDay();
+      const daysInMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1, 0).getDate();
+      const prevMonthDays = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth(), 0).getDate();
+      const cells = [];
+      for (let index = 0; index < 42; index += 1) {
+        const dayNumber = index - firstDay + 1;
+        let date = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth(), dayNumber);
+        let label = dayNumber;
+        let muted = false;
+        if (dayNumber < 1) {
+          label = prevMonthDays + dayNumber;
+          muted = true;
+        } else if (dayNumber > daysInMonth) {
+          label = dayNumber - daysInMonth;
+          muted = true;
+        }
+        const iso = toIsoDate(date);
+        const disabled = muted || date < today;
+        const classes = [
+          "exam-date-day",
+          muted || date < today ? "muted" : "",
+          iso === toIsoDate(today) ? "today" : "",
+          iso === selected ? "selected" : ""
+        ].filter(Boolean).join(" ");
+        cells.push(`<button class="${classes}" type="button" ${disabled ? "disabled" : `onclick="selectExamDate('${iso}')"`}>${label}</button>`);
+      }
+      return `
+        <section class="exam-date-card" aria-label="Choose exam date">
+          <div class="exam-date-month">
+            <button class="exam-date-nav" type="button" onclick="changeExamDateMonth(-1)" aria-label="Previous month">‹</button>
+            <strong>${monthLabel}</strong>
+            <button class="exam-date-nav" type="button" onclick="changeExamDateMonth(1)" aria-label="Next month">›</button>
+          </div>
+          <div class="exam-date-weekdays" aria-hidden="true">
+            ${["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((day) => `<span>${day}</span>`).join("")}
+          </div>
+          <div class="exam-date-grid">
+            ${cells.join("")}
+          </div>
+          <p class="exam-date-summary">${examDateSummary(selected)}</p>
+        </section>
+      `;
     }
 
     function onboardingPlanPage() {
@@ -8404,6 +8566,15 @@
     }
 
     function selectExamDays(value) {
+      if (value === "custom") {
+        state.onboardingDatePicker = true;
+        state.onboardingExamDate = state.onboardingExamDate || "2026-07-31";
+        state.onboardingExamDays = `${daysUntilExam(state.onboardingExamDate)} days`;
+        render();
+        return;
+      }
+      state.onboardingDatePicker = false;
+      state.onboardingExamDate = "";
       state.onboardingExamDays = value;
       render();
     }
@@ -8413,10 +8584,27 @@
       render();
     }
 
+    function selectExamDate(value) {
+      state.onboardingExamDate = value;
+      state.onboardingExamDays = `${daysUntilExam(value)} days`;
+      state.onboardingDatePicker = false;
+      render();
+    }
+
+    function changeExamDateMonth(delta) {
+      state.onboardingDateMonthOffset = Math.max(0, state.onboardingDateMonthOffset + delta);
+      render();
+    }
+
     function continueOnboarding() {
       if (!onboardingCanContinue()) return;
       if (state.onboardingStage === 0 && state.onboardingGoal === "daily") {
         setStep("home");
+        return;
+      }
+      if (state.onboardingDatePicker) {
+        state.onboardingDatePicker = false;
+        render();
         return;
       }
       if (state.onboardingStage < 4) {
@@ -8559,22 +8747,53 @@
     }
 
     function examPrepPlanLabel() {
+      if (state.onboardingExamDays === "custom") return "Custom Prep Plan";
       const [amount, unit = "days"] = state.onboardingExamDays.split(" ");
       const singularUnit = unit.replace(/s$/, "");
       return `${amount}-${singularUnit.charAt(0).toUpperCase()}${singularUnit.slice(1)} Prep Plan`;
     }
 
     function examPrepStarterTitle() {
+      if (state.onboardingExamDays === "custom") return "Custom Exam Prep Starter";
       const [amount, unit = "days"] = state.onboardingExamDays.split(" ");
       const singularUnit = unit.replace(/s$/, "");
       return `${amount}-${singularUnit.charAt(0).toUpperCase()}${singularUnit.slice(1)} Exam Prep Starter`;
     }
 
     function examPrepPlanDuration() {
+      if (state.onboardingExamDays === "custom") return "Custom Plan";
       return state.onboardingExamDays
         .split(" ")
         .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
         .join(" ");
+    }
+
+    function toIsoDate(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    }
+
+    function daysUntilExam(value) {
+      const today = new Date(2026, 6, 21);
+      const [year, month, day] = value.split("-").map(Number);
+      const examDate = new Date(year, month - 1, day);
+      return Math.max(1, Math.round((examDate - today) / 86400000));
+    }
+
+    function examDateSummary(value) {
+      if (!value) return "Choose your exam date to continue.";
+      const [year, month, day] = value.split("-").map(Number);
+      const examDate = new Date(year, month - 1, day);
+      const label = examDate.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+      return `${label} · ${daysUntilExam(value)} days until exam`;
+    }
+
+    function selectedExamDateLabel() {
+      if (!state.onboardingExamDate) return "";
+      const [year, month, day] = state.onboardingExamDate.split("-").map(Number);
+      return new Date(year, month - 1, day).toLocaleDateString("en-US", { month: "short", day: "numeric" });
     }
 
     function escapeHtml(value) {
@@ -9312,13 +9531,13 @@
             <div class="coverage-head">
               <div>
                 <h2>Your ${planWindow} plan preview is ready</h2>
-                <p>Solvely found ${priorityGroupCount} priority topic groups from your materials.</p>
+                <p>Solvely prioritized the highest-impact topics, built in mastery checks, and scheduled mock exams before test day.</p>
               </div>
             </div>
             <div class="plan-diagnostic-metrics" aria-label="Plan diagnostic summary">
-              ${planMetric(`${priorityGroupCount}`, "priority groups")}
-              ${planMetric("12", "self-checks")}
-              ${planMetric("64%", "exam readiness")}
+              ${planMetric(`${priorityGroupCount}`, "priority topic groups")}
+              ${planMetric("12", "mastery checks")}
+              ${planMetric("2", "mock exams")}
             </div>
           </section>
           <div class="study-plan-timeline">
@@ -9334,6 +9553,7 @@
     }
 
     function compactExamPrepWindow() {
+      if (state.onboardingExamDays === "custom") return "custom plan";
       const [amount, unit = "days"] = state.onboardingExamDays.split(" ");
       return `${amount}-${unit.replace(/s$/, "")}`;
     }
@@ -10164,7 +10384,7 @@
               <span class="monetization-proof-copy"><strong>291,286</strong> students prep smarter</span>
             </div>
             <div class="monetization-body">
-              <h2>Unlock your full study plan to cover all topics before exam</h2>
+              <h2>Unlock the full plan to stay ready for test day</h2>
               <div class="monetization-score-card">
                 <span class="monetization-score-accent" aria-hidden="true"></span>
                 <span class="monetization-score-metric">
@@ -10356,6 +10576,8 @@
     window.setStudySetVariant = setStudySetVariant;
     window.selectOnboardingGoal = selectOnboardingGoal;
     window.selectExamDays = selectExamDays;
+    window.selectExamDate = selectExamDate;
+    window.changeExamDateMonth = changeExamDateMonth;
     window.selectStudyTime = selectStudyTime;
     window.continueOnboarding = continueOnboarding;
     window.startSetup = startSetup;
