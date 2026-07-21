@@ -5363,10 +5363,16 @@
     .prediction-indicator .check {
       position: absolute;
       inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
       display: grid;
       place-items: center;
       color: #fff;
-      font: 900 16px/1 var(--svy-font-body);
+      font: 900 15px/24px var(--svy-font-body);
+      text-align: center;
       opacity: 0;
       transform: scale(.6);
       animation: predictionCheckIn 180ms calc(var(--delay) + 900ms) var(--ease) forwards;
@@ -6285,10 +6291,18 @@
       font: 600 16px/24px var(--svy-font-body);
     }
 
-    .study-plan-calendar-month img {
+    .study-plan-month-nav {
       width: 24px;
       height: 24px;
+      display: grid;
+      place-items: center;
+    }
+
+    .study-plan-month-nav img {
+      width: 14px;
+      height: 14px;
       display: block;
+      object-fit: contain;
     }
 
     .study-plan-calendar-grid {
@@ -9813,7 +9827,7 @@
               ${section.lessons.map((lesson, lessonIndex) => {
                 const key = `${sectionIndex}-${lessonIndex}`;
                 const expanded = state.editingTopicIndex === key;
-                const tag = outlinePriorityTag(sectionIndex, lessonIndex);
+                const tag = state.studySetVariant === "scheme2" ? outlinePriorityTag(sectionIndex, lessonIndex) : null;
                 return `
                   <button class="outline-lesson ${expanded ? "expanded" : ""}" type="button" onclick="toggleOutlineLesson('${key}')">
                     <span class="outline-lesson-main">
@@ -10226,23 +10240,8 @@
       return `
         <div class="scheme-two-list">
           <section class="scheme-two-section">
-            <h2 class="scheme-two-title">Exam</h2>
-            <article class="scheme-two-card">
-              <div>
-                <h3>Final Mock Exam</h3>
-                <p>Take the mock exam on exam-eve and review weak spots from the score report.</p>
-              </div>
-              <div class="scheme-two-card-foot">
-                <span class="scheme-two-stars" aria-label="3 star priority">${studySetStarRow(3)}</span>
-                <button class="mock-exam-btn" type="button">
-                  Start
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path d="M5 12h12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
-                    <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </button>
-              </div>
-            </article>
+            <h2 class="scheme-two-title">EXAMS</h2>
+            ${mockExamEntry()}
           </section>
         </div>
       `;
@@ -10289,9 +10288,9 @@
       return `
         <div class="study-plan-mini-calendar">
           <div class="study-plan-calendar-month">
-            <img src="${studySetAssets.todaySheetChevronLeft}" alt="" aria-hidden="true">
+            <span class="study-plan-month-nav"><img src="${studySetAssets.todaySheetChevronLeft}" alt="" aria-hidden="true"></span>
             <strong>July</strong>
-            <img src="${studySetAssets.todaySheetChevronRight}" alt="" aria-hidden="true">
+            <span class="study-plan-month-nav"><img src="${studySetAssets.todaySheetChevronRight}" alt="" aria-hidden="true"></span>
           </div>
           <div class="study-plan-calendar-grid">
             <div class="study-plan-weekdays" aria-hidden="true">
@@ -10629,11 +10628,11 @@
           <div class="mock-exam-card">
             <div>
               <h3>Final Mock Exam</h3>
-              <p>Ready? Try a mock exam and get your final learning analysis.</p>
+              <p>Take a full-length mock exam that mirrors the real test, then get your final readiness analysis.</p>
             </div>
             <div class="mock-exam-tags" aria-label="Mock exam outputs">
-              <span>Full-score report</span>
-              <span>Weak spots</span>
+              <span>Full score report</span>
+              <span>Weak spot breakdown</span>
               <span>Tutor feedback</span>
             </div>
             <button class="mock-exam-btn" type="button">
