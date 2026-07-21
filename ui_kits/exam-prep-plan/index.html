@@ -63,7 +63,8 @@
       margin: 0;
     }
 
-    .country-switcher {
+    .country-switcher,
+    .study-set-switcher {
       display: grid;
       gap: 10px;
       padding: 14px;
@@ -73,7 +74,8 @@
       box-shadow: var(--svy-shadow-card);
     }
 
-    .country-switcher label {
+    .country-switcher label,
+    .study-set-switcher label {
       display: grid;
       gap: 6px;
       color: var(--svy-fg);
@@ -98,9 +100,37 @@
       box-shadow: 0 0 0 3px color-mix(in oklch, var(--svy-primary) 12%, transparent);
     }
 
-    .country-switcher small {
+    .country-switcher small,
+    .study-set-switcher small {
       color: var(--svy-muted);
       font: 700 12px/1.35 var(--svy-font-body);
+    }
+
+    .variant-toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      padding: 4px;
+      border-radius: 16px;
+      background: color-mix(in oklch, var(--svy-bg) 78%, var(--svy-surface));
+      border: 1px solid var(--svy-border);
+    }
+
+    .variant-toggle button {
+      min-height: 36px;
+      border: 0;
+      border-radius: 12px;
+      background: transparent;
+      color: var(--svy-muted);
+      font: 800 12px/1.15 var(--svy-font-body);
+      cursor: pointer;
+      transition: background 160ms var(--ease), color 160ms var(--ease), box-shadow 160ms var(--ease);
+    }
+
+    .variant-toggle button.active {
+      background: var(--svy-surface);
+      color: var(--svy-fg);
+      box-shadow: 0 8px 18px rgba(35, 47, 70, .08);
     }
 
     .flow-rail {
@@ -5973,6 +6003,10 @@
       color: #111;
     }
 
+    .scheme-one-set {
+      background: #f6f8fa;
+    }
+
     .set-appbar {
       height: 44px;
       margin: 0 -8px;
@@ -5993,10 +6027,68 @@
       cursor: pointer;
     }
 
+    .set-icon-btn img {
+      width: 32px;
+      height: 32px;
+      display: block;
+    }
+
     .set-actions {
       display: flex;
       align-items: center;
       gap: 16px;
+    }
+
+    .set-day-pill {
+      min-height: 36px;
+      border: 0;
+      border-radius: 999px;
+      padding: 2px 12px 2px 5px;
+      background: #fff;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 8px 18px rgba(35, 47, 70, .08);
+      color: #111;
+      font: 700 14px/1 var(--svy-font-body);
+      text-transform: none;
+      cursor: pointer;
+    }
+
+    .set-day-pill .check {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: transparent;
+      color: #007aff;
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .set-day-pill .check img {
+      width: 22px;
+      height: 22px;
+      display: block;
+      opacity: .34;
+      filter: grayscale(1) saturate(0);
+      transition: opacity 160ms var(--ease), filter 160ms var(--ease);
+    }
+
+    .set-day-pill.done .check img {
+      opacity: 1;
+      filter: none;
+    }
+
+    .set-day-pill strong {
+      color: #007aff;
+      font-weight: 800;
+    }
+
+    .set-day-pill.done {
+      color: #007aff;
+      box-shadow: 0 10px 22px rgba(0, 122, 255, .14);
     }
 
     .set-header {
@@ -6050,6 +6142,61 @@
       box-shadow: 0 6px 16px rgba(45, 67, 112, .12);
     }
 
+    .scheme-one-set .set-view-tabs,
+    .scheme-two-set .set-view-tabs {
+      width: calc(100% + 48px);
+      height: 44px;
+      min-height: 44px;
+      margin: 0 -24px;
+      border-radius: 12px 12px 0 0;
+      border: 0;
+      background: #f1f5f9;
+      padding: 4px 0 0;
+      gap: 0;
+      position: relative;
+      z-index: 2;
+      overflow: hidden;
+    }
+
+    .scheme-two-set .set-view-tabs {
+      width: calc(100% + 40px);
+      margin-left: -20px;
+      margin-right: -20px;
+    }
+
+    .scheme-one-set .set-view-tab,
+    .scheme-two-set .set-view-tab {
+      position: relative;
+      z-index: 1;
+      border-radius: 0;
+      color: #111;
+      font: 700 16px/1 "Poppins", var(--svy-font-display);
+    }
+
+    .scheme-one-set .set-view-tab.active::before,
+    .scheme-two-set .set-view-tab.active::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -2px;
+      width: 251px;
+      height: 42px;
+      transform: translateX(-50%);
+      background: url("assets/study-set/scheme1-tab-union.svg") center/100% 100% no-repeat;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .scheme-two-set .set-view-tab.active::before {
+      background-image: url("assets/study-set/scheme2-tab-union.svg");
+    }
+
+    .scheme-one-set .set-view-tab.active,
+    .scheme-two-set .set-view-tab.active {
+      background: transparent;
+      box-shadow: none;
+    }
+
     .set-chip {
       min-height: 28px;
       padding: 3px 10px;
@@ -6067,6 +6214,22 @@
       padding-top: 4px;
     }
 
+    .scheme-one-set .set-content {
+      margin: 0 -24px;
+      padding: 20px 28px 34px 20px;
+      background: #fff;
+      gap: 16px;
+    }
+
+    .scheme-one-set .set-topic-list {
+      gap: 0;
+    }
+
+    .scheme-one-set .set-topic {
+      grid-template-columns: 24px minmax(0, 1fr);
+      gap: 12px;
+    }
+
     .set-section {
       display: grid;
       gap: 8px;
@@ -6080,6 +6243,21 @@
       font: 700 15px/24px var(--svy-font-body);
       text-transform: uppercase;
       color: #111;
+    }
+
+    .scheme-one-set .set-section-title {
+      margin-left: -20px;
+      gap: 15px;
+      font: 700 18px/27px "Poppins", var(--svy-font-display);
+    }
+
+    .scheme-one-set .set-section-title::before {
+      content: "";
+      width: 5px;
+      height: 20px;
+      border-radius: 0 12px 12px 0;
+      background: #007aff;
+      flex: 0 0 auto;
     }
 
     .set-topic-list {
@@ -6214,6 +6392,22 @@
       font: 500 16px/24px var(--svy-font-body);
     }
 
+    .scheme-one-set .set-card {
+      min-height: 126px;
+      border-color: #eee;
+      background: #f6f8fa;
+      align-items: center;
+      padding: 16px;
+      box-shadow: none;
+    }
+
+    .scheme-one-set .set-topic.open .set-card {
+      min-height: 176px;
+      background: #fbfcff;
+      border: .5px solid #e6e8ea;
+      box-shadow: 0 6px 7.45px rgba(0, 0, 0, .06);
+    }
+
     .set-card-topic-title {
       flex: 1 1 auto;
       min-width: 0;
@@ -6222,9 +6416,27 @@
       white-space: nowrap;
     }
 
+    .set-card-copy {
+      display: grid;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .set-card-copy p {
+      margin: 0;
+      color: #595c60;
+      font: 400 16px/24px var(--svy-font-body);
+      letter-spacing: -0.01em;
+    }
+
     .set-topic:not(.upcoming) .set-card {
       border-color: #e6e8ea;
       background: #fbfcff;
+    }
+
+    .scheme-one-set .set-topic:not(.upcoming):not(.open) .set-card {
+      background: #f6f8fa;
+      border-color: #eee;
     }
 
     .set-card.open {
@@ -6234,6 +6446,11 @@
       gap: 12px;
       padding: 16px;
       box-shadow: 0 12px 12px rgba(0,0,0,.06);
+    }
+
+    .scheme-one-set .set-card.open {
+      min-height: 176px;
+      box-shadow: 0 6px 7.45px rgba(0,0,0,.06);
     }
 
     .set-card-head {
@@ -6290,6 +6507,65 @@
       padding: 0 12px 0 20px;
       font: 600 16px/24px "Poppins", var(--svy-font-display);
       cursor: pointer;
+    }
+
+    .set-learn-btn img,
+    .mock-exam-btn img {
+      width: 24px;
+      height: 24px;
+      display: block;
+    }
+
+    .scheme-one-set .set-learn-btn img {
+      transform: rotate(180deg);
+    }
+
+    .scheme-one-set .topic-priority-tag {
+      display: none;
+    }
+
+    .scheme-one-set .set-topic.first .set-marker,
+    .scheme-one-set .set-topic.done .set-marker {
+      border: 0;
+      background: url("assets/study-set/scheme1-check-circle.svg") center/24px 24px no-repeat;
+      color: transparent;
+    }
+
+    .scheme-one-set .set-topic.first .set-marker::before,
+    .scheme-one-set .set-topic.done .set-marker::before,
+    .scheme-one-set .set-topic.first .set-marker::after,
+    .scheme-one-set .set-topic.done .set-marker::after {
+      display: none;
+    }
+
+    .scheme-one-set .set-topic.upcoming .set-marker {
+      border: 0;
+      background: url("assets/study-set/scheme1-marker-outline.svg") center/20px 20px no-repeat;
+      color: transparent;
+    }
+
+    .scheme-one-set .set-topic.upcoming .set-marker::before,
+    .scheme-one-set .set-topic.upcoming .set-marker::after {
+      display: none;
+    }
+
+    .scheme-one-set .set-topic.open .set-marker {
+      background: #fff;
+      border: 2px solid #007aff;
+      box-shadow: 0 0 0 2px #fff inset;
+      color: #007aff;
+    }
+
+    .scheme-one-set .set-topic.open .set-marker::before {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 0;
+      background: #007aff;
+    }
+
+    .scheme-one-set .set-topic.open .set-marker::after {
+      display: none;
     }
 
     .mock-exam-entry {
@@ -6376,6 +6652,344 @@
       font: 600 16px/24px "Poppins", var(--svy-font-display);
       cursor: pointer;
       box-shadow: 0 10px 22px rgba(0, 122, 255, .22);
+    }
+
+    .figma-set-screen {
+      padding: 0 20px 34px;
+      background: #f6f8fb;
+      color: #111;
+    }
+
+    .figma-set-appbar {
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .figma-set-appbar h1 {
+      margin: 0;
+      font: 760 18px/1.25 var(--svy-font-display);
+      letter-spacing: -0.02em;
+    }
+
+    .figma-set-hero {
+      display: grid;
+      gap: 14px;
+      padding: 18px;
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at 88% 16%, rgba(255, 212, 90, .42), transparent 32%),
+        linear-gradient(135deg, #eaf4ff 0%, #ffffff 60%, #fff8dd 100%);
+      border: 1px solid rgba(0, 122, 255, .12);
+      box-shadow: 0 16px 32px rgba(36, 73, 123, .10);
+    }
+
+    .figma-set-hero-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .figma-set-hero h2 {
+      margin: 0;
+      font: 820 24px/1.08 var(--svy-font-display);
+      letter-spacing: -0.035em;
+      text-wrap: balance;
+    }
+
+    .figma-set-hero p {
+      margin: 7px 0 0;
+      color: #5f6b7a;
+      font: 650 13px/1.45 var(--svy-font-body);
+    }
+
+    .figma-set-score {
+      min-width: 58px;
+      height: 58px;
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      background: #111;
+      color: #fff;
+      box-shadow: 0 12px 22px rgba(17,17,17,.16);
+    }
+
+    .figma-set-score strong {
+      font: 850 18px/1 var(--svy-font-display);
+    }
+
+    .figma-set-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .figma-set-stat {
+      min-height: 62px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.74);
+      border: 1px solid rgba(255,255,255,.8);
+      display: grid;
+      align-content: center;
+      gap: 3px;
+      padding: 10px;
+    }
+
+    .figma-set-stat strong {
+      font: 850 18px/1 var(--svy-font-display);
+      color: #111;
+    }
+
+    .figma-set-stat span {
+      color: #7b8491;
+      font: 750 11px/1.15 var(--svy-font-body);
+    }
+
+    .figma-set-tabs {
+      margin: 16px 0 14px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      padding: 6px;
+      border-radius: 20px;
+      background: #e9edf3;
+    }
+
+    .figma-set-tab {
+      min-height: 42px;
+      border: 0;
+      border-radius: 16px;
+      background: transparent;
+      color: #75808d;
+      font: 820 14px/1 var(--svy-font-body);
+      cursor: pointer;
+    }
+
+    .figma-set-tab.active {
+      color: #111;
+      background: #fff;
+      box-shadow: 0 10px 22px rgba(31, 50, 82, .12);
+    }
+
+    .figma-set-stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .figma-set-card {
+      border-radius: 24px;
+      background: #fff;
+      border: 1px solid #edf0f4;
+      box-shadow: 0 12px 24px rgba(36, 54, 84, .07);
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .figma-set-card-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .figma-set-card h3 {
+      margin: 0;
+      font: 780 16px/1.25 var(--svy-font-display);
+      letter-spacing: -0.02em;
+      color: #111;
+    }
+
+    .figma-set-card p {
+      margin: 4px 0 0;
+      color: #647080;
+      font: 650 13px/1.45 var(--svy-font-body);
+    }
+
+    .figma-set-pill {
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: #eff6ff;
+      color: #0a6ce8;
+      font: 850 11px/1 var(--svy-font-body);
+      white-space: nowrap;
+    }
+
+    .figma-set-progress {
+      height: 8px;
+      border-radius: 999px;
+      background: #edf1f5;
+      overflow: hidden;
+    }
+
+    .figma-set-progress span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #0a84ff, #77b8ff);
+    }
+
+    .figma-set-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .figma-set-action {
+      min-height: 40px;
+      border: 0;
+      border-radius: 999px;
+      background: #0a84ff;
+      color: #fff;
+      padding: 0 18px;
+      font: 820 14px/1 var(--svy-font-body);
+      cursor: pointer;
+      box-shadow: 0 12px 22px rgba(10,132,255,.22);
+    }
+
+    .figma-set-secondary {
+      color: #697483;
+      font: 800 12px/1 var(--svy-font-body);
+    }
+
+    .figma-exam-card {
+      border-radius: 26px;
+      padding: 18px;
+      background: linear-gradient(180deg, #111827, #1f2937);
+      color: #fff;
+      box-shadow: 0 18px 30px rgba(17,24,39,.2);
+    }
+
+    .figma-exam-card p {
+      color: rgba(255,255,255,.72);
+    }
+
+    .scheme-two-set {
+      padding-left: 20px;
+      padding-right: 20px;
+      background: #f6f8fa;
+    }
+
+    .scheme-two-set .set-header {
+      padding: 10px 4px 18px;
+    }
+
+    .scheme-two-list {
+      display: grid;
+      gap: 0;
+      margin: 0 -20px;
+      padding: 20px 24px 34px 20px;
+      background: #fff;
+    }
+
+    .scheme-two-section {
+      display: grid;
+      gap: 8px;
+    }
+
+    .scheme-two-section + .scheme-two-section {
+      margin-top: 16px;
+    }
+
+    .scheme-two-title {
+      margin: 0 0 0 -20px;
+      min-height: 27px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      color: #111;
+      font: 700 18px/27px "Poppins", var(--svy-font-display);
+      text-transform: uppercase;
+    }
+
+    .scheme-two-title::before {
+      content: "";
+      width: 5px;
+      height: 20px;
+      border-radius: 0 12px 12px 0;
+      background: #007aff;
+      flex: 0 0 auto;
+    }
+
+    .scheme-two-card {
+      min-height: 126px;
+      border-radius: 20px;
+      border: 1px solid #eee;
+      background: #fbfcff;
+      padding: 16px;
+      display: grid;
+      gap: 10px;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+    }
+
+    .scheme-two-card h3 {
+      margin: 0;
+      color: #111;
+      font: 650 16px/24px var(--svy-font-body);
+    }
+
+    .scheme-two-card p {
+      margin: 2px 0 0;
+      color: #595c60;
+      font: 400 16px/24px var(--svy-font-body);
+      letter-spacing: -0.01em;
+    }
+
+    .scheme-two-card-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .scheme-two-stars {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .scheme-two-stars img {
+      width: 18px;
+      height: 18px;
+      display: block;
+    }
+
+    .scheme-two-tools {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .scheme-two-tool {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 0;
+      background: transparent;
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .scheme-two-tool img {
+      position: absolute;
+      inset: 0;
+      width: 36px;
+      height: 36px;
+      display: block;
+    }
+
+    .scheme-two-tool img.scheme-two-tool-glyph {
+      inset: 8px;
+      width: 20px;
+      height: 20px;
+    }
+
+    .scheme-two-tool.empty img {
+      opacity: .98;
     }
 
     .learn-tool-mask {
@@ -7090,6 +7704,7 @@
       <p>This prototype combines the Solvely Study surface with the reference app's guided course-creation flow.</p>
       <p>Use the rail or tap inside the phone. The primary flow moves from Study home to personalized questions, outline confirmation, plan generation, and the final study set.</p>
       <div class="country-switcher" id="country-switcher"></div>
+      <div class="study-set-switcher" id="study-set-switcher"></div>
       <div class="flow-rail" id="rail"></div>
     </aside>
 
@@ -7145,7 +7760,9 @@
       learnToolSheet: false,
       monetizationSheet: false,
       selectedLearnTool: "Study Guide",
-      courseView: "topics"
+      courseView: "topics",
+      studySetVariant: "scheme1",
+      studySetTodayDone: false
     };
 
     let loadingTimers = [];
@@ -7235,6 +7852,7 @@
     const phone = document.getElementById("phone");
     const rail = document.getElementById("rail");
     const countrySwitcher = document.getElementById("country-switcher");
+    const studySetSwitcher = document.getElementById("study-set-switcher");
     const visibleSetupStages = [2];
 
     function setStep(step) {
@@ -7492,9 +8110,39 @@
       `;
     }
 
+    function renderStudySetSwitcher() {
+      const variants = [
+        { id: "scheme1", label: "方案一" },
+        { id: "scheme2", label: "方案二" }
+      ];
+      studySetSwitcher.innerHTML = `
+        <label>
+          Study Set Page
+          <div class="variant-toggle" role="tablist" aria-label="Switch Study Set page variant">
+            ${variants.map((variant) => `
+              <button
+                class="${state.studySetVariant === variant.id ? "active" : ""}"
+                type="button"
+                role="tab"
+                aria-selected="${state.studySetVariant === variant.id}"
+                onclick="setStudySetVariant('${variant.id}')"
+              >${variant.label}</button>
+            `).join("")}
+          </div>
+        </label>
+        <small>方案一复刻 Figma 20:4166；方案二复刻 Figma 20:4572。</small>
+      `;
+    }
+
     function setExamCountry(country) {
       if (!countryExamOptions[country]) return;
       state.examCountry = country;
+      render();
+    }
+
+    function setStudySetVariant(variant) {
+      if (!["scheme1", "scheme2"].includes(variant)) return;
+      state.studySetVariant = variant;
       render();
     }
 
@@ -8962,46 +9610,171 @@
       return topic.length > 18 ? `${topic.slice(0, 16)}...` : topic;
     }
 
+    const studySetAssets = {
+      scheme1Back: "assets/study-set/scheme1-back.svg",
+      scheme1Check: "assets/study-set/scheme1-check-circle.svg",
+      scheme1LearnArrow: "assets/study-set/scheme1-learn-arrow.svg",
+      scheme2Back: "assets/study-set/scheme2-back.svg",
+      scheme2Star: "assets/study-set/scheme2-star.svg",
+      scheme2ToolBg: "assets/study-set/scheme2-tool-bg.svg",
+      scheme2ToolStudy: "assets/study-set/scheme2-tool-study.svg",
+      scheme2ToolQuiz: "assets/study-set/scheme2-tool-quiz.svg",
+      scheme2ToolEmpty: "assets/study-set/scheme2-tool-empty.png"
+    };
+
+    function studySetStarRow(count = 3) {
+      return Array.from({ length: count }, () => `<img src="${studySetAssets.scheme2Star}" alt="" aria-hidden="true">`).join("");
+    }
+
+    function schemeTwoToolIcon(type = "empty") {
+      const icon = type === "study" ? studySetAssets.scheme2ToolStudy : type === "quiz" ? studySetAssets.scheme2ToolQuiz : studySetAssets.scheme2ToolEmpty;
+      if (type === "empty") {
+        return `<span class="scheme-two-tool empty"><img src="${icon}" alt="" aria-hidden="true"></span>`;
+      }
+      return `
+        <span class="scheme-two-tool">
+          <img src="${studySetAssets.scheme2ToolBg}" alt="" aria-hidden="true">
+          <img class="scheme-two-tool-glyph" src="${icon}" alt="" aria-hidden="true">
+        </span>
+      `;
+    }
+
+    function studySetTodayPill() {
+      const done = state.studySetTodayDone;
+      return `
+        <button
+          class="set-day-pill ${done ? "done" : ""}"
+          type="button"
+          onclick="toggleStudySetToday()"
+          aria-pressed="${done}"
+          aria-label="${done ? "Done Today" : "Today 1 of 3"}"
+        >
+          <span class="check"><img src="${studySetAssets.scheme1Check}" alt="" aria-hidden="true"></span>
+          <span>${done ? "Done Today ☑️" : "Today 1/3"}</span>
+        </button>
+      `;
+    }
+
+    function toggleStudySetToday() {
+      state.studySetTodayDone = !state.studySetTodayDone;
+      render();
+    }
+
     function renderCourse() {
+      if (state.studySetVariant === "scheme2") {
+        renderSchemeTwoStudySet();
+        return;
+      }
       shell(`
-        <div class="screen set-screen">
+        <div class="screen set-screen scheme-one-set">
           <div class="set-appbar">
             <button class="set-icon-btn" type="button" onclick="goBack()" aria-label="Back">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M15 5L8 12l7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              <img src="${studySetAssets.scheme1Back}" alt="" aria-hidden="true">
             </button>
-            <div class="set-actions" aria-label="Set actions">
-              <button class="set-icon-btn" type="button" aria-label="Refresh">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M19 12a7 7 0 1 1-2.05-4.95" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-                  <path d="M19 4v5h-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
-              <button class="set-icon-btn" type="button" aria-label="More">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/>
-                </svg>
-              </button>
-            </div>
+            ${studySetTodayPill()}
           </div>
           <header class="set-header">
-            <h1>${escapeHtml(studySetContent().title)}</h1>
+            <h1>Advanced Spanish Vocab</h1>
             <div class="set-meta">
               <span>2024/12/12, 20:39</span>
-              <span class="set-chip">1 Source</span>
+              <span class="set-chip">2 Sources</span>
             </div>
           </header>
           <div class="set-view-tabs" role="tablist" aria-label="Study set views">
             <button class="set-view-tab ${state.courseView === "topics" ? "active" : ""}" type="button" onclick="setCourseView('topics')">Learn</button>
-            <button class="set-view-tab ${state.courseView === "exams" ? "active" : ""}" type="button" onclick="setCourseView('exams')">Test</button>
+            <button class="set-view-tab ${state.courseView === "exams" ? "active" : ""}" type="button" onclick="setCourseView('exams')">Exam</button>
           </div>
-          ${state.courseView === "exams" ? courseExamsContent() : courseTopicsContent()}
+          ${state.courseView === "exams" ? courseExamsContent() : schemeOneLearnContent()}
         </div>
       `, { result: true, back: false });
       if (state.learnToolSheet) appendLearnToolSheet();
       if (state.monetizationSheet) appendMonetizationSheet();
       requestAnimationFrame(() => phone.querySelector(".screen")?.scrollTo({ top: 0 }));
+    }
+
+    function renderSchemeTwoStudySet() {
+      const content = studySetContent();
+      shell(`
+        <div class="screen set-screen scheme-two-set">
+          <div class="set-appbar">
+            <button class="set-icon-btn" type="button" onclick="goBack()" aria-label="Back">
+              <img src="${studySetAssets.scheme2Back}" alt="" aria-hidden="true">
+            </button>
+            <span aria-hidden="true"></span>
+            ${studySetTodayPill()}
+          </div>
+          <header class="set-header">
+            <h1>Advanced Spanish Vocab</h1>
+            <div class="set-meta">
+              <span>2024/12/12, 20:39</span>
+              <span class="set-chip">2 Sources</span>
+            </div>
+          </header>
+          <div class="set-view-tabs" role="tablist" aria-label="Study set views">
+            <button class="set-view-tab ${state.courseView === "topics" ? "active" : ""}" type="button" onclick="setCourseView('topics')">Learn</button>
+            <button class="set-view-tab ${state.courseView === "exams" ? "active" : ""}" type="button" onclick="setCourseView('exams')">Exam</button>
+          </div>
+          ${state.courseView === "exams" ? schemeTwoExamContent() : schemeTwoLearnContent(content)}
+        </div>
+      `, { result: true, back: false });
+      if (state.learnToolSheet) appendLearnToolSheet();
+      if (state.monetizationSheet) appendMonetizationSheet();
+      requestAnimationFrame(() => phone.querySelector(".screen")?.scrollTo({ top: 0 }));
+    }
+
+    function schemeTwoLearnContent(content) {
+      return `
+        <div class="scheme-two-list">
+          ${["CELL BIOLOGY", "CELL BIOLOGY"].map((section, sectionIndex) => `
+            <section class="scheme-two-section">
+              <h2 class="scheme-two-title">${section}</h2>
+              ${[
+                { rating: sectionIndex === 0 ? 3 : 3, tools: sectionIndex === 0 ? ["study", "quiz", "empty"] : ["empty", "empty", "empty"] },
+                { rating: sectionIndex === 0 ? 1 : 1, tools: sectionIndex === 0 ? ["quiz", "empty", "empty"] : ["empty", "empty", "empty"] }
+              ].map((topic, index) => schemeTwoTopicCard(topic, index)).join("")}
+            </section>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function schemeTwoTopicCard(topic, index) {
+      const rating = topic.rating || 1;
+      const tools = topic.tools || ["empty", "empty", "empty"];
+      return `
+        <article class="scheme-two-card">
+          <div>
+            <h3>Verbs &amp; Conjugations</h3>
+            <p>How cells grow and reproduce, from mitosis to meiosis</p>
+          </div>
+          <div class="scheme-two-card-foot">
+            <span class="scheme-two-stars" aria-label="${rating} star priority">${studySetStarRow(rating)}</span>
+            <span class="scheme-two-tools" aria-label="Available study tools">
+              ${tools.map((tool) => schemeTwoToolIcon(tool)).join("")}
+            </span>
+          </div>
+        </article>
+      `;
+    }
+
+    function schemeTwoExamContent() {
+      return `
+        <div class="scheme-two-list">
+          <section class="scheme-two-section">
+            <h2 class="scheme-two-title">Exam</h2>
+            <article class="scheme-two-card">
+              <div>
+                <h3>Final Mock Exam</h3>
+                <p>Take the mock exam on exam-eve and review weak spots from the score report.</p>
+              </div>
+              <div class="scheme-two-card-foot">
+                <span class="scheme-two-stars" aria-label="3 star priority">${studySetStarRow(3)}</span>
+                <button class="mock-exam-btn" type="button">Start</button>
+              </div>
+            </article>
+          </section>
+        </div>
+      `;
     }
 
     function setCourseView(view) {
@@ -9021,6 +9794,29 @@
               </div>
             </section>
           `).join("")}
+        </div>
+      `;
+    }
+
+    function schemeOneLearnContent() {
+      const description = "How cells grow and reproduce, from mitosis to meiosis";
+      return `
+        <div class="set-content">
+          <section class="set-section">
+            <h2 class="set-section-title">CELL BIOLOGY</h2>
+            <div class="set-topic-list">
+              ${setTopic("Verbs & Conjugations", "done", null, description)}
+              ${setTopic("Verbs & Conjugations", "open", null, description)}
+              ${setTopic("Verbs & Conjugations", "upcoming", null, description)}
+            </div>
+          </section>
+          <section class="set-section">
+            <h2 class="set-section-title">CELL BIOLOGY</h2>
+            <div class="set-topic-list">
+              ${setTopic("Verbs & Conjugations", "upcoming", null, description)}
+              ${setTopic("Verbs & Conjugations", "upcoming", null, description)}
+            </div>
+          </section>
         </div>
       `;
     }
@@ -9249,10 +10045,7 @@
               <p>${escapeHtml(detail)}</p>
               <button class="set-learn-btn" type="button" onclick="openLearnToolSheet()">
                 Learn
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M5 12h12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
-                  <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                <img src="${studySetAssets.scheme1LearnArrow}" alt="" aria-hidden="true">
               </button>
             </div>
           </article>
@@ -9264,7 +10057,10 @@
             <span class="set-marker">${status === "done" ? "✓" : ""}</span>
           </div>
           <div class="set-card">
-            <span class="set-card-topic-title">${escapeHtml(title)}</span>
+            <span class="set-card-copy">
+              <span class="set-card-topic-title">${escapeHtml(title)}</span>
+              ${description ? `<p>${escapeHtml(description)}</p>` : ""}
+            </span>
             ${studySetPriorityTag(tag, status)}
           </div>
         </article>
@@ -9540,6 +10336,7 @@
 
     function render() {
       renderCountrySwitcher();
+      renderStudySetSwitcher();
       renderRail();
       if (state.step === "onboarding") renderOnboarding();
       if (state.step === "home") renderHome();
@@ -9556,6 +10353,7 @@
     window.setStep = setStep;
     window.startOnboarding = startOnboarding;
     window.setExamCountry = setExamCountry;
+    window.setStudySetVariant = setStudySetVariant;
     window.selectOnboardingGoal = selectOnboardingGoal;
     window.selectExamDays = selectExamDays;
     window.selectStudyTime = selectStudyTime;
