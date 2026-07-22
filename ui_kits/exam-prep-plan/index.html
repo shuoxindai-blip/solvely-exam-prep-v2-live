@@ -106,6 +106,11 @@
       font: 700 12px/1.35 var(--svy-font-body);
     }
 
+    .experiment-note {
+      color: var(--svy-muted);
+      font: 700 11px/1.35 var(--svy-font-body);
+    }
+
     .variant-toggle {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -7820,36 +7825,59 @@
     }
 
     .monetization-price-row {
-      height: 39px;
       display: flex;
-      align-items: flex-end;
-      gap: 6px;
-      padding-top: 24px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding-top: 18px;
+    }
+
+    .monetization-offer-copy {
+      display: grid;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .monetization-offer-label {
+      color: #111;
+      font: 700 13px/18px var(--svy-font-body);
     }
 
     .monetization-price {
       color: #111;
-      font: 700 26px/39px "Poppins", var(--svy-font-display);
+      font: 700 28px/36px "Poppins", var(--svy-font-display);
       letter-spacing: -0.02em;
+    }
+
+    .monetization-price-old {
+      color: #8b8f96;
+      font: 600 15px/22px "Poppins", var(--svy-font-display);
+      text-decoration: line-through;
+      text-decoration-thickness: 1.5px;
+    }
+
+    .monetization-price-current {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: auto;
+      white-space: nowrap;
     }
 
     .monetization-period {
       color: #595c60;
       font: 400 13px/20px var(--svy-font-body);
-      padding-bottom: 6px;
     }
 
     .monetization-save {
-      margin-left: auto;
-      margin-bottom: 7px;
       min-height: 24px;
       border-radius: 999px;
-      background: #f0fbe8;
-      color: #40c700;
+      background: #fff3cf;
+      color: #9a5f00;
       display: inline-flex;
       align-items: center;
       padding: 3px 10px;
-      font: 500 12px/18px var(--svy-font-body);
+      font: 700 12px/18px var(--svy-font-body);
     }
 
     .monetization-continue {
@@ -8098,6 +8126,7 @@
       selectedLearnTool: "Study Guide",
       courseView: "topics",
       studySetVariant: "scheme1",
+      schemeOneSelectedTopic: "",
       studySetTodayDone: false
     };
 
@@ -8463,13 +8492,14 @@
 
     function renderStudySetSwitcher() {
       const variants = [
-        { id: "scheme1", label: "方案一" },
-        { id: "scheme2", label: "方案二" }
+        { id: "scheme1", label: "实验组 1", note: "展示 Study Set 方案一" },
+        { id: "scheme2", label: "实验组 2", note: "展示 Study Set 方案二" }
       ];
+      const activeVariant = variants.find((variant) => variant.id === state.studySetVariant) || variants[0];
       studySetSwitcher.innerHTML = `
         <label>
-          Study Set Page
-          <div class="variant-toggle" role="tablist" aria-label="Switch Study Set page variant">
+          Experiment group preview
+          <div class="variant-toggle" role="tablist" aria-label="Preview Study Set experiment group">
             ${variants.map((variant) => `
               <button
                 class="${state.studySetVariant === variant.id ? "active" : ""}"
@@ -8480,6 +8510,8 @@
               >${variant.label}</button>
             `).join("")}
           </div>
+          <small>${activeVariant.note}</small>
+          <span class="experiment-note">仅用于 demo 预览。正式版由实验分组决定 Study Set 视觉方案，用户端不展示切换控件。</span>
         </label>
       `;
     }
@@ -10115,9 +10147,9 @@
           type="button"
           onclick="openStudyPlanSheet()"
           aria-pressed="${done}"
-          aria-label="${done ? "Done Today" : "Today 1 of 3"}"
+          aria-label="${done ? "Done Today" : "Daily Goal 1 of 3"}"
         >
-          <span>${done ? "Done Today" : "Today 1/3"}</span>
+          <span>${done ? "Done Today" : "Daily Goal 1/3"}</span>
         </button>
       `;
     }
@@ -10353,26 +10385,43 @@
     }
 
     function schemeOneLearnContent() {
-      const description = "How cells grow and reproduce, from mitosis to meiosis";
+      const description = schemeOneTopicDescription();
+      const topics = schemeOneTopics();
       return `
         <div class="set-content">
           <section class="set-section">
             <h2 class="set-section-title">CELL BIOLOGY</h2>
             <div class="set-topic-list">
-              ${setTopic("Verbs & Conjugations", "done", null, description)}
-              ${setTopic("Verbs & Conjugations", "open", null, description)}
-              ${setTopic("Verbs & Conjugations", "upcoming", null, description)}
+              ${topics.slice(0, 3).map((topic) => schemeOneTopic(topic, description)).join("")}
             </div>
           </section>
           <section class="set-section">
             <h2 class="set-section-title">CELL BIOLOGY</h2>
             <div class="set-topic-list">
-              ${setTopic("Verbs & Conjugations", "upcoming", null, description)}
-              ${setTopic("Verbs & Conjugations", "upcoming", null, description)}
+              ${topics.slice(3).map((topic) => schemeOneTopic(topic, description)).join("")}
             </div>
           </section>
         </div>
       `;
+    }
+
+    function schemeOneTopicDescription() {
+      return "How cells grow and reproduce, from mitosis to meiosis";
+    }
+
+    function schemeOneTopics() {
+      return [
+        { key: "cell-1", title: "Verbs & Conjugations", status: "done" },
+        { key: "cell-2", title: "Verbs & Conjugations", status: "upcoming" },
+        { key: "cell-3", title: "Verbs & Conjugations", status: "upcoming" },
+        { key: "cell-4", title: "Verbs & Conjugations", status: "upcoming" },
+        { key: "cell-5", title: "Verbs & Conjugations", status: "upcoming" }
+      ];
+    }
+
+    function schemeOneTopic(topic, description) {
+      const status = state.schemeOneSelectedTopic === topic.key ? "open" : topic.status;
+      return setTopic(topic.title, status, null, description, { selectable: true, key: topic.key });
     }
 
     function courseExamsContent() {
@@ -10578,12 +10627,16 @@
     }
 
     function activeLearnTopic() {
+      if (state.studySetVariant === "scheme1" && state.schemeOneSelectedTopic) {
+        const topic = schemeOneTopics().find((item) => item.key === state.schemeOneSelectedTopic);
+        if (topic) return { ...topic, status: "open", description: schemeOneTopicDescription() };
+      }
       return studySetContent().sections
         .flatMap((section) => section.topics)
         .find((topic) => topic.status === "open");
     }
 
-    function setTopic(title, status, tag = null, description = "") {
+    function setTopic(title, status, tag = null, description = "", options = {}) {
       if (status === "open") {
         const detail = description || `Focus on the highest-priority part of ${planTopic()} before the mock exam.`;
         return `
@@ -10605,20 +10658,27 @@
           </article>
         `;
       }
+      const selectableAttrs = options.selectable
+        ? `role="button" tabindex="0" onclick="selectSchemeOneTopic('${options.key}')" onkeydown="if(event.key==='Enter'||event.key===' ') { event.preventDefault(); selectSchemeOneTopic('${options.key}'); }" aria-label="Select ${escapeHtml(title)}"`
+        : "";
       return `
-        <article class="set-topic ${status}">
+        <article class="set-topic ${status}" ${selectableAttrs}>
           <div class="set-progress">
             <span class="set-marker">${status === "done" ? "✓" : ""}</span>
           </div>
           <div class="set-card">
             <span class="set-card-copy">
               <span class="set-card-topic-title">${escapeHtml(title)}</span>
-              ${description ? `<p>${escapeHtml(description)}</p>` : ""}
             </span>
             ${studySetPriorityTag(tag, status)}
           </div>
         </article>
       `;
+    }
+
+    function selectSchemeOneTopic(key) {
+      state.schemeOneSelectedTopic = key;
+      render();
     }
 
     function mockExamEntry() {
@@ -10748,6 +10808,16 @@
                 ${monetizationBenefit(figmaAssets.paywallPlanIcon, "Daily Study Plan", "A personalized schedule based on your exam date and progress.")}
                 ${monetizationBenefit(figmaAssets.paywallPracticeIcon, "Weak Area Practice", "Targeted practice based on your mistakes.")}
                 ${monetizationBenefit(figmaAssets.paywallReportIcon, "Pass Prediction Report", "Realistic mock tests with score prediction and next steps.")}
+              </div>
+              <div class="monetization-price-row" aria-label="Intro price">
+                <span class="monetization-offer-copy">
+                  <span class="monetization-offer-label">First week offer</span>
+                  <span class="monetization-price-old">$6.99</span>
+                </span>
+                <span class="monetization-price-current">
+                  <strong class="monetization-price">$1.99</strong>
+                  <span class="monetization-save">72% OFF</span>
+                </span>
               </div>
               <button class="monetization-continue" type="button">Unlock My Full Plan</button>
               <button class="monetization-later" type="button" onclick="closeMonetizationSheet()">Maybe Later</button>
@@ -10939,6 +11009,7 @@
     window.toggleOutlineLesson = toggleOutlineLesson;
     window.createCourseFromOutline = createCourseFromOutline;
     window.setCourseView = setCourseView;
+    window.selectSchemeOneTopic = selectSchemeOneTopic;
     window.openLearnToolSheet = openLearnToolSheet;
     window.closeLearnToolSheet = closeLearnToolSheet;
     window.selectLearnTool = selectLearnTool;
