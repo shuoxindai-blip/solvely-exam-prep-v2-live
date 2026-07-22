@@ -211,6 +211,315 @@
       color: var(--ink);
     }
 
+    .phone.chromeless {
+      background: #f5f6f8;
+    }
+
+    .figma-onboarding-frame {
+      position: absolute;
+      inset: 0;
+      background: #f5f6f8;
+      overflow: hidden;
+    }
+
+    .figma-onboarding-art {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .figma-onboarding-hotspot,
+    .figma-onboarding-back,
+    .figma-onboarding-option {
+      position: absolute;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .figma-onboarding-hotspot {
+      left: 0;
+      right: 0;
+      top: 100px;
+      bottom: 0;
+      z-index: 1;
+    }
+
+    .figma-onboarding-back {
+      left: 16px;
+      top: 52px;
+      width: 48px;
+      height: 48px;
+      z-index: 2;
+    }
+
+    .figma-onboarding-option {
+      z-index: 2;
+    }
+
+    .figma-onboarding-progress {
+      position: absolute;
+      left: 68px;
+      right: 28px;
+      top: 64px;
+      height: 7px;
+      border-radius: 999px;
+      background: #dcecff;
+      overflow: hidden;
+      box-shadow: 0 0 0 5px #f5f6f8;
+      z-index: 2;
+    }
+
+    .figma-onboarding-progress-fill {
+      display: block;
+      width: var(--progress, 0%);
+      height: 100%;
+      border-radius: 999px;
+      background: #007aff;
+    }
+
+    .native-onboarding {
+      position: absolute;
+      inset: 0;
+      background: #f5f6f8;
+      color: #111;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      font-family: "Poppins", var(--svy-font-display);
+    }
+
+    .native-onboarding.blue {
+      color: #fff;
+      background:
+        radial-gradient(circle at 50% 104%, rgba(255,255,255,.72) 0%, rgba(255,255,255,.38) 16%, transparent 34%),
+        linear-gradient(180deg, #1187ff 0%, #6bbaff 65%, #99d0ff 100%);
+    }
+
+    .native-status {
+      height: 52px;
+      padding: 16px 28px 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      font: 700 16px/1 var(--svy-font-body);
+      letter-spacing: -.02em;
+      flex: 0 0 auto;
+    }
+
+    .native-status-signal {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 16px;
+    }
+
+    .native-progress-head {
+      min-height: 40px;
+      padding: 10px 20px 0;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex: 0 0 auto;
+    }
+
+    .native-back {
+      width: 28px;
+      height: 28px;
+      border: 0;
+      background: transparent;
+      color: #111;
+      padding: 0;
+      display: grid;
+      place-items: center;
+      font: 800 28px/1 "Poppins", var(--svy-font-display);
+      cursor: pointer;
+    }
+
+    .native-progress-track {
+      flex: 1;
+      height: 6px;
+      border-radius: 999px;
+      background: #dcecff;
+      overflow: hidden;
+    }
+
+    .native-progress-fill {
+      display: block;
+      width: var(--progress, 0%);
+      height: 100%;
+      border-radius: 999px;
+      background: #007aff;
+      transition: width 220ms var(--ease);
+    }
+
+    .native-intro-body {
+      flex: 1;
+      padding: 18px 16px 24px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .native-intro-title {
+      margin: 18px auto 8px;
+      max-width: 330px;
+      text-align: center;
+      font: 800 24px/1.22 "Poppins", var(--svy-font-display);
+      letter-spacing: -.035em;
+      text-wrap: balance;
+    }
+
+    .native-intro-copy {
+      margin: 0 auto 28px;
+      max-width: 330px;
+      text-align: center;
+      color: #111;
+      font: 500 15px/1.45 var(--svy-font-body);
+    }
+
+    .native-options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      padding: 0 14px;
+    }
+
+    .native-user-card {
+      min-height: 192px;
+      border: 2px solid transparent;
+      border-radius: 12px;
+      background: #fff;
+      padding: 8px 8px 16px;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      gap: 14px;
+      color: #111;
+      font: 700 15px/1.2 "Poppins", var(--svy-font-display);
+      cursor: pointer;
+    }
+
+    .native-user-card.selected,
+    .native-list-option.selected {
+      border-color: #007aff;
+      background: #eaf5ff;
+    }
+
+    .native-user-art {
+      border-radius: 5px;
+      background: #e5f6ff;
+    }
+
+    .native-user-card span:last-child {
+      text-align: center;
+    }
+
+    .native-list {
+      display: grid;
+      gap: 14px;
+      padding: 0 0 0;
+    }
+
+    .native-list-option {
+      min-height: 56px;
+      width: 100%;
+      border: 2px solid transparent;
+      border-radius: 14px;
+      background: #fff;
+      color: #111;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-align: left;
+      font: 600 16px/1.25 "Poppins", var(--svy-font-display);
+      cursor: pointer;
+    }
+
+    .native-option-icon {
+      width: 28px;
+      text-align: center;
+      font-size: 22px;
+      line-height: 1;
+      flex: 0 0 auto;
+    }
+
+    .native-onboarding-bottom {
+      padding: 12px 28px 32px;
+      flex: 0 0 auto;
+    }
+
+    .native-continue {
+      width: 100%;
+      min-height: 54px;
+      border: 0;
+      border-radius: 999px;
+      background: #007aff;
+      color: #fff;
+      font: 700 18px/1 "Poppins", var(--svy-font-display);
+      cursor: pointer;
+    }
+
+    .native-continue:disabled {
+      background: #ececec;
+      color: #c6c9ce;
+      cursor: not-allowed;
+    }
+
+    .native-hero {
+      position: relative;
+      flex: 1;
+      padding: 18px 0 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .native-hero h1 {
+      margin: 0 auto 20px;
+      max-width: 320px;
+      text-align: center;
+      font: 800 27px/1.25 "Poppins", var(--svy-font-display);
+      letter-spacing: -.04em;
+      text-wrap: balance;
+    }
+
+    .native-hero-label {
+      z-index: 1;
+      margin: 2px 0 12px;
+      font: 700 15px/1 var(--svy-font-body);
+    }
+
+    .native-pill-row {
+      width: 118%;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex: 0 0 auto;
+    }
+
+    .native-pill-row span {
+      width: 112px;
+      height: 36px;
+      border-radius: 999px;
+      background: rgba(218, 239, 255, .78);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.42);
+    }
+
+    .native-login {
+      margin-top: 22px;
+      text-align: center;
+      color: rgba(255,255,255,.92);
+      font: 600 16px/1 "Poppins", var(--svy-font-display);
+    }
+
     .status {
       height: var(--status-h);
       padding: 18px 24px 0;
@@ -845,46 +1154,46 @@
       top: 0;
       z-index: 8;
       margin: 0 -20px 22px;
-      padding: 12px 24px;
+      padding: 14px 22px 12px;
       background: #f7f9fc;
+      display: flex;
+      align-items: center;
+      gap: 14px;
     }
 
     .phone.has-back .onboarding-head {
-      padding-left: 68px;
+      padding-left: 22px;
+    }
+
+    .onboarding-flow-back {
+      width: 28px;
+      height: 28px;
+      border: 0;
+      background: transparent;
+      color: #111;
+      padding: 0;
+      display: grid;
+      place-items: center;
+      font: 800 28px/1 "Poppins", var(--svy-font-display);
+      cursor: pointer;
     }
 
     .onboarding-progress {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 0;
-      height: 8px;
-      overflow: hidden;
+      flex: 1;
+      height: 6px;
       border-radius: 999px;
       background: #dcecff;
-    }
-
-    .onboarding-progress span {
-      height: 8px;
-      border-radius: 999px;
-      background: transparent;
       overflow: hidden;
     }
 
-    .onboarding-progress span::after {
+    .onboarding-progress-fill {
       content: "";
       display: block;
-      width: 100%;
+      width: var(--progress, 0%);
       height: 100%;
-      border-radius: inherit;
+      border-radius: 999px;
       background: #007aff;
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 220ms var(--ease);
-    }
-
-    .onboarding-progress span.active::after,
-    .onboarding-progress span.done::after {
-      transform: scaleX(1);
+      transition: width 220ms var(--ease);
     }
 
     .onboarding-kicker {
@@ -1265,6 +1574,10 @@
       background: #f6f8fa;
     }
 
+    .social-proof-screen.has-onboarding-progress {
+      height: calc(100% - var(--status-h) - 54px);
+    }
+
     .social-proof-screen::before {
       content: "";
       position: absolute;
@@ -1379,7 +1692,7 @@
       display: grid;
       justify-items: center;
       gap: 16px;
-      margin-top: 52px;
+      margin-top: 28px;
       padding-top: 14px;
     }
 
@@ -4212,39 +4525,13 @@
       line-height: 1.38;
     }
 
-    .outline-tabs {
-      width: fit-content;
-      min-height: 42px;
-      border-radius: 999px;
-      background: #eaf1f9;
-      border: 1px solid #dbe7f2;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4px;
-      padding: 4px;
-      margin: 0 auto 16px;
-    }
-
-    .outline-tab {
-      min-width: 112px;
-      border: 0;
-      border-radius: 999px;
-      background: transparent;
-      color: #5d6877;
-      font: 760 14px/1 var(--svy-font-body);
-      cursor: pointer;
-      transition: background 160ms var(--ease), color 160ms var(--ease), box-shadow 160ms var(--ease);
-    }
-
-    .outline-tab.active {
-      background: #fff;
-      color: var(--svy-fg);
-      box-shadow: 0 6px 16px rgba(45, 67, 112, .12);
-    }
-
     .study-plan-preview {
       display: grid;
       gap: 14px;
+    }
+
+    .study-plan-preview + .outline-section-list {
+      margin-top: 12px;
     }
 
     .coverage-card,
@@ -6593,6 +6880,16 @@
       padding: 10px 0 12px;
     }
 
+    .set-title-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .set-title-row .set-icon-btn {
+      flex: 0 0 auto;
+    }
+
     .set-header h1 {
       margin: 0;
       font: 600 20px/27px "Poppins", var(--svy-font-display);
@@ -7379,6 +7676,10 @@
       padding: 10px 4px 18px;
     }
 
+    .scheme-two-set .set-meta {
+      margin-left: 44px;
+    }
+
     .scheme-two-list {
       display: grid;
       gap: 0;
@@ -7417,6 +7718,7 @@
     }
 
     .scheme-two-card {
+      width: 100%;
       min-height: 126px;
       border-radius: 20px;
       border: 1px solid #eee;
@@ -7425,6 +7727,14 @@
       display: grid;
       gap: 10px;
       box-shadow: 0 0 0 rgba(0,0,0,0);
+      text-align: left;
+      cursor: pointer;
+      font: inherit;
+      color: inherit;
+    }
+
+    .scheme-two-card:active {
+      transform: scale(.985);
     }
 
     .scheme-two-card h3 {
@@ -8253,6 +8563,7 @@
 
     const state = {
       step: "onboarding",
+      onboardingIntroStage: 0,
       onboardingStage: 0,
       onboardingGoal: "",
       onboardingExamDays: "",
@@ -8260,6 +8571,10 @@
       onboardingDatePicker: false,
       onboardingDateMonthOffset: 0,
       onboardingStudyTime: "",
+      onboardingUserRole: "",
+      onboardingEducationLevel: "",
+      onboardingDiscoverySource: "",
+      onboardingSubjectArea: "",
       setupStage: 0,
       topic: "",
       background: "",
@@ -8283,12 +8598,10 @@
       editingTopicInstructions: "",
       setupThinking: "",
       outlineVariant: 0,
-      outlineView: "studyPlan",
       outlineChangeSheet: false,
       requestChangeText: "",
       learnToolSheet: false,
       monetizationSheet: false,
-      studyPlanSheet: false,
       selectedLearnTool: "Study Guide",
       courseView: "topics",
       studySetVariant: "scheme1",
@@ -8424,7 +8737,6 @@
       state.outlineChangeSheet = false;
       state.requestChangeText = "";
       state.outlineVariant = 0;
-      state.outlineView = "studyPlan";
       state.courseView = "topics";
       state.step = "setup";
       render();
@@ -8535,18 +8847,20 @@
 
     function shell(content, options = {}) {
       const showBack = state.step !== "home" && options.back !== false;
-      const className = ["phone", showBack ? "has-back" : "", options.home ? "home-screen" : "", options.cream ? "cream" : "", options.flow ? "flow-screen" : "", options.result ? "result-screen" : "", options.loading ? "loading-screen" : "", options.outline ? "outline-screen" : ""].filter(Boolean).join(" ");
+      const className = ["phone", showBack ? "has-back" : "", options.home ? "home-screen" : "", options.cream ? "cream" : "", options.flow ? "flow-screen" : "", options.result ? "result-screen" : "", options.loading ? "loading-screen" : "", options.outline ? "outline-screen" : "", options.chromeless ? "chromeless" : ""].filter(Boolean).join(" ");
       phone.className = className;
       phone.innerHTML = `
-        <div class="status">
-          <span>${options.time || "9:41"}</span>
-          <div class="signal" aria-hidden="true">
-            <img class="status-icon cellular" src="${figmaAssets.cellular}" alt="">
-            <img class="status-icon wifi-icon" src="${figmaAssets.wifi}" alt="">
-            <img class="status-icon battery-icon" src="${figmaAssets.battery}" alt="">
+        ${options.chromeless ? "" : `
+          <div class="status">
+            <span>${options.time || "9:41"}</span>
+            <div class="signal" aria-hidden="true">
+              <img class="status-icon cellular" src="${figmaAssets.cellular}" alt="">
+              <img class="status-icon wifi-icon" src="${figmaAssets.wifi}" alt="">
+              <img class="status-icon battery-icon" src="${figmaAssets.battery}" alt="">
+            </div>
           </div>
-        </div>
-        ${showBack ? `<button class="page-back" type="button" onclick="goBack()" aria-label="Back">‹</button>` : ""}
+          ${showBack ? `<button class="page-back" type="button" onclick="goBack()" aria-label="Back">‹</button>` : ""}
+        `}
         ${content}
       `;
     }
@@ -8597,6 +8911,18 @@
     }
 
     function goBack() {
+      if (state.step === "onboarding" && state.onboardingIntroStage > 0 && state.onboardingIntroStage < onboardingIntroPages.length) {
+        state.onboardingIntroStage -= 1;
+        render();
+        return;
+      }
+
+      if (state.step === "onboarding" && state.onboardingIntroStage >= onboardingIntroPages.length && state.onboardingStage === 0) {
+        state.onboardingIntroStage = onboardingIntroPages.length - 1;
+        render();
+        return;
+      }
+
       if (state.step === "onboarding" && state.onboardingDatePicker) {
         state.onboardingDatePicker = false;
         render();
@@ -8658,8 +8984,8 @@
 
     function renderStudySetSwitcher() {
       const variants = [
-        { id: "scheme1", label: "实验组 1", note: "展示 Study Plan 方案一" },
-        { id: "scheme2", label: "实验组 2", note: "展示 Study Plan 方案二" }
+        { id: "scheme1", label: "实验组 1", note: "Study Plan 使用卡片方案 · 商业化弹窗不显示价格" },
+        { id: "scheme2", label: "实验组 2", note: "Study Plan 使用卡片方案 · 商业化弹窗显示价格" }
       ];
       const activeVariant = variants.find((variant) => variant.id === state.studySetVariant) || variants[0];
       studySetSwitcher.innerHTML = `
@@ -8677,7 +9003,7 @@
             `).join("")}
           </div>
           <small>${activeVariant.note}</small>
-          <span class="experiment-note">仅用于 demo 预览。正式版由实验分组决定 Study Plan 视觉方案，用户端不展示切换控件。</span>
+          <span class="experiment-note">仅用于 demo 预览。正式版两组使用同一个 Study Plan 卡片方案，差异仅在商业化弹窗价格展示。</span>
         </label>
       `;
     }
@@ -8696,23 +9022,108 @@
 
     function startOnboarding() {
       state.step = "onboarding";
+      state.onboardingIntroStage = 0;
       state.onboardingStage = 0;
       render();
     }
 
+    const onboardingIntroPages = [
+      {
+        label: "Ace every challenge with Solvely.ai",
+        options: [{ action: "continueIntro", label: "Get Started", box: { left: 8, top: 82, width: 84, height: 10 } }]
+      },
+      {
+        label: "Who's using Solvely?",
+        copy: "So we know what to prioritize for you",
+        options: [
+          { action: "selectIntroOption", field: "onboardingUserRole", value: "Full-time student", label: "Full-time student", box: { left: 10, top: 30, width: 39, height: 22 } },
+          { action: "selectIntroOption", field: "onboardingUserRole", value: "Part-time learner", label: "Part-time learner", box: { left: 51, top: 30, width: 39, height: 22 } },
+          { action: "selectIntroOption", field: "onboardingUserRole", value: "Educator", label: "Educator", box: { left: 10, top: 54, width: 39, height: 22 } },
+          { action: "selectIntroOption", field: "onboardingUserRole", value: "Parent", label: "Parent", box: { left: 51, top: 54, width: 39, height: 22 } }
+        ]
+      },
+      {
+        label: "What's your education level?",
+        copy: "We tailor your study experience to your goals",
+        options: [
+          { action: "selectIntroOption", field: "onboardingEducationLevel", value: "University & college", label: "University & college", icon: "🎓", box: { left: 8, top: 24, width: 84, height: 8 } },
+          { action: "selectIntroOption", field: "onboardingEducationLevel", value: "Community college", label: "Community college", icon: "🏫", box: { left: 8, top: 33, width: 84, height: 8 } },
+          { action: "selectIntroOption", field: "onboardingEducationLevel", value: "High School", label: "High School", icon: "📚", box: { left: 8, top: 42, width: 84, height: 8 } },
+          { action: "selectIntroOption", field: "onboardingEducationLevel", value: "Middle School", label: "Middle School", icon: "✏️", box: { left: 8, top: 51, width: 84, height: 8 } },
+          { action: "selectIntroOption", field: "onboardingEducationLevel", value: "Others", label: "Others", icon: "🧩", box: { left: 8, top: 60, width: 84, height: 8 } }
+        ]
+      },
+      {
+        label: "How did you hear about Solvely?",
+        copy: "We'd love to know how you found us",
+        options: [
+          { action: "selectIntroOption", field: "onboardingDiscoverySource", value: "News/article/blog", label: "News/article/blog", box: { left: 8, top: 23, width: 84, height: 7.5 } },
+          { action: "selectIntroOption", field: "onboardingDiscoverySource", value: "Google Search", label: "Google Search", box: { left: 8, top: 32, width: 84, height: 7.5 } },
+          { action: "selectIntroOption", field: "onboardingDiscoverySource", value: "Friends/family", label: "Friends/family", box: { left: 8, top: 41, width: 84, height: 7.5 } },
+          { action: "selectIntroOption", field: "onboardingDiscoverySource", value: "App store", label: "App store", box: { left: 8, top: 50, width: 84, height: 7.5 } },
+          { action: "selectIntroOption", field: "onboardingDiscoverySource", value: "YouTube", label: "YouTube", box: { left: 8, top: 59, width: 84, height: 7.5 } },
+          { action: "selectIntroOption", field: "onboardingDiscoverySource", value: "Instagram", label: "Instagram", box: { left: 8, top: 68, width: 84, height: 7.5 } },
+          { action: "selectIntroOption", field: "onboardingDiscoverySource", value: "TikTok", label: "TikTok", box: { left: 8, top: 77, width: 84, height: 7.5 } }
+        ]
+      },
+      {
+        label: "What are you currently studying?",
+        copy: "Select your subjects to get expert-level help",
+        options: [
+          { action: "selectIntroOption", field: "onboardingSubjectArea", value: "Math", label: "Math", icon: "🔢", box: { left: 5, top: 26, width: 90, height: 7.6 } },
+          { action: "selectIntroOption", field: "onboardingSubjectArea", value: "Business & Economics", label: "Business & Economics", icon: "📊", box: { left: 5, top: 35, width: 90, height: 7.6 } },
+          { action: "selectIntroOption", field: "onboardingSubjectArea", value: "Medicine & Health", label: "Medicine & Health", icon: "🏥", box: { left: 5, top: 44, width: 90, height: 7.6 } },
+          { action: "selectIntroOption", field: "onboardingSubjectArea", value: "Science & Engineering", label: "Science & Engineering", icon: "🔬", box: { left: 5, top: 53, width: 90, height: 7.6 } },
+          { action: "selectIntroOption", field: "onboardingSubjectArea", value: "Social Science & Humanities", label: "Social Science & Humanities", icon: "📝", box: { left: 5, top: 62, width: 90, height: 7.6 } },
+          { action: "selectIntroOption", field: "onboardingSubjectArea", value: "Arts & Media", label: "Arts & Media", icon: "🎙️", box: { left: 5, top: 71, width: 90, height: 7.6 } },
+          { action: "selectIntroOption", field: "onboardingSubjectArea", value: "General Studies", label: "General Studies", icon: "📚", box: { left: 5, top: 80, width: 90, height: 7.6 } }
+        ]
+      }
+    ];
+
+    function onboardingTotalSteps() {
+      return onboardingIntroPages.length + 5;
+    }
+
+    function onboardingIntroProgressPercent() {
+      return Math.round(((state.onboardingIntroStage + 1) / onboardingTotalSteps()) * 100);
+    }
+
+    function onboardingProgressPercent() {
+      const totalSteps = onboardingTotalSteps();
+      const completedIndex = Math.min(totalSteps, onboardingIntroPages.length + state.onboardingStage + 1);
+      return Math.round((completedIndex / totalSteps) * 100);
+    }
+
     function onboardingProgress() {
+      const progress = onboardingProgressPercent();
       return `
-        <div class="onboarding-progress" aria-label="Onboarding progress">
-          ${[0, 1, 2, 3, 4].map((index) => `<span class="${index < state.onboardingStage ? "done" : index === state.onboardingStage ? "active" : ""}"></span>`).join("")}
+        <div class="onboarding-progress" role="progressbar" aria-label="Onboarding progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${progress}">
+          <span class="onboarding-progress-fill" style="--progress:${progress}%"></span>
         </div>
       `;
     }
 
+    function onboardingFlowHead() {
+      return `
+        <header class="onboarding-head">
+          <button class="onboarding-flow-back" type="button" onclick="goBack()" aria-label="Back">‹</button>
+          ${onboardingProgress()}
+        </header>
+      `;
+    }
+
     function renderOnboarding() {
+      if (state.onboardingIntroStage < onboardingIntroPages.length) {
+        renderOnboardingIntro();
+        return;
+      }
+
       const canContinue = onboardingCanContinue();
       if (state.onboardingStage === 4) {
         shell(`
-          <div class="social-proof-screen">
+          ${onboardingFlowHead()}
+          <div class="social-proof-screen has-onboarding-progress">
             ${onboardingSocialProofPage()}
           </div>
           <div class="social-proof-bottom">
@@ -8724,9 +9135,7 @@
 
       shell(`
         <div class="onboarding-screen">
-          <header class="onboarding-head">
-            ${onboardingProgress()}
-          </header>
+          ${onboardingFlowHead()}
           ${state.onboardingStage === 0 ? onboardingGoalPage() : ""}
           ${state.onboardingStage === 1 ? onboardingCourseExamPage() : ""}
           ${state.onboardingStage === 2 ? state.onboardingDatePicker ? onboardingExamDatePage() : onboardingExamPage() : ""}
@@ -8735,7 +9144,119 @@
         <div class="onboarding-bottom">
           <button class="onboarding-next" type="button" onclick="continueOnboarding()" ${canContinue ? "" : "disabled"}>Continue</button>
         </div>
-      `, { back: state.onboardingStage > 0, flow: true });
+      `, { back: false, flow: true });
+    }
+
+    function renderOnboardingIntro() {
+      const page = onboardingIntroPages[state.onboardingIntroStage] || onboardingIntroPages[0];
+      const stage = state.onboardingIntroStage;
+      const content = stage === 0
+        ? nativeOnboardingHero()
+        : nativeOnboardingQuestion(page);
+      shell(content, { back: false, chromeless: true });
+    }
+
+    function nativeStatus(inverted = false) {
+      return `
+        <div class="native-status">
+          <span>9:41</span>
+          <span class="native-status-signal" aria-hidden="true" style="color:${inverted ? "#fff" : "#111"}">▮▮ ᯤ ▰</span>
+        </div>
+      `;
+    }
+
+    function nativeIntroProgressHead() {
+      return `
+        <div class="native-progress-head">
+          <button class="native-back" type="button" onclick="goBack()" aria-label="Back">‹</button>
+          <div class="native-progress-track" role="progressbar" aria-label="Onboarding progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${onboardingIntroProgressPercent()}">
+            <span class="native-progress-fill" style="--progress:${onboardingIntroProgressPercent()}%"></span>
+          </div>
+        </div>
+      `;
+    }
+
+    function nativeOnboardingHero() {
+      return `
+        <div class="native-onboarding blue">
+          ${nativeStatus(true)}
+          <section class="native-hero">
+            <h1>Ace every challenge with Solvely.ai</h1>
+            ${["Master your curriculum", "Trusted by students at", "Excel in exams & career"].map((label) => `
+              <p class="native-hero-label">${label}</p>
+              <div class="native-pill-row" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+            `).join("")}
+          </section>
+          <div class="native-onboarding-bottom">
+            <button class="native-continue" type="button" onclick="continueOnboarding()">Get Started</button>
+            <p class="native-login">Already have an account</p>
+          </div>
+        </div>
+      `;
+    }
+
+    function nativeOnboardingQuestion(page) {
+      const canContinue = onboardingIntroCanContinue();
+      const isUserType = state.onboardingIntroStage === 1;
+      return `
+        <div class="native-onboarding">
+          ${nativeStatus()}
+          ${nativeIntroProgressHead()}
+          <section class="native-intro-body">
+            <h1 class="native-intro-title">${escapeHtml(page.label)}</h1>
+            ${page.copy ? `<p class="native-intro-copy">${escapeHtml(page.copy)}</p>` : ""}
+            ${isUserType ? nativeUserTypeGrid(page) : nativeIntroList(page)}
+          </section>
+          <div class="native-onboarding-bottom">
+            <button class="native-continue" type="button" onclick="continueOnboarding()" ${canContinue ? "" : "disabled"}>Continue</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function nativeUserTypeGrid(page) {
+      return `
+        <div class="native-options-grid">
+          ${(page.options || []).map((option) => {
+            const selected = state[option.field] === option.value;
+            return `
+              <button class="native-user-card ${selected ? "selected" : ""}" type="button" onclick="selectOnboardingIntroOption('${option.field}', ${escapeJsArg(option.value)})" aria-pressed="${selected ? "true" : "false"}">
+                <span class="native-user-art" aria-hidden="true"></span>
+                <span>${escapeHtml(option.label)}</span>
+              </button>
+            `;
+          }).join("")}
+        </div>
+      `;
+    }
+
+    function nativeIntroList(page) {
+      return `
+        <div class="native-list">
+          ${(page.options || []).map((option) => {
+            const selected = state[option.field] === option.value;
+            return `
+              <button class="native-list-option ${selected ? "selected" : ""}" type="button" onclick="selectOnboardingIntroOption('${option.field}', ${escapeJsArg(option.value)})" aria-pressed="${selected ? "true" : "false"}">
+                ${option.icon ? `<span class="native-option-icon" aria-hidden="true">${option.icon}</span>` : ""}
+                <span>${escapeHtml(option.label)}</span>
+              </button>
+            `;
+          }).join("")}
+        </div>
+      `;
+    }
+
+    function onboardingIntroCanContinue() {
+      if (state.onboardingIntroStage === 0) return true;
+      const page = onboardingIntroPages[state.onboardingIntroStage];
+      const field = page?.options?.[0]?.field;
+      return field ? Boolean(state[field]) : true;
+    }
+
+    function selectOnboardingIntroOption(field, value) {
+      if (!["onboardingUserRole", "onboardingEducationLevel", "onboardingDiscoverySource", "onboardingSubjectArea"].includes(field)) return;
+      state[field] = value;
+      render();
     }
 
     function onboardingGoalPage() {
@@ -8921,7 +9442,7 @@
           <div class="proof-metric wide plan-count">
             <span class="proof-laurel left" aria-hidden="true"></span>
             <span class="proof-laurel right" aria-hidden="true"></span>
-            <p class="proof-number">290,000+</p>
+            <p class="proof-number">5,000,000+</p>
             <p class="proof-caption">Exam prep plans created</p>
           </div>
           <div class="proof-metric wide">
@@ -9045,6 +9566,13 @@
     }
 
     function continueOnboarding() {
+      if (state.onboardingIntroStage < onboardingIntroPages.length) {
+        if (!onboardingIntroCanContinue()) return;
+        state.onboardingIntroStage += 1;
+        render();
+        return;
+      }
+
       if (!onboardingCanContinue()) return;
       if (state.onboardingStage === 0 && state.onboardingGoal === "daily") {
         setStep("home");
@@ -9292,10 +9820,102 @@
       return escapeHtml(JSON.stringify(String(value ?? "")));
     }
 
-    function selectedExamShortcuts() {
-      const localizedExams = countryExamOptions[state.examCountry] || countryExamOptions["United States"];
+    function uniqueShortcuts(items, limit = 10) {
+      const seen = new Set();
+      return items
+        .filter(Boolean)
+        .filter((item) => {
+          const key = item.toLocaleLowerCase();
+          if (seen.has(key)) return false;
+          seen.add(key);
+          return true;
+        })
+        .slice(0, limit);
+    }
+
+    function localizedSubjectsByIndex(indexes) {
       const localizedSubjects = localizedSubjectOptions[state.examCountry] || localizedSubjectOptions["United States"];
-      return [...localizedExams, ...localizedSubjects];
+      return indexes.map((index) => localizedSubjects[index]).filter(Boolean);
+    }
+
+    function countryExamPriority() {
+      const exams = countryExamOptions[state.examCountry] || countryExamOptions["United States"];
+      const grade = state.onboardingEducationLevel || state.background;
+      const gradeRules = {
+        "University & college": ["GRE", "GMAT", "MCAT", "LSAT", "IELTS", "TOEFL", "TAGE MAGE", "TOLC", "IMAT", "CASPer", "UCAT", "GAMSAT", "大学入学共通テスト", "TestAS"],
+        "Community college": ["SAT", "ACT", "AP Exams", "International Baccalaureate", "IELTS", "TOEFL", "TOLC", "ATAR", "GCSE"],
+        "High School": ["SAT", "ACT", "AP Exams", "International Baccalaureate", "GCSE", "A-levels", "ATAR", "HSC", "VCE", "Abitur", "Baccalauréat", "대학수학능력시험", "大学入学共通テスト"],
+        "Middle School": ["GCSE", "AP Exams", "SAT", "ACT", "ATAR", "HSC", "VCE", "Abitur", "Baccalauréat"],
+        "Others": []
+      };
+      const preferred = gradeRules[grade] || gradeRules["High School"];
+      return uniqueShortcuts([
+        ...preferred.filter((exam) => exams.includes(exam)),
+        ...exams
+      ], 6);
+    }
+
+    function subjectAreaShortcuts() {
+      const subject = state.onboardingSubjectArea || "";
+      const exams = countryExamOptions[state.examCountry] || countryExamOptions["United States"];
+      const hasExam = (name) => exams.includes(name);
+      const countrySpecific = (...items) => items.filter(hasExam);
+
+      if (subject === "Math") {
+        return [
+          ...countrySpecific("SAT", "ACT", "AP Exams", "GCSE", "A-levels", "STEP", "大学入学共通テスト"),
+          ...localizedSubjectsByIndex([4, 5, 6])
+        ];
+      }
+
+      if (subject === "Business & Economics") {
+        return [
+          ...countrySpecific("GMAT", "GRE", "CPA", "CPA Canada", "CPA Australia", "ACCA", "TOLC-E", "Bocconi Test", "TAGE MAGE"),
+          ...localizedSubjectsByIndex([8, 9, 10])
+        ];
+      }
+
+      if (subject === "Medicine & Health") {
+        return [
+          ...countrySpecific("MCAT", "USMLE", "NCLEX", "NCLEX-RN", "UCAT", "UCAT ANZ", "GAMSAT", "IMAT", "TOLC-MED", "의사 국가시험", "医師国家試験"),
+          ...localizedSubjectsByIndex([1, 2, 0])
+        ];
+      }
+
+      if (subject === "Science & Engineering") {
+        return [
+          ...countrySpecific("AP Exams", "TOLC-I", "TOLC-F", "STEP", "大学入学共通テスト", "情報処理技術者試験"),
+          ...localizedSubjectsByIndex([0, 1, 2, 3, 5])
+        ];
+      }
+
+      if (subject === "Social Science & Humanities") {
+        return [
+          ...countrySpecific("LSAT", "LNAT", "TSA", "Sciences Po", "Concours Grandes Écoles", "LEET", "司法試験", "SQE"),
+          ...localizedSubjectsByIndex([7, 10, 8])
+        ];
+      }
+
+      if (subject === "Arts & Media") {
+        return [
+          ...localizedSubjectsByIndex([7, 8]),
+          "Arts & Media",
+          ...countrySpecific("IELTS", "TOEFL", "PTE Academic")
+        ];
+      }
+
+      return [
+        ...countryExamPriority(),
+        ...localizedSubjectsByIndex([0, 1, 2, 4, 5, 6])
+      ];
+    }
+
+    function selectedExamShortcuts() {
+      return uniqueShortcuts([
+        ...subjectAreaShortcuts(),
+        ...countryExamPriority(),
+        ...(localizedSubjectOptions[state.examCountry] || localizedSubjectOptions["United States"])
+      ], 10);
     }
 
     function renderSetup() {
@@ -9410,14 +10030,7 @@
             <span class="material-entry-icon" aria-hidden="true">📎</span>
             <span class="material-entry-copy">
               <strong>Upload Photos/Files</strong>
-              <small>Add slides, textbooks, practice exams, notes, outlines, or syllabus.</small>
-            </span>
-          </button>
-          <button class="material-entry-card ${state.materials.has("Solution History") ? "selected" : ""}" type="button" onclick="selectMaterial('Solution History')">
-            <span class="material-entry-icon" aria-hidden="true">🕘</span>
-            <span class="material-entry-copy">
-              <strong>Solution History</strong>
-              <small>Use solved Solvely questions to help target your exam prep plan.</small>
+              <small>Add files, photos, or solved Solvely questions to help target your exam prep plan.</small>
             </span>
           </button>
         </div>
@@ -9747,6 +10360,13 @@
           { label: "Solution History", sub: "Select solved Solvely questions to guide exam prep", icon: "🕘", action: "openSolutionHistoryFromSheet()" }
         ];
       }
+      if (material.name === "Upload Photos/Files") {
+        return [
+          { label: "Choose Files", sub: "Upload PDFs, documents, notes, or exam outlines", icon: "FILE" },
+          { label: "Take Photo", sub: "Capture a worksheet, textbook page, or notes", icon: "CAM" },
+          { label: "Solution History", sub: "Select solved Solvely questions to guide exam prep", icon: "🕘", action: "openSolutionHistoryFromSheet()" }
+        ];
+      }
       if (material.name === "Take photos") {
         return [
           { label: "Photo Library", sub: "Pick an existing worksheet image", icon: "IMG" },
@@ -10051,22 +10671,13 @@
           <div class="course-outline-head">
             <h1>${planTopic()} Exam Prep Preview</h1>
           </div>
-          <div class="outline-tabs" role="tablist" aria-label="Exam prep preview views">
-            <button class="outline-tab ${state.outlineView === "studyPlan" ? "active" : ""}" type="button" onclick="setOutlineView('studyPlan')">Study plan</button>
-            <button class="outline-tab ${state.outlineView === "topics" ? "active" : ""}" type="button" onclick="setOutlineView('topics')">Topics</button>
-          </div>
-          ${state.outlineView === "studyPlan" ? studyPlanPreview() : topicsPreview(sections)}
+          ${studyPlanPreview()}
+          ${topicsPreview(sections)}
         </div>
         <div class="outline-bottom-actions">
           <button class="outline-action-primary" type="button" onclick="createCourseFromOutline()">Start My Exam Prep</button>
         </div>
       `, { loading: true, outline: true });
-    }
-
-    function setOutlineView(view) {
-      state.outlineView = view;
-      state.editingTopicIndex = null;
-      render();
     }
 
     function studyPlanPreview() {
@@ -10087,14 +10698,6 @@
               ${planMetric("2", "mock exams")}
             </div>
           </section>
-          <div class="study-plan-timeline">
-            ${studyPathCard("Day 1 · Start with priority topics", true, "Study the concepts your materials emphasize most, then answer 6 quick checks.")}
-            ${studyPathCard("Next study day · Repair weak spots", false, "Review missed concepts, revisit flashcards, and take short quizzes on the topics that need recovery.")}
-            <section class="study-focus-card">
-              <span class="study-focus-icon">★</span>
-              <span><h2>Exam-eve · Mock exam</h2><p>Take the mock exam the day before your test, then use the score report for final review.</p></span>
-            </section>
-          </div>
         </div>
       `;
     }
@@ -10131,7 +10734,7 @@
               ${section.lessons.map((lesson, lessonIndex) => {
                 const key = `${sectionIndex}-${lessonIndex}`;
                 const expanded = state.editingTopicIndex === key;
-                const tag = state.studySetVariant === "scheme2" ? outlinePriorityTag(sectionIndex, lessonIndex) : null;
+                const tag = outlinePriorityTag(sectionIndex, lessonIndex);
                 return `
                   <button class="outline-lesson ${expanded ? "expanded" : ""}" type="button" onclick="toggleOutlineLesson('${key}')">
                     <span class="outline-lesson-main">
@@ -10410,83 +11013,21 @@
       `;
     }
 
-    function studySetTodayPill() {
-      const done = state.studySetTodayDone;
-      return `
-        <button
-          class="set-day-pill ${done ? "done" : ""}"
-          type="button"
-          onclick="openStudyPlanSheet()"
-          aria-pressed="${done}"
-          aria-label="${done ? "Done Today" : "Daily Goal 1 of 3"}"
-        >
-          <span>${done ? "Done Today" : "Daily Goal 1/3"}</span>
-        </button>
-      `;
-    }
-
-    function toggleStudySetToday() {
-      state.studySetTodayDone = !state.studySetTodayDone;
-      render();
-    }
-
-    function openStudyPlanSheet() {
-      state.studyPlanSheet = true;
-      render();
-    }
-
-    function closeStudyPlanSheet() {
-      state.studyPlanSheet = false;
-      render();
-    }
-
     function renderCourse() {
-      if (state.studySetVariant === "scheme2") {
-        renderSchemeTwoStudySet();
-        return;
-      }
-      state.schemeOneSelectedTopic = state.schemeOneSelectedTopic || "cell-1";
-      shell(`
-        <div class="screen set-screen scheme-one-set">
-          <div class="set-appbar">
-            <button class="set-icon-btn" type="button" onclick="goBack()" aria-label="Back">
-              <img src="${studySetAssets.scheme1Back}" alt="" aria-hidden="true">
-            </button>
-            ${studySetTodayPill()}
-          </div>
-          <header class="set-header">
-            <h1>Advanced Spanish Vocab</h1>
-            <div class="set-meta">
-              <span>2024/12/12, 20:39</span>
-              <span class="set-chip">2 Sources</span>
-            </div>
-          </header>
-          <div class="set-view-tabs" role="tablist" aria-label="Study plan views">
-            <button class="set-view-tab ${state.courseView === "topics" ? "active" : ""}" type="button" onclick="setCourseView('topics')">Learn</button>
-            <button class="set-view-tab ${state.courseView === "exams" ? "active" : ""}" type="button" onclick="setCourseView('exams')">Test</button>
-          </div>
-          ${state.courseView === "exams" ? courseExamsContent() : schemeOneLearnContent()}
-        </div>
-      `, { result: true, back: false });
-      if (state.learnToolSheet) appendLearnToolSheet();
-      if (state.monetizationSheet) appendMonetizationSheet();
-      if (state.studyPlanSheet) appendStudyPlanSheet();
-      requestAnimationFrame(() => phone.querySelector(".screen")?.scrollTo({ top: 0 }));
+      renderSchemeTwoStudySet();
     }
 
     function renderSchemeTwoStudySet() {
       const content = studySetContent();
       shell(`
         <div class="screen set-screen scheme-two-set">
-          <div class="set-appbar">
-            <button class="set-icon-btn" type="button" onclick="goBack()" aria-label="Back">
-              <img src="${studySetAssets.scheme2Back}" alt="" aria-hidden="true">
-            </button>
-            <span aria-hidden="true"></span>
-            ${studySetTodayPill()}
-          </div>
           <header class="set-header">
-            <h1>Advanced Spanish Vocab</h1>
+            <div class="set-title-row">
+              <button class="set-icon-btn" type="button" onclick="goBack()" aria-label="Back">
+                <img src="${studySetAssets.scheme2Back}" alt="" aria-hidden="true">
+              </button>
+              <h1>Advanced Spanish Vocab</h1>
+            </div>
             <div class="set-meta">
               <span>2024/12/12, 20:39</span>
               <span class="set-chip">2 Sources</span>
@@ -10501,7 +11042,6 @@
       `, { result: true, back: false });
       if (state.learnToolSheet) appendLearnToolSheet();
       if (state.monetizationSheet) appendMonetizationSheet();
-      if (state.studyPlanSheet) appendStudyPlanSheet();
       requestAnimationFrame(() => phone.querySelector(".screen")?.scrollTo({ top: 0 }));
     }
 
@@ -10525,7 +11065,7 @@
       const rating = topic.rating || 1;
       const tools = topic.tools || ["empty", "empty", "empty"];
       return `
-        <article class="scheme-two-card">
+        <button class="scheme-two-card" type="button" onclick="openLearnToolSheet()" aria-label="Choose learning tool for Verbs & Conjugations">
           <div>
             <h3>Verbs &amp; Conjugations</h3>
             <p>How cells grow and reproduce, from mitosis to meiosis</p>
@@ -10536,7 +11076,7 @@
               ${tools.map((tool) => schemeTwoToolIcon(tool)).join("")}
             </span>
           </div>
-        </article>
+        </button>
       `;
     }
 
@@ -10549,90 +11089,6 @@
           </section>
         </div>
       `;
-    }
-
-    function appendStudyPlanSheet() {
-      phone.insertAdjacentHTML("beforeend", `
-        <div class="study-plan-sheet-mask" onclick="closeStudyPlanSheet()" role="presentation">
-          <section class="study-plan-sheet" onclick="event.stopPropagation()" role="dialog" aria-label="Study Plan">
-            <div class="study-plan-sheet-cell">
-              <span class="study-plan-sheet-handle" aria-hidden="true"></span>
-              <button class="study-plan-sheet-close" type="button" onclick="closeStudyPlanSheet()" aria-label="Close study plan">
-                <img src="${studySetAssets.todaySheetClose}" alt="" aria-hidden="true">
-              </button>
-            </div>
-            <div class="study-plan-sheet-content">
-              <div class="study-plan-sheet-title">
-                <h2>Study Plan</h2>
-                <div class="study-plan-sheet-meta">
-                  <span>Exam: Jul 19, 2026</span>
-                  <span>|</span>
-                  <span>14-day-plan</span>
-                </div>
-              </div>
-              ${studyPlanMiniCalendar()}
-              ${studyPlanDailyGoalCard()}
-            </div>
-          </section>
-        </div>
-      `);
-    }
-
-    function studyPlanMiniCalendar() {
-      const cells = [
-        { label: "28", state: "muted" }, { label: "29", state: "muted" }, { label: "30", state: "muted" },
-        { label: "1" }, { label: "2" }, { label: "3" }, { label: "4" },
-        { label: "5" }, { label: "6", state: "done" }, { label: "7", state: "done" }, { label: "8", state: "current" },
-        { label: "9", state: "future" }, { label: "10", state: "future" }, { label: "11", state: "future" },
-        { label: "12", state: "future" }, { label: "13", state: "future" }, { label: "14", state: "future" },
-        { label: "15", state: "future" }, { label: "16", state: "future" }, { label: "17", state: "future" }, { label: "18", state: "future" },
-        { label: "", state: "exam" }, { label: "20" }, { label: "21" }, { label: "22" }, { label: "23" }, { label: "24" }, { label: "25" },
-        { label: "26" }, { label: "27" }, { label: "28" }, { label: "29" }, { label: "30" }, { label: "31" }, { label: "1", state: "muted" }
-      ];
-      return `
-        <div class="study-plan-mini-calendar">
-          <div class="study-plan-calendar-month">
-            <span class="study-plan-month-nav"><img src="${studySetAssets.todaySheetChevronLeft}" alt="" aria-hidden="true"></span>
-            <strong>July</strong>
-            <span class="study-plan-month-nav"><img src="${studySetAssets.todaySheetChevronRight}" alt="" aria-hidden="true"></span>
-          </div>
-          <div class="study-plan-calendar-grid">
-            <div class="study-plan-weekdays" aria-hidden="true">
-              ${["M", "T", "W", "T", "F", "S", "S"].map((day) => `<span>${day}</span>`).join("")}
-            </div>
-            <div class="study-plan-days">
-              ${cells.map((cell) => studyPlanCalendarDay(cell)).join("")}
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    function studyPlanCalendarDay(cell) {
-      const stateClass = cell.state || "";
-      if (cell.state === "exam") {
-        return `<span class="study-plan-day exam"><img src="${studySetAssets.todaySheetLabProfile}" alt="" aria-hidden="true"></span>`;
-      }
-      return `<span class="study-plan-day ${stateClass}">${cell.label}</span>`;
-    }
-
-    function studyPlanDailyGoalCard() {
-      return `
-        <section class="study-plan-goal-card">
-          <div class="study-plan-goal-head">
-            <h3>Your daily goal</h3>
-            <span class="study-plan-goal-count"><strong>1</strong>/3 Topics</span>
-          </div>
-          ${studyPlanGoalItem("Verbs & Conjugations", true)}
-          ${studyPlanGoalItem("Verbs & Conjugations", false)}
-          ${studyPlanGoalItem("Verbs & Conjugations", false)}
-        </section>
-      `;
-    }
-
-    function studyPlanGoalItem(label, done) {
-      const icon = done ? studySetAssets.scheme1Check : studySetAssets.todaySheetProcessEmpty;
-      return `<div class="study-plan-goal-item"><img src="${icon}" alt="" aria-hidden="true"><span>${escapeHtml(label)}</span></div>`;
     }
 
     function setCourseView(view) {
@@ -10899,10 +11355,6 @@
     }
 
     function activeLearnTopic() {
-      if (state.studySetVariant === "scheme1" && state.schemeOneSelectedTopic) {
-        const topic = schemeOneTopics().find((item) => item.key === state.schemeOneSelectedTopic);
-        if (topic) return { ...topic, status: "open", description: schemeOneTopicDescription() };
-      }
       return studySetContent().sections
         .flatMap((section) => section.topics)
         .find((topic) => topic.status === "open");
@@ -11035,6 +11487,7 @@
     }
 
     function appendMonetizationSheet() {
+      const shouldShowPrice = state.studySetVariant === "scheme2";
       phone.insertAdjacentHTML("beforeend", `
         <div class="monetization-mask" role="presentation">
           <section class="monetization-sheet" onclick="event.stopPropagation()" role="dialog" aria-label="Unlock premium study plan">
@@ -11047,7 +11500,7 @@
               <span class="monetization-stars" aria-label="Five star rating">★★★★★</span>
               <span class="monetization-proof-rating">4.8</span>
               <span class="monetization-proof-divider">·</span>
-              <span class="monetization-proof-copy"><strong>291,286</strong> students prep smarter</span>
+              <span class="monetization-proof-copy"><strong>5,934,254</strong> students prep smarter</span>
             </div>
             <div class="monetization-body">
               <h2>Unlock Your Fastest Path to Exam Readiness</h2>
@@ -11081,16 +11534,18 @@
                 ${monetizationBenefit(figmaAssets.paywallPracticeIcon, "Weak Area Practice", "Targeted practice based on your mistakes.")}
                 ${monetizationBenefit(figmaAssets.paywallReportIcon, "Pass Prediction Report", "Realistic mock tests with score prediction and next steps.")}
               </div>
-              <div class="monetization-price-row" aria-label="Intro price">
-                <span class="monetization-offer-copy">
-                  <span class="monetization-offer-label">First week offer</span>
-                  <span class="monetization-price-old">$6.99</span>
-                </span>
-                <span class="monetization-price-current">
-                  <strong class="monetization-price">$1.99</strong>
-                  <span class="monetization-save">72% OFF</span>
-                </span>
-              </div>
+              ${shouldShowPrice ? `
+                <div class="monetization-price-row" aria-label="Intro price">
+                  <span class="monetization-offer-copy">
+                    <span class="monetization-offer-label">First week offer</span>
+                    <span class="monetization-price-old">$6.99</span>
+                  </span>
+                  <span class="monetization-price-current">
+                    <strong class="monetization-price">$1.99</strong>
+                    <span class="monetization-save">72% OFF</span>
+                  </span>
+                </div>
+              ` : ""}
               <button class="monetization-continue" type="button">Unlock My Full Plan</button>
               <button class="monetization-later" type="button" onclick="closeMonetizationSheet()">Maybe Later</button>
             </div>
@@ -11250,9 +11705,8 @@
     window.startOnboarding = startOnboarding;
     window.setExamCountry = setExamCountry;
     window.setStudySetVariant = setStudySetVariant;
-    window.openStudyPlanSheet = openStudyPlanSheet;
-    window.closeStudyPlanSheet = closeStudyPlanSheet;
     window.selectOnboardingGoal = selectOnboardingGoal;
+    window.selectOnboardingIntroOption = selectOnboardingIntroOption;
     window.selectExamDays = selectExamDays;
     window.selectExamDate = selectExamDate;
     window.changeExamDateMonth = changeExamDateMonth;
@@ -11280,7 +11734,6 @@
     window.openSolutionHistoryFromSheet = openSolutionHistoryFromSheet;
     window.continueSetup = continueSetup;
     window.backSetupStep = backSetupStep;
-    window.setOutlineView = setOutlineView;
     window.toggleOutlineLesson = toggleOutlineLesson;
     window.createCourseFromOutline = createCourseFromOutline;
     window.setCourseView = setCourseView;
