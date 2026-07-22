@@ -1022,6 +1022,39 @@
       box-shadow: 0 10px 22px rgba(0, 122, 255, .1);
     }
 
+    .onboarding-selected-date {
+      margin-top: 10px;
+      min-height: 54px;
+      border-radius: 18px;
+      border: 1px solid #dce8f5;
+      background: #fff;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      box-shadow: 0 8px 18px rgba(45, 67, 112, .04);
+    }
+
+    .onboarding-selected-date span {
+      color: #6a7483;
+      font: 700 11px/1.2 var(--svy-font-body);
+    }
+
+    .onboarding-selected-date strong {
+      display: block;
+      margin-top: 3px;
+      color: #111827;
+      font: 800 16px/1.25 var(--svy-font-body);
+      letter-spacing: -0.01em;
+    }
+
+    .onboarding-selected-date small {
+      color: #007aff;
+      font: 800 12px/1.2 var(--svy-font-body);
+      white-space: nowrap;
+    }
+
     .exam-date-card {
       margin-top: 22px;
       border: 1px solid #dce8f5;
@@ -2755,6 +2788,74 @@
       color: #2f5f9b;
     }
 
+    .plan-edit-card {
+      display: grid;
+      gap: 8px;
+    }
+
+    .plan-edit-row {
+      min-height: 64px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 10px;
+      border-radius: 16px;
+      background: #fff;
+      border: 0;
+      padding: 12px 16px;
+      box-shadow: none;
+    }
+
+    .plan-edit-icon {
+      display: none;
+    }
+
+    .plan-edit-field {
+      min-width: 0;
+      display: grid;
+      gap: 3px;
+    }
+
+    .plan-edit-field label,
+    .plan-date-trigger span:first-child {
+      color: #6a7483;
+      font: 700 11px/1.2 var(--svy-font-body);
+    }
+
+    .plan-edit-field input {
+      width: 100%;
+      min-width: 0;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: #111;
+      font: 700 16px/1.25 var(--svy-font-body);
+      letter-spacing: -0.01em;
+    }
+
+    .plan-date-trigger {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      padding: 0;
+      color: #111;
+      text-align: left;
+      display: grid;
+      gap: 3px;
+      cursor: pointer;
+    }
+
+    .plan-date-trigger strong {
+      color: #111;
+      font: 700 16px/1.25 var(--svy-font-body);
+      letter-spacing: -0.01em;
+    }
+
+    .plan-date-chevron {
+      color: #9aa4b2;
+      font: 900 18px/1 var(--svy-font-display);
+    }
+
     .wizard-input-card.locked-note-card {
       background: #f2f5f9;
       color: #7a8492;
@@ -3575,6 +3676,66 @@
       color: #5f6b7a;
       font-size: 13px;
       line-height: 1.35;
+    }
+
+    .exam-date-sheet {
+      padding-bottom: max(26px, env(safe-area-inset-bottom));
+    }
+
+    .exam-date-sheet .exam-date-card {
+      margin-top: 12px;
+      border-radius: 22px;
+      box-shadow: none;
+      padding: 14px;
+    }
+
+    .exam-date-sheet .exam-date-month {
+      margin-bottom: 12px;
+    }
+
+    .exam-date-sheet .exam-date-nav {
+      width: 28px;
+      height: 28px;
+      font-size: 18px;
+    }
+
+    .exam-date-sheet .exam-date-weekdays,
+    .exam-date-sheet .exam-date-grid {
+      gap: 6px;
+    }
+
+    .exam-date-sheet .exam-date-day {
+      height: 34px;
+      border-radius: 12px;
+      font-size: 14px;
+    }
+
+    .exam-date-sheet .exam-date-summary {
+      min-height: 38px;
+      margin-top: 12px;
+    }
+
+    .exam-date-quick-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .exam-date-quick {
+      min-height: 38px;
+      border: 1px solid #dce8f5;
+      border-radius: 14px;
+      background: #f8fbff;
+      color: #17212f;
+      font: 800 12px/1 var(--svy-font-body);
+      cursor: pointer;
+    }
+
+    .exam-date-quick.selected {
+      border-color: #007aff;
+      background: #eef6ff;
+      color: #007aff;
     }
 
     .sheet-options {
@@ -8105,6 +8266,7 @@
       materialQuestion: "",
       materials: new Set(),
       uploadSheet: null,
+      setupExamDateSheet: false,
       uploadingFile: null,
       uploadedFiles: [],
       examCountry: "United States",
@@ -8169,7 +8331,7 @@
         { label: "Tomorrow", value: "1 day" },
         { label: "In 2 days", value: "2 days" },
         { label: "In 3 days", value: "3 days" },
-        { label: selectedExamDateLabel() || "Pick a date", value: "custom" }
+        { label: "Pick a date", value: "custom" }
       ];
     }
 
@@ -8602,14 +8764,15 @@
 
     function onboardingExamPage() {
       return `
-        <h1 class="onboarding-title">How much time do you have before the exam?</h1>
-        <p class="onboarding-copy">We'll calibrate your daily workload and keep the plan realistic.</p>
+        <h1 class="onboarding-title">When is your exam, and how much can you study each day?</h1>
+        <p class="onboarding-copy">Solvely uses your exam date and daily study time to build a realistic prep plan.</p>
         <div class="onboarding-picker">
           <section class="onboarding-picker-group">
-            <h2>Days until exam</h2>
+            <h2>Exam date</h2>
             <div class="onboarding-chip-grid">
               ${onboardingExamDayOptions().map((option) => onboardingChip("examDays", option.label, option.value)).join("")}
             </div>
+            ${onboardingSelectedExamDate()}
           </section>
           <section class="onboarding-picker-group">
             <h2>Daily study time</h2>
@@ -8640,10 +8803,10 @@
       return `<button class="onboarding-chip ${selected ? "selected" : ""}" type="button" onclick="${handler}(${escapeJsArg(value)})">${escapeHtml(label)}</button>`;
     }
 
-    function examDateCalendar() {
+    function examDateCalendar(context = "onboarding") {
       const today = new Date(2026, 6, 21);
       const visibleMonth = new Date(today.getFullYear(), today.getMonth() + state.onboardingDateMonthOffset, 1);
-      const selected = state.onboardingExamDate || "2026-07-31";
+      const selected = context === "setup" ? setupExamDateValue() : state.onboardingExamDate || "2026-07-31";
       const monthLabel = visibleMonth.toLocaleDateString("en-US", { month: "long", year: "numeric" });
       const firstDay = visibleMonth.getDay();
       const daysInMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1, 0).getDate();
@@ -8669,7 +8832,8 @@
           iso === toIsoDate(today) ? "today" : "",
           iso === selected ? "selected" : ""
         ].filter(Boolean).join(" ");
-        cells.push(`<button class="${classes}" type="button" ${disabled ? "disabled" : `onclick="selectExamDate('${iso}')"`}>${label}</button>`);
+        const handler = context === "setup" ? "selectSetupExamDate" : "selectExamDate";
+        cells.push(`<button class="${classes}" type="button" ${disabled ? "disabled" : `onclick="${handler}('${iso}')"`}>${label}</button>`);
       }
       return `
         <section class="exam-date-card" aria-label="Choose exam date">
@@ -9067,9 +9231,43 @@
     }
 
     function selectedExamDateLabel() {
-      if (!state.onboardingExamDate) return "";
-      const [year, month, day] = state.onboardingExamDate.split("-").map(Number);
+      const value = state.onboardingExamDate || "";
+      if (!value) return "";
+      const [year, month, day] = value.split("-").map(Number);
       return new Date(year, month - 1, day).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+    }
+
+    function onboardingExamDateValue() {
+      if (state.onboardingExamDate) return state.onboardingExamDate;
+      const today = new Date(2026, 6, 21);
+      const amount = Number.parseInt(state.onboardingExamDays, 10);
+      const days = Number.isFinite(amount) && amount > 0 ? amount : 3;
+      return toIsoDate(new Date(today.getFullYear(), today.getMonth(), today.getDate() + days));
+    }
+
+    function onboardingSelectedExamDate() {
+      const value = onboardingExamDateValue();
+      const [year, month, day] = value.split("-").map(Number);
+      const label = new Date(year, month - 1, day).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric"
+      });
+      const daysLeft = daysUntilExam(value);
+      return `
+        <div class="onboarding-selected-date" aria-label="Selected exam date">
+          <span>Selected exam date<strong>${escapeHtml(label)}</strong></span>
+          <small>${daysLeft} ${daysLeft === 1 ? "day" : "days"} left</small>
+        </div>
+      `;
+    }
+
+    function setupExamDateValue() {
+      if (state.onboardingExamDate) return state.onboardingExamDate;
+      const today = new Date(2026, 6, 21);
+      const amount = Number.parseInt(state.onboardingExamDays, 10);
+      const days = Number.isFinite(amount) && amount > 0 ? amount : 3;
+      return toIsoDate(new Date(today.getFullYear(), today.getMonth(), today.getDate() + days));
     }
 
     function escapeHtml(value) {
@@ -9103,6 +9301,7 @@
         </div>
         ${setupBottomCta(canContinue)}
         ${materialUploadSheet()}
+        ${setupExamDateSheet()}
       `, { flow: true });
     }
 
@@ -9163,16 +9362,35 @@
         <p class="plan-input-kicker">Study Materials</p>
         <h1 class="plan-input-title">Upload your study materials</h1>
         <p class="plan-input-copy">Solvely uses your files or Solution History to spot coverage gaps and prioritize high-impact exam topics.</p>
-        <div class="wizard-input-card prefilled-topic-card">
-          <label for="upload-topic-input">Course, Exam, or Topic</label>
-          <input id="upload-topic-input" value="${escapeHtml(state.topic)}" oninput="updateTopicInput(this.value)" placeholder="e.g. Biology, SAT Math, Organic Chemistry">
-        </div>
+        ${planEditCard()}
         ${state.uploadedFiles.length ? "" : materialEntryList()}
         ${materialUploadStatus()}
         <div class="wizard-input-card ${hasUploadedMaterial ? "" : "locked-note-card"}">
           <label for="material-note-input">Optional: Add any study requirements</label>
           <textarea id="material-note-input" rows="2" oninput="updateMaterialQuestion(this.value)" placeholder="${hasUploadedMaterial ? "e.g. Focus on cell division, genetics, and the topics I keep missing on quizzes" : "Upload a file first, then add optional focus areas or requirements."}" ${hasUploadedMaterial ? "" : "disabled"}>${escapeHtml(state.materialQuestion)}</textarea>
         </div>
+      `;
+    }
+
+    function planEditCard() {
+      return `
+        <section class="plan-edit-card" aria-label="Edit exam plan details">
+          <div class="plan-edit-row">
+            <span class="plan-edit-icon" aria-hidden="true">🎯</span>
+            <span class="plan-edit-field">
+              <label for="upload-topic-input">Course, Exam, or Subject</label>
+              <input id="upload-topic-input" value="${escapeHtml(state.topic)}" oninput="updateTopicInput(this.value)" placeholder="e.g. Biology, SAT Math, Organic Chemistry">
+            </span>
+          </div>
+          <div class="plan-edit-row">
+            <span class="plan-edit-icon" aria-hidden="true">📅</span>
+            <button class="plan-date-trigger" type="button" onclick="openSetupExamDateSheet()" aria-label="Edit exam date">
+              <span>Exam Date</span>
+              <strong>${escapeHtml(setupExamDateValue())}</strong>
+            </button>
+            <span class="plan-date-chevron" aria-hidden="true">›</span>
+          </div>
+        </section>
       `;
     }
 
@@ -9486,6 +9704,32 @@
       `;
     }
 
+    function setupExamDateSheet() {
+      if (!state.setupExamDateSheet) return "";
+      const quickDates = [
+        { label: "Tomorrow", value: toIsoDate(new Date(2026, 6, 22)) },
+        { label: "In 2 days", value: toIsoDate(new Date(2026, 6, 23)) },
+        { label: "In 3 days", value: toIsoDate(new Date(2026, 6, 24)) }
+      ];
+      const selected = setupExamDateValue();
+      return `
+        <div class="sheet-backdrop" onclick="closeSetupExamDateSheet()">
+          <section class="upload-sheet exam-date-sheet" onclick="event.stopPropagation()" role="dialog" aria-label="Edit exam date">
+            <button class="sheet-close" type="button" onclick="closeSetupExamDateSheet()" aria-label="Close exam date picker">×</button>
+            <div class="sheet-handle"></div>
+            <h2>Edit exam date</h2>
+            <p>Choose the test day so Solvely can pace your study plan and mock exams.</p>
+            <div class="exam-date-quick-row" aria-label="Quick exam date choices">
+              ${quickDates.map((item) => `
+                <button class="exam-date-quick ${selected === item.value ? "selected" : ""}" type="button" onclick="selectSetupExamDate('${item.value}')">${item.label}</button>
+              `).join("")}
+            </div>
+            ${examDateCalendar("setup")}
+          </section>
+        </div>
+      `;
+    }
+
     function uploadSheetOptions(material) {
       if (material.name === "Additional Material") {
         return [
@@ -9639,6 +9883,7 @@
     function openMaterialSheet(name) {
       const material = materialOptions.find((option) => option.name === name) || materialOptions[0];
       state.uploadSheet = material;
+      state.setupExamDateSheet = false;
       state.lastMaterialName = material.name;
       render();
     }
@@ -9655,6 +9900,24 @@
 
     function closeMaterialSheet() {
       state.uploadSheet = null;
+      render();
+    }
+
+    function openSetupExamDateSheet() {
+      state.setupExamDateSheet = true;
+      state.uploadSheet = null;
+      render();
+    }
+
+    function closeSetupExamDateSheet() {
+      state.setupExamDateSheet = false;
+      render();
+    }
+
+    function selectSetupExamDate(value) {
+      state.onboardingExamDate = value;
+      state.onboardingExamDays = `${daysUntilExam(value)} days`;
+      state.setupExamDateSheet = false;
       render();
     }
 
@@ -10992,6 +11255,9 @@
     window.toggleMaterial = toggleMaterial;
     window.selectTopic = selectTopic;
     window.updateTopicInput = updateTopicInput;
+    window.openSetupExamDateSheet = openSetupExamDateSheet;
+    window.closeSetupExamDateSheet = closeSetupExamDateSheet;
+    window.selectSetupExamDate = selectSetupExamDate;
     window.selectBackground = selectBackground;
     window.updateGradeInput = updateGradeInput;
     window.selectPurpose = selectPurpose;
