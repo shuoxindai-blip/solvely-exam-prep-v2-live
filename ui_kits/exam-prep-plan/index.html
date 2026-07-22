@@ -6891,12 +6891,16 @@
     }
 
     .scheme-one-set .set-card {
-      min-height: 126px;
+      min-height: 72px;
       border-color: #eee;
       background: #f6f8fa;
       align-items: center;
-      padding: 16px;
+      padding: 12px 16px;
       box-shadow: none;
+    }
+
+    .scheme-one-set .set-topic:not(.open) .set-progress::after {
+      min-height: 54px;
     }
 
     .scheme-one-set .set-topic.open .set-card {
@@ -8223,7 +8227,7 @@
     <aside class="notes">
       <h1>Exam Prep Plan Creation</h1>
       <p>This prototype combines the Solvely Study surface with the reference app's guided course-creation flow.</p>
-      <p>Use the rail or tap inside the phone. The primary flow moves from Study home to personalized questions, outline confirmation, plan generation, and the final study set.</p>
+      <p>Use the rail or tap inside the phone. The primary flow moves from Study home to personalized questions, outline confirmation, plan generation, and the final study plan.</p>
       <div class="country-switcher" id="country-switcher"></div>
       <div class="study-set-switcher" id="study-set-switcher"></div>
       <div class="flow-rail" id="rail"></div>
@@ -8244,18 +8248,18 @@
       { id: "prepLoading", label: "Reviewing" },
       { id: "outline", label: "Outline edit" },
       { id: "generating", label: "Generating" },
-      { id: "course", label: "Study set" }
+      { id: "course", label: "Study plan" }
     ];
 
     const state = {
       step: "onboarding",
       onboardingStage: 0,
       onboardingGoal: "",
-      onboardingExamDays: "3 days",
+      onboardingExamDays: "",
       onboardingExamDate: "",
       onboardingDatePicker: false,
       onboardingDateMonthOffset: 0,
-      onboardingStudyTime: "30 min/day",
+      onboardingStudyTime: "",
       setupStage: 0,
       topic: "",
       background: "",
@@ -8288,7 +8292,7 @@
       selectedLearnTool: "Study Guide",
       courseView: "topics",
       studySetVariant: "scheme1",
-      schemeOneSelectedTopic: "",
+      schemeOneSelectedTopic: "cell-1",
       studySetTodayDone: false
     };
 
@@ -8654,14 +8658,14 @@
 
     function renderStudySetSwitcher() {
       const variants = [
-        { id: "scheme1", label: "实验组 1", note: "展示 Study Set 方案一" },
-        { id: "scheme2", label: "实验组 2", note: "展示 Study Set 方案二" }
+        { id: "scheme1", label: "实验组 1", note: "展示 Study Plan 方案一" },
+        { id: "scheme2", label: "实验组 2", note: "展示 Study Plan 方案二" }
       ];
       const activeVariant = variants.find((variant) => variant.id === state.studySetVariant) || variants[0];
       studySetSwitcher.innerHTML = `
         <label>
           Experiment group preview
-          <div class="variant-toggle" role="tablist" aria-label="Preview Study Set experiment group">
+          <div class="variant-toggle" role="tablist" aria-label="Preview Study Plan experiment group">
             ${variants.map((variant) => `
               <button
                 class="${state.studySetVariant === variant.id ? "active" : ""}"
@@ -8673,7 +8677,7 @@
             `).join("")}
           </div>
           <small>${activeVariant.note}</small>
-          <span class="experiment-note">仅用于 demo 预览。正式版由实验分组决定 Study Set 视觉方案，用户端不展示切换控件。</span>
+          <span class="experiment-note">仅用于 demo 预览。正式版由实验分组决定 Study Plan 视觉方案，用户端不展示切换控件。</span>
         </label>
       `;
     }
@@ -8806,7 +8810,7 @@
     function examDateCalendar(context = "onboarding") {
       const today = new Date(2026, 6, 21);
       const visibleMonth = new Date(today.getFullYear(), today.getMonth() + state.onboardingDateMonthOffset, 1);
-      const selected = context === "setup" ? setupExamDateValue() : state.onboardingExamDate || "2026-07-31";
+      const selected = context === "setup" ? setupExamDateValue() : onboardingExamDateValue();
       const monthLabel = visibleMonth.toLocaleDateString("en-US", { month: "long", year: "numeric" });
       const firstDay = visibleMonth.getDay();
       const daysInMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1, 0).getDate();
@@ -8848,7 +8852,7 @@
           <div class="exam-date-grid">
             ${cells.join("")}
           </div>
-          <p class="exam-date-summary">${examDateSummary(selected)}</p>
+          <p class="exam-date-summary">${selected ? examDateSummary(selected) : "Choose your exam date to continue."}</p>
         </section>
       `;
     }
@@ -8997,6 +9001,12 @@
     function onboardingCanContinue() {
       if (state.onboardingStage === 0) return Boolean(state.onboardingGoal);
       if (state.onboardingStage === 1) return Boolean(state.topic.trim());
+      if (state.onboardingStage === 2) {
+        const hasExamDate = state.onboardingDatePicker
+          ? Boolean(state.onboardingExamDate)
+          : Boolean(state.onboardingExamDate || state.onboardingExamDays);
+        return hasExamDate && Boolean(state.onboardingStudyTime);
+      }
       return true;
     }
 
@@ -9008,8 +9018,6 @@
     function selectExamDays(value) {
       if (value === "custom") {
         state.onboardingDatePicker = true;
-        state.onboardingExamDate = state.onboardingExamDate || "2026-07-31";
-        state.onboardingExamDays = `${daysUntilExam(state.onboardingExamDate)} days`;
         render();
         return;
       }
@@ -9187,22 +9195,21 @@
     }
 
     function examPrepPlanLabel() {
-      if (state.onboardingExamDays === "custom") return "Custom Prep Plan";
-      const [amount, unit = "days"] = state.onboardingExamDays.split(" ");
+      const examWindow = state.onboardingExamDays || "3 days";
+      const [amount, unit = "days"] = examWindow.split(" ");
       const singularUnit = unit.replace(/s$/, "");
       return `${amount}-${singularUnit.charAt(0).toUpperCase()}${singularUnit.slice(1)} Prep Plan`;
     }
 
     function examPrepStarterTitle() {
-      if (state.onboardingExamDays === "custom") return "Custom Exam Prep Starter";
-      const [amount, unit = "days"] = state.onboardingExamDays.split(" ");
+      const examWindow = state.onboardingExamDays || "3 days";
+      const [amount, unit = "days"] = examWindow.split(" ");
       const singularUnit = unit.replace(/s$/, "");
       return `${amount}-${singularUnit.charAt(0).toUpperCase()}${singularUnit.slice(1)} Exam Prep Starter`;
     }
 
     function examPrepPlanDuration() {
-      if (state.onboardingExamDays === "custom") return "Custom Plan";
-      return state.onboardingExamDays
+      return (state.onboardingExamDays || "3 days")
         .split(" ")
         .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
         .join(" ");
@@ -9239,6 +9246,7 @@
 
     function onboardingExamDateValue() {
       if (state.onboardingExamDate) return state.onboardingExamDate;
+      if (!state.onboardingExamDays) return "";
       const today = new Date(2026, 6, 21);
       const amount = Number.parseInt(state.onboardingExamDays, 10);
       const days = Number.isFinite(amount) && amount > 0 ? amount : 3;
@@ -9247,6 +9255,7 @@
 
     function onboardingSelectedExamDate() {
       const value = onboardingExamDateValue();
+      if (!value) return "";
       const [year, month, day] = value.split("-").map(Number);
       const label = new Date(year, month - 1, day).toLocaleDateString("en-US", {
         month: "short",
@@ -10091,8 +10100,7 @@
     }
 
     function compactExamPrepWindow() {
-      if (state.onboardingExamDays === "custom") return "custom plan";
-      const [amount, unit = "days"] = state.onboardingExamDays.split(" ");
+      const [amount, unit = "days"] = (state.onboardingExamDays || "3 days").split(" ");
       return `${amount}-${unit.replace(/s$/, "")}`;
     }
 
@@ -10437,6 +10445,7 @@
         renderSchemeTwoStudySet();
         return;
       }
+      state.schemeOneSelectedTopic = state.schemeOneSelectedTopic || "cell-1";
       shell(`
         <div class="screen set-screen scheme-one-set">
           <div class="set-appbar">
@@ -10452,9 +10461,9 @@
               <span class="set-chip">2 Sources</span>
             </div>
           </header>
-          <div class="set-view-tabs" role="tablist" aria-label="Study set views">
+          <div class="set-view-tabs" role="tablist" aria-label="Study plan views">
             <button class="set-view-tab ${state.courseView === "topics" ? "active" : ""}" type="button" onclick="setCourseView('topics')">Learn</button>
-            <button class="set-view-tab ${state.courseView === "exams" ? "active" : ""}" type="button" onclick="setCourseView('exams')">Exam</button>
+            <button class="set-view-tab ${state.courseView === "exams" ? "active" : ""}" type="button" onclick="setCourseView('exams')">Test</button>
           </div>
           ${state.courseView === "exams" ? courseExamsContent() : schemeOneLearnContent()}
         </div>
@@ -10483,9 +10492,9 @@
               <span class="set-chip">2 Sources</span>
             </div>
           </header>
-          <div class="set-view-tabs" role="tablist" aria-label="Study set views">
+          <div class="set-view-tabs" role="tablist" aria-label="Study plan views">
             <button class="set-view-tab ${state.courseView === "topics" ? "active" : ""}" type="button" onclick="setCourseView('topics')">Learn</button>
-            <button class="set-view-tab ${state.courseView === "exams" ? "active" : ""}" type="button" onclick="setCourseView('exams')">Exam</button>
+            <button class="set-view-tab ${state.courseView === "exams" ? "active" : ""}" type="button" onclick="setCourseView('exams')">Test</button>
           </div>
           ${state.courseView === "exams" ? schemeTwoExamContent() : schemeTwoLearnContent(content)}
         </div>
