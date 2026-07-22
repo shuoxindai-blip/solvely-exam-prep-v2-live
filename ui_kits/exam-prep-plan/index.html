@@ -7847,6 +7847,43 @@
       background: #fff;
     }
 
+    .scheme-two-sort-row {
+      display: flex;
+      justify-content: flex-end;
+      margin: -2px -4px 12px 0;
+    }
+
+    .scheme-two-sort-btn {
+      min-height: 34px;
+      border: 1px solid #dce8f5;
+      border-radius: 999px;
+      background: #f7fbff;
+      color: #0f5ea8;
+      padding: 0 11px 0 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font: 750 12px/1 var(--svy-font-body);
+      letter-spacing: -.01em;
+      box-shadow: 0 8px 18px rgba(17, 76, 140, .06);
+      cursor: pointer;
+    }
+
+    .scheme-two-sort-btn::before {
+      content: "";
+      width: 14px;
+      height: 14px;
+      background: url("data:image/svg+xml,%3Csvg width='14' height='14' viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M3 4h8M3 7h5.8M3 10h3.3' stroke='%230A84FF' stroke-width='1.7' stroke-linecap='round'/%3E%3Cpath d='M10.8 7.2v3.2m0 0l1.4-1.4m-1.4 1.4L9.4 9' stroke='%230A84FF' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+      flex: 0 0 auto;
+    }
+
+    .scheme-two-sort-btn::after {
+      content: "⌄";
+      color: #4b83bd;
+      font: 900 13px/1 var(--svy-font-body);
+      transform: translateY(-1px);
+    }
+
     .scheme-two-section {
       display: grid;
       gap: 8px;
@@ -8763,6 +8800,7 @@
       monetizationSheet: false,
       selectedLearnTool: "Study Guide",
       courseView: "topics",
+      studyPlanSort: "unit",
       studySetVariant: "scheme1",
       schemeOneSelectedTopic: "cell-1",
       studySetTodayDone: false
@@ -11274,16 +11312,59 @@
       requestAnimationFrame(() => phone.querySelector(".screen")?.scrollTo({ top: 0 }));
     }
 
+    function schemeTwoTopicGroups() {
+      return [
+        {
+          title: "CELL BIOLOGY",
+          topics: [
+            { rating: 3, tools: ["study", "quiz", "empty"], unitOrder: 0 },
+            { rating: 1, tools: ["quiz", "empty", "empty"], unitOrder: 1 }
+          ]
+        },
+        {
+          title: "CELL BIOLOGY",
+          topics: [
+            { rating: 3, tools: ["empty", "empty", "empty"], unitOrder: 2 },
+            { rating: 1, tools: ["empty", "empty", "empty"], unitOrder: 3 }
+          ]
+        }
+      ];
+    }
+
+    function studyPlanSortLabel() {
+      return state.studyPlanSort === "priority" ? "Sort: Priority first" : "Sort: Unit order";
+    }
+
+    function schemeTwoSortControl() {
+      const next = state.studyPlanSort === "priority" ? "unit" : "priority";
+      const nextLabel = next === "priority" ? "Priority first" : "Unit order";
+      const currentLabel = state.studyPlanSort === "priority" ? "Priority first" : "Unit order";
+      return `
+        <div class="scheme-two-sort-row">
+          <button class="scheme-two-sort-btn" type="button" onclick="setStudyPlanSort('${next}')" aria-label="Current sort: ${currentLabel}. Tap to switch to ${nextLabel}">
+            ${studyPlanSortLabel()}
+          </button>
+        </div>
+      `;
+    }
+
     function schemeTwoLearnContent(content) {
+      const groups = schemeTwoTopicGroups();
+      const sections = state.studyPlanSort === "priority"
+        ? [{
+            title: "PRIORITY FIRST",
+            topics: groups
+              .flatMap((group) => group.topics.map((topic) => ({ ...topic, sectionTitle: group.title })))
+              .sort((a, b) => (b.rating - a.rating) || (a.unitOrder - b.unitOrder))
+          }]
+        : groups;
       return `
         <div class="scheme-two-list">
-          ${["CELL BIOLOGY", "CELL BIOLOGY"].map((section, sectionIndex) => `
+          ${schemeTwoSortControl()}
+          ${sections.map((section) => `
             <section class="scheme-two-section">
-              <h2 class="scheme-two-title">${section}</h2>
-              ${[
-                { rating: sectionIndex === 0 ? 3 : 3, tools: sectionIndex === 0 ? ["study", "quiz", "empty"] : ["empty", "empty", "empty"] },
-                { rating: sectionIndex === 0 ? 1 : 1, tools: sectionIndex === 0 ? ["quiz", "empty", "empty"] : ["empty", "empty", "empty"] }
-              ].map((topic, index) => schemeTwoTopicCard(topic, index)).join("")}
+              <h2 class="scheme-two-title">${section.title}</h2>
+              ${section.topics.map((topic, index) => schemeTwoTopicCard(topic, index)).join("")}
             </section>
           `).join("")}
         </div>
@@ -11322,6 +11403,11 @@
 
     function setCourseView(view) {
       state.courseView = view;
+      render();
+    }
+
+    function setStudyPlanSort(sort) {
+      state.studyPlanSort = sort === "priority" ? "priority" : "unit";
       render();
     }
 
