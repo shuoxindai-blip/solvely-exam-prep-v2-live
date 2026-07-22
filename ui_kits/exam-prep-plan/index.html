@@ -140,7 +140,18 @@
 
     .flow-rail {
       display: grid;
-      gap: 10px;
+      gap: 8px;
+      max-height: 420px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .rail-group {
+      margin-top: 8px;
+      color: var(--svy-muted);
+      font: 850 11px/1.2 var(--svy-font-body);
+      letter-spacing: .08em;
+      text-transform: uppercase;
     }
 
     .rail-step {
@@ -179,6 +190,29 @@
       background: var(--svy-surface);
       font-size: 12px;
       font-weight: 850;
+    }
+
+    .rail-copy {
+      display: grid;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .rail-copy strong,
+    .rail-copy small {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .rail-copy strong {
+      color: inherit;
+      font: 850 13px/1.15 var(--svy-font-body);
+    }
+
+    .rail-copy small {
+      color: var(--svy-muted);
+      font: 700 11px/1.2 var(--svy-font-body);
     }
 
     .phone-shell {
@@ -1327,6 +1361,24 @@
     .onboarding-chip.selected {
       border-color: #007aff;
       background: #eef6ff;
+      color: #007aff;
+      box-shadow: 0 10px 22px rgba(0, 122, 255, .1);
+    }
+
+    .exam-date-option-list {
+      gap: 12px;
+    }
+
+    .exam-date-option-list .native-list-option {
+      min-height: 58px;
+      border-color: #edf1f6;
+      border-radius: 18px;
+      padding: 0 18px;
+      box-shadow: 0 8px 18px rgba(45, 67, 112, .04);
+    }
+
+    .exam-date-option-list .native-list-option.selected {
+      border-color: #007aff;
       color: #007aff;
       box-shadow: 0 10px 22px rgba(0, 122, 255, .1);
     }
@@ -4216,7 +4268,7 @@
     }
 
     .sheet-option {
-      min-height: 52px;
+      min-height: 50px;
       border: 1px solid #dce7f2;
       border-radius: 16px;
       background: #f8fbff;
@@ -7849,8 +7901,30 @@
 
     .scheme-two-sort-row {
       display: flex;
-      justify-content: flex-end;
-      margin: -2px -4px 12px 0;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: -2px -4px 16px 0;
+    }
+
+    .scheme-two-sort-title {
+      margin: 0;
+      color: #111827;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      transform: translateX(-20px);
+      font: 850 17px/1.2 var(--svy-font-display);
+      letter-spacing: -.02em;
+    }
+
+    .scheme-two-sort-title::before {
+      content: "";
+      width: 5px;
+      height: 20px;
+      border-radius: 0 12px 12px 0;
+      background: #007aff;
+      flex: 0 0 auto;
     }
 
     .scheme-two-sort-btn {
@@ -7890,27 +7964,14 @@
     }
 
     .scheme-two-section + .scheme-two-section {
-      margin-top: 16px;
+      margin-top: 18px;
     }
 
     .scheme-two-title {
-      margin: 0 0 0 -20px;
-      min-height: 27px;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      color: #111;
-      font: 700 18px/27px "Poppins", var(--svy-font-display);
-      text-transform: uppercase;
-    }
-
-    .scheme-two-title::before {
-      content: "";
-      width: 5px;
-      height: 20px;
-      border-radius: 0 12px 12px 0;
-      background: #007aff;
-      flex: 0 0 auto;
+      margin: 0 0 2px;
+      color: #6b7280;
+      font: 850 12px/1.2 var(--svy-font-body);
+      letter-spacing: .02em;
     }
 
     .scheme-two-card {
@@ -8657,7 +8718,16 @@
         justify-items: center;
       }
 
-      .notes, .inspector {
+      .notes {
+        width: var(--phone-w);
+        max-width: calc(100vw - 36px);
+      }
+
+      .flow-rail {
+        max-height: 260px;
+      }
+
+      .inspector {
         display: none;
       }
     }
@@ -8732,8 +8802,6 @@
   <main class="prototype" aria-label="Solvely exam prep plan prototype">
     <aside class="notes">
       <h1>Exam Prep Plan Creation</h1>
-      <p>This prototype combines the Solvely Study surface with the reference app's guided course-creation flow.</p>
-      <p>Use the rail or tap inside the phone. The primary flow moves from Study home to personalized questions, outline confirmation, plan generation, and the final study plan.</p>
       <div class="country-switcher" id="country-switcher"></div>
       <div class="study-set-switcher" id="study-set-switcher"></div>
       <div class="flow-rail" id="rail"></div>
@@ -9155,12 +9223,24 @@
     }
 
     function renderRail() {
-      rail.innerHTML = steps.map((step, index) => `
-        <button class="rail-step ${state.step === step.id ? "active" : ""}" type="button" onclick="${step.id === "setup" ? "startSetup()" : step.id === "onboarding" ? "startOnboarding()" : `setStep('${step.id}')`}">
-          <span class="rail-index">${index + 1}</span>
-          <span>${step.label}</span>
-        </button>
-      `).join("");
+      let pageIndex = 0;
+      rail.innerHTML = demoPages.map((page) => {
+        if (page.type === "group") return `<div class="rail-group">${page.label}</div>`;
+        pageIndex += 1;
+        return `
+          <button class="rail-step ${isDemoPageActive(page) ? "active" : ""}" type="button" onclick="jumpToDemoPage('${page.id}')" ${isDemoPageActive(page) ? "aria-current=\"page\"" : ""}>
+            <span class="rail-index">${pageIndex}</span>
+            <span class="rail-copy">
+              <strong>${page.label}</strong>
+              <small>${page.note}</small>
+            </span>
+          </button>
+        `;
+      }).join("");
+    }
+
+    function isDemoPageActive(page) {
+      return Boolean(page.isActive && page.isActive());
     }
 
     function renderCountrySwitcher() {
@@ -9277,6 +9357,155 @@
         ]
       }
     ];
+
+    const demoPages = [
+      { type: "group", label: "Onboarding intro" },
+      { id: "intro-1", label: "Intro landing", note: "Get Started hero", isActive: () => state.step === "onboarding" && state.onboardingIntroStage === 0 },
+      { id: "intro-2", label: "User role", note: "Who's using Solvely?", isActive: () => state.step === "onboarding" && state.onboardingIntroStage === 1 },
+      { id: "intro-3", label: "Education level", note: "School stage selection", isActive: () => state.step === "onboarding" && state.onboardingIntroStage === 2 },
+      { id: "intro-4", label: "Discovery source", note: "How users found Solvely", isActive: () => state.step === "onboarding" && state.onboardingIntroStage === 3 },
+      { id: "intro-5", label: "Subject area", note: "Current study focus", isActive: () => state.step === "onboarding" && state.onboardingIntroStage === 4 },
+      { type: "group", label: "Exam prep setup" },
+      { id: "study-goal", label: "Study goal", note: "Daily study vs Exam prep", isActive: () => state.step === "onboarding" && state.onboardingIntroStage >= onboardingIntroPages.length && state.onboardingStage === 0 },
+      { id: "course-exam", label: "Course / exam", note: "Input and quick picks", isActive: () => state.step === "onboarding" && state.onboardingStage === 1 },
+      { id: "exam-date", label: "Exam date", note: "Quick dates and selected date", isActive: () => state.step === "onboarding" && state.onboardingStage === 2 && !state.onboardingDatePicker },
+      { id: "date-picker", label: "Date picker", note: "Exact calendar selection", isActive: () => state.step === "onboarding" && state.onboardingStage === 2 && state.onboardingDatePicker },
+      { id: "plan-explainer", label: "Plan explainer", note: "69% to 98% readiness", isActive: () => state.step === "onboarding" && state.onboardingStage === 3 },
+      { id: "social-proof", label: "Social proof", note: "Metrics and review cards", isActive: () => state.step === "onboarding" && state.onboardingStage === 4 },
+      { type: "group", label: "Study home and materials" },
+      { id: "study-home", label: "Study home", note: "For You and banner CTA", isActive: () => state.step === "home" },
+      { id: "upload-materials", label: "Upload materials", note: "Exam name/date and upload entry", isActive: () => state.step === "setup" && !state.uploadSheet && !state.setupExamDateSheet },
+      { id: "upload-sheet", label: "Upload sheet", note: "Choose Files / Take Photo / History", isActive: () => state.step === "setup" && Boolean(state.uploadSheet) },
+      { id: "solution-history", label: "Solution history", note: "Select solved questions", isActive: () => state.step === "solutionHistory" },
+      { id: "reviewing", label: "Reviewing materials", note: "Reading files loading state", isActive: () => state.step === "prepLoading" },
+      { id: "outline", label: "Outline preview", note: "Preview card and topics", isActive: () => state.step === "outline" },
+      { id: "generating", label: "Finalizing plan", note: "Generation progress", isActive: () => state.step === "generating" },
+      { type: "group", label: "Study plan and paywall" },
+      { id: "study-plan-learn", label: "Study Plan - Learn", note: "Unit order topic cards", isActive: () => state.step === "course" && state.courseView === "topics" && !state.learnToolSheet && !state.monetizationSheet && state.studyPlanSort === "unit" },
+      { id: "study-plan-priority", label: "Priority sort", note: "Importance-first topic order", isActive: () => state.step === "course" && state.courseView === "topics" && state.studyPlanSort === "priority" && !state.learnToolSheet && !state.monetizationSheet },
+      { id: "study-plan-test", label: "Study Plan - Test", note: "Final Mock Exam entry", isActive: () => state.step === "course" && state.courseView === "exams" },
+      { id: "learn-tool", label: "Learn tool sheet", note: "Choose Study Guide / Flashcard / Quiz", isActive: () => state.step === "course" && state.learnToolSheet },
+      { id: "paywall-hidden", label: "Paywall - no price", note: "Experiment group 1", isActive: () => state.step === "course" && state.monetizationSheet && state.studySetVariant === "scheme1" },
+      { id: "paywall-price", label: "Paywall - price", note: "Experiment group 2", isActive: () => state.step === "course" && state.monetizationSheet && state.studySetVariant === "scheme2" }
+    ];
+
+    function seedDemoContext() {
+      clearLoadingTimers();
+      clearGeneratingTimer();
+      state.onboardingGoal = "exam";
+      state.onboardingUserRole = state.onboardingUserRole || "Full-time student";
+      state.onboardingEducationLevel = state.onboardingEducationLevel || "High School";
+      state.onboardingDiscoverySource = state.onboardingDiscoverySource || "Google Search";
+      state.onboardingSubjectArea = state.onboardingSubjectArea || "Math";
+      state.topic = state.topic.trim() || "IELTS";
+      state.onboardingExamDate = state.onboardingExamDate || "2026-07-31";
+      state.onboardingExamDays = state.onboardingExamDays || `${daysUntilExam(state.onboardingExamDate)} days`;
+      state.onboardingDateMonthOffset = 0;
+      state.setupStage = 2;
+      state.loadingPhase = "reviewing";
+      state.loadingRunId += 1;
+      state.outlineTopics = state.outlineTopics.length ? state.outlineTopics : defaultOutlineTopics();
+      state.editingTopicIndex = null;
+      state.setupThinking = "";
+      state.setupExamDateSheet = false;
+      state.uploadingFile = null;
+      state.learnToolSheet = false;
+      state.monetizationSheet = false;
+      state.selectedLearnTool = state.selectedLearnTool || "Study Guide";
+      state.courseView = "topics";
+      state.studyPlanSort = "unit";
+      state.uploadSheet = null;
+    }
+
+    function seedUploadedMaterial() {
+      state.materials = new Set(["Upload Photos/Files"]);
+      state.uploadedFiles = [{
+        name: "Upload Photos/Files",
+        icon: "📎",
+        file: "study-material.pdf"
+      }];
+      state.lastMaterialName = "Upload Photos/Files";
+    }
+
+    function jumpToDemoPage(pageId) {
+      seedDemoContext();
+
+      if (pageId.startsWith("intro-")) {
+        state.step = "onboarding";
+        state.onboardingIntroStage = Number(pageId.split("-")[1]) - 1;
+        state.onboardingStage = 0;
+        state.onboardingDatePicker = false;
+        render();
+        return;
+      }
+
+      if (pageId === "study-goal") {
+        state.step = "onboarding";
+        state.onboardingIntroStage = onboardingIntroPages.length;
+        state.onboardingStage = 0;
+        state.onboardingGoal = "";
+        render();
+        return;
+      }
+
+      const onboardingTargets = {
+        "course-exam": [1, false],
+        "exam-date": [2, false],
+        "date-picker": [2, true],
+        "plan-explainer": [3, false],
+        "social-proof": [4, false]
+      };
+      if (onboardingTargets[pageId]) {
+        const [stage, datePicker] = onboardingTargets[pageId];
+        state.step = "onboarding";
+        state.onboardingIntroStage = onboardingIntroPages.length;
+        state.onboardingStage = stage;
+        state.onboardingDatePicker = datePicker;
+        render();
+        return;
+      }
+
+      if (pageId === "study-home") {
+        state.step = "home";
+      } else if (pageId === "upload-materials") {
+        state.step = "setup";
+        state.materials = new Set();
+        state.uploadedFiles = [];
+      } else if (pageId === "upload-sheet") {
+        state.step = "setup";
+        state.materials = new Set();
+        state.uploadedFiles = [];
+        state.uploadSheet = materialOptions[0];
+      } else if (pageId === "solution-history") {
+        state.step = "solutionHistory";
+      } else if (pageId === "reviewing") {
+        state.step = "prepLoading";
+        seedUploadedMaterial();
+      } else if (pageId === "outline") {
+        state.step = "outline";
+        seedUploadedMaterial();
+      } else if (pageId === "generating") {
+        state.step = "generating";
+        seedUploadedMaterial();
+      } else if (pageId === "study-plan-learn") {
+        state.step = "course";
+      } else if (pageId === "study-plan-priority") {
+        state.step = "course";
+        state.studyPlanSort = "priority";
+      } else if (pageId === "study-plan-test") {
+        state.step = "course";
+        state.courseView = "exams";
+      } else if (pageId === "learn-tool") {
+        state.step = "course";
+        state.learnToolSheet = true;
+      } else if (pageId === "paywall-hidden" || pageId === "paywall-price") {
+        state.step = "course";
+        state.studySetVariant = pageId === "paywall-price" ? "scheme2" : "scheme1";
+        state.monetizationSheet = true;
+      }
+
+      render();
+    }
 
     function onboardingTotalSteps() {
       return onboardingIntroPages.length + 5;
@@ -9486,24 +9715,14 @@
 
     function onboardingExamPage() {
       return `
-        <h1 class="onboarding-title">When is your exam, and how much can you study each day?</h1>
-        <p class="onboarding-copy">Solvely uses your exam date and daily study time to build a realistic prep plan.</p>
+        <h1 class="onboarding-title">When is exam day?</h1>
+        <p class="onboarding-copy">We’ll pace your review, practice, and mock tests around your deadline.</p>
         <div class="onboarding-picker">
           <section class="onboarding-picker-group">
-            <h2>Exam date</h2>
-            <div class="onboarding-chip-grid">
-              ${onboardingExamDayOptions().map((option) => onboardingChip("examDays", option.label, option.value)).join("")}
+            <div class="native-list exam-date-option-list">
+              ${onboardingExamDayOptions().map((option) => onboardingExamDateOption(option)).join("")}
             </div>
             ${onboardingSelectedExamDate()}
-          </section>
-          <section class="onboarding-picker-group">
-            <h2>Daily study time</h2>
-            <div class="onboarding-chip-grid">
-              ${onboardingChip("studyTime", "30 min/day")}
-              ${onboardingChip("studyTime", "45 min/day")}
-              ${onboardingChip("studyTime", "60 min/day")}
-              ${onboardingChip("studyTime", "90 min/day")}
-            </div>
           </section>
         </div>
       `;
@@ -9511,8 +9730,8 @@
 
     function onboardingExamDatePage() {
       return `
-        <h1 class="onboarding-title" style="text-align:center">When is your exam?</h1>
-        <p class="onboarding-copy" style="text-align:center">Pick the exact date so Solvely can pace your daily study plan.</p>
+        <h1 class="onboarding-title" style="text-align:center">When is exam day?</h1>
+        <p class="onboarding-copy" style="text-align:center">We’ll pace your review, practice, and mock tests around your deadline.</p>
         ${examDateCalendar()}
       `;
     }
@@ -9523,6 +9742,17 @@
         : state.onboardingStudyTime === value;
       const handler = type === "examDays" ? "selectExamDays" : "selectStudyTime";
       return `<button class="onboarding-chip ${selected ? "selected" : ""}" type="button" onclick="${handler}(${escapeJsArg(value)})">${escapeHtml(label)}</button>`;
+    }
+
+    function onboardingExamDateOption(option) {
+      const selected = option.value === "custom"
+        ? Boolean(state.onboardingExamDate)
+        : state.onboardingExamDays === option.value && !state.onboardingExamDate;
+      return `
+        <button class="native-list-option ${selected ? "selected" : ""}" type="button" onclick="selectExamDays(${escapeJsArg(option.value)})" aria-pressed="${selected ? "true" : "false"}">
+          <span>${escapeHtml(option.label)}</span>
+        </button>
+      `;
     }
 
     function examDateCalendar(context = "onboarding") {
@@ -9734,7 +9964,7 @@
       return [
         {
           avatar: "E",
-          name: "Emma Chen",
+          name: "Emma Carter",
           role: "(Student, finals prep)",
           title: "Study plans without cramming",
           quote: "I can make study plans and mock exams without cramming. It helps me a lot for exams."
@@ -9754,15 +9984,15 @@
           quote: "It gets you ready even from zero, with quick recaps and tests before the exam."
         },
         {
-          avatar: "M",
-          name: "Maya Johnson",
+          avatar: "L",
+          name: "Liam Johnson",
           role: "(University access exams)",
           title: "Helped with real exam prep",
           quote: "I used it for university access exam prep. It made hard math problems easier to understand."
         },
         {
-          avatar: "T",
-          name: "Taylor Brooks",
+          avatar: "N",
+          name: "Noah Brooks",
           role: "(Study materials uploaded)",
           title: "Turns files into practice",
           quote: "Just upload a file and add details. It turns my materials into a test track."
@@ -9793,7 +10023,7 @@
         const hasExamDate = state.onboardingDatePicker
           ? Boolean(state.onboardingExamDate)
           : Boolean(state.onboardingExamDate || state.onboardingExamDays);
-        return hasExamDate && Boolean(state.onboardingStudyTime);
+        return hasExamDate;
       }
       return true;
     }
@@ -10257,7 +10487,7 @@
       return `
         <p class="plan-input-kicker">Study Materials</p>
         <h1 class="plan-input-title">Upload your study materials</h1>
-        <p class="plan-input-copy">Solvely uses your files or Solution History to spot coverage gaps and prioritize high-impact exam topics.</p>
+        <p class="plan-input-copy">Solvely uses your study materials to spot coverage gaps and prioritize high-impact exam topics.</p>
         ${planEditCard()}
         ${state.uploadedFiles.length ? "" : materialEntryList()}
         ${materialUploadStatus()}
@@ -10571,7 +10801,7 @@
       const sheetCopy = isAdditional
         ? "Upload another input so Solvely can make your exam prep plan more targeted."
         : isUploadFiles
-          ? "Upload photos, notes, textbooks, practice exams, or outlines so Solvely can check coverage before building your plan."
+          ? "Upload problems, notes, textbooks, practice exams, or outlines"
           : "Choose a source. Solvely will read it before drafting your outline.";
       return `
         <div class="sheet-backdrop" onclick="closeMaterialSheet()">
@@ -10584,7 +10814,7 @@
               ${uploadSheetOptions(material).map((option) => `
                 <button class="sheet-option" type="button" onclick="${option.action || `startMaterialUpload('${material.name}', '${option.label}')`}">
                   <span>${option.icon}</span>
-                  <span><strong>${option.label}</strong><small>${option.sub}</small></span>
+                  <span><strong>${option.label}</strong></span>
                 </button>
               `).join("")}
             </div>
@@ -11315,14 +11545,14 @@
     function schemeTwoTopicGroups() {
       return [
         {
-          title: "CELL BIOLOGY",
+          title: "Unit 1 · Cell Biology",
           topics: [
             { rating: 3, tools: ["study", "quiz", "empty"], unitOrder: 0 },
             { rating: 1, tools: ["quiz", "empty", "empty"], unitOrder: 1 }
           ]
         },
         {
-          title: "CELL BIOLOGY",
+          title: "Unit 2 · Cell Biology",
           topics: [
             { rating: 3, tools: ["empty", "empty", "empty"], unitOrder: 2 },
             { rating: 1, tools: ["empty", "empty", "empty"], unitOrder: 3 }
@@ -11341,6 +11571,7 @@
       const currentLabel = state.studyPlanSort === "priority" ? "Priority first" : "Unit order";
       return `
         <div class="scheme-two-sort-row">
+          <h2 class="scheme-two-sort-title">High-Yield Topics</h2>
           <button class="scheme-two-sort-btn" type="button" onclick="setStudyPlanSort('${next}')" aria-label="Current sort: ${currentLabel}. Tap to switch to ${nextLabel}">
             ${studyPlanSortLabel()}
           </button>
@@ -11352,7 +11583,7 @@
       const groups = schemeTwoTopicGroups();
       const sections = state.studyPlanSort === "priority"
         ? [{
-            title: "PRIORITY FIRST",
+            title: "",
             topics: groups
               .flatMap((group) => group.topics.map((topic) => ({ ...topic, sectionTitle: group.title })))
               .sort((a, b) => (b.rating - a.rating) || (a.unitOrder - b.unitOrder))
@@ -11363,7 +11594,7 @@
           ${schemeTwoSortControl()}
           ${sections.map((section) => `
             <section class="scheme-two-section">
-              <h2 class="scheme-two-title">${section.title}</h2>
+              ${section.title ? `<h2 class="scheme-two-title">${section.title}</h2>` : ""}
               ${section.topics.map((topic, index) => schemeTwoTopicCard(topic, index)).join("")}
             </section>
           `).join("")}
@@ -11393,8 +11624,10 @@
     function schemeTwoExamContent() {
       return `
         <div class="scheme-two-list">
+          <div class="scheme-two-sort-row">
+            <h2 class="scheme-two-sort-title">Exam</h2>
+          </div>
           <section class="scheme-two-section">
-            <h2 class="scheme-two-title">EXAMS</h2>
             ${mockExamEntry()}
           </section>
         </div>
@@ -12017,6 +12250,7 @@
     }
 
     window.setStep = setStep;
+    window.jumpToDemoPage = jumpToDemoPage;
     window.startOnboarding = startOnboarding;
     window.setExamCountry = setExamCountry;
     window.setStudySetVariant = setStudySetVariant;
