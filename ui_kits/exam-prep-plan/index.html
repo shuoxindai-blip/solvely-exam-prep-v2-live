@@ -6207,13 +6207,6 @@
       to { opacity: 0; }
     }
 
-    .prediction-footnote {
-      margin: 1px 0 0;
-      color: #595c60;
-      font: 400 12px/18px var(--svy-font-body);
-      text-align: center;
-    }
-
     @media (prefers-reduced-motion: reduce) {
       .prediction-wave path,
       .prediction-mini-card,
@@ -9138,6 +9131,7 @@
       lastMaterialName: "",
       loadingPhase: "reviewing",
       loadingRunId: 0,
+      generatingPurpose: "reviewing",
       outlineTopics: [],
       editingTopicIndex: null,
       editingTopicTitle: "",
@@ -9435,6 +9429,11 @@
     function scheduleGeneratingRedirect() {
       generatingReadyTimer = window.setTimeout(() => {
         if (state.step !== "generating") return;
+        if (state.generatingPurpose === "reviewing") {
+          if (!state.outlineTopics.length) state.outlineTopics = defaultOutlineTopics();
+          setStep("outline");
+          return;
+        }
         setStep("course");
       }, 8200);
     }
@@ -9500,8 +9499,8 @@
         solutionHistory: "setup",
         prepLoading: "setup",
         outline: "setup",
-        generating: "outline",
-        course: "generating"
+        generating: state.generatingPurpose === "reviewing" ? "setup" : "outline",
+        course: "prepLoading"
       }[state.step] || steps[Math.max(0, stepIndex() - 1)].id;
       setStep(previousStep);
     }
@@ -9661,9 +9660,9 @@
       { id: "upload-materials", label: "Upload materials", note: "Exam name/date and upload entry", isActive: () => state.step === "setup" && !state.uploadSheet && !state.setupExamDateSheet },
       { id: "upload-sheet", label: "Upload sheet", note: "iPhone Files / Camera & Photos / History", isActive: () => state.step === "setup" && Boolean(state.uploadSheet) },
       { id: "solution-history", label: "Solution history", note: "Select solved questions", isActive: () => state.step === "solutionHistory" },
-      { id: "reviewing", label: "Reviewing materials", note: "Reading files loading state", isActive: () => state.step === "prepLoading" },
+      { id: "generating", label: "Generating study plan", note: "Professional plan loading", isActive: () => state.step === "generating" && state.generatingPurpose === "reviewing" },
       { id: "outline", label: "Outline preview", note: "Preview card and topics", isActive: () => state.step === "outline" },
-      { id: "generating", label: "Finalizing plan", note: "Generation progress", isActive: () => state.step === "generating" },
+      { id: "reviewing", label: "Finalizing plan", note: "Confirmed outline loading", isActive: () => state.step === "prepLoading" && state.loadingPhase === "finalizing" },
       { type: "group", label: "Study plan and paywall" },
       { id: "study-plan-learn", label: "Study Plan - Learn", note: "All high-yield topics", isActive: () => state.step === "course" && state.courseView === "topics" && !state.learnToolSheet && !state.monetizationSheet && state.studyPlanFilter === "all" },
       { id: "study-plan-core", label: "Core topics", note: "Most likely to appear", isActive: () => state.step === "course" && state.courseView === "topics" && state.studyPlanFilter === "core" && !state.learnToolSheet && !state.monetizationSheet },
@@ -9690,6 +9689,7 @@
       state.setupStage = 2;
       state.loadingPhase = "reviewing";
       state.loadingRunId += 1;
+      state.generatingPurpose = "reviewing";
       state.outlineTopics = state.outlineTopics.length ? state.outlineTopics : defaultOutlineTopics();
       state.editingTopicIndex = null;
       state.setupThinking = "";
@@ -9766,12 +9766,14 @@
         state.step = "solutionHistory";
       } else if (pageId === "reviewing") {
         state.step = "prepLoading";
+        state.loadingPhase = "finalizing";
         seedUploadedMaterial();
       } else if (pageId === "outline") {
         state.step = "outline";
         seedUploadedMaterial();
       } else if (pageId === "generating") {
         state.step = "generating";
+        state.generatingPurpose = "reviewing";
         seedUploadedMaterial();
       } else if (pageId === "study-plan-learn") {
         state.step = "course";
@@ -11476,27 +11478,16 @@
 
     function startPlanReview() {
       clearLoadingTimers();
-      state.step = "prepLoading";
-      state.loadingPhase = "reviewing";
-      state.loadingRunId += 1;
-      const runId = state.loadingRunId;
-      render();
-      loadingTimers.push(window.setTimeout(() => {
-        if (state.loadingRunId !== runId || state.step !== "prepLoading") return;
-        state.loadingPhase = "creating";
-        render();
-        loadingTimers.push(window.setTimeout(() => {
-          if (state.loadingRunId !== runId || state.step !== "prepLoading") return;
-          if (!state.outlineTopics.length) state.outlineTopics = defaultOutlineTopics();
-          setStep("outline");
-        }, 1300));
-      }, 1100));
+      state.generatingPurpose = "reviewing";
+      setStep("generating");
     }
 
     function renderPrepLoading() {
-      const copy = state.loadingPhase === "creating"
-        ? ["Drafting your outline", "Solvely is turning your material into reviewable topics."]
-        : ["Reviewing your study material", "Solvely is reading the files before it drafts a plan."];
+      const copy = state.loadingPhase === "finalizing"
+        ? ["Finalizing your study plan", "Solvely is turning your confirmed outline into Learn and Test steps."]
+        : state.loadingPhase === "creating"
+          ? ["Drafting your outline", "Solvely is turning your material into reviewable topics."]
+          : ["Reviewing your study material", "Solvely is reading the files before it drafts a plan."];
       shell(`
         <div class="prep-loading-wrap">
           <div class="prep-loading-card">
@@ -11652,7 +11643,15 @@
 
     function createCourseFromOutline() {
       state.outlineTopics = outlineSections().flatMap((section) => section.lessons.map((lesson) => lesson[0].replace(/^\d+\.\d+\.\s*/, "")));
-      setStep("generating");
+      clearLoadingTimers();
+      state.loadingPhase = "finalizing";
+      state.loadingRunId += 1;
+      const runId = state.loadingRunId;
+      setStep("prepLoading");
+      loadingTimers.push(window.setTimeout(() => {
+        if (state.loadingRunId !== runId || state.step !== "prepLoading") return;
+        setStep("course");
+      }, 1800));
     }
 
     function topicEditModal() {
@@ -11705,14 +11704,25 @@
     function renderGenerating() {
       const course = escapeHtml(planTopic());
       const examContext = escapeHtml(examContextLabel());
-      const tasks = [
-        "Reading uploaded materials to find what your exam is likely to test",
-        `Linking ${course} to ${examContext}`,
-        "Ranking topics by importance, coverage gaps, and prerequisite dependencies",
-        "Choosing targeted practice types: study guide, flashcards, quiz, or mock exam",
-        "Designing weak-spot loops so missed questions change the next review step",
-        "Finalizing the plan logic: review order, practice checkpoints, and test-day focus"
-      ];
+      const isReviewingMaterials = state.generatingPurpose === "reviewing";
+      const title = isReviewingMaterials ? "Generating your study plan" : "Finalizing your plan";
+      const tasks = isReviewingMaterials
+        ? [
+          "Verifying your materials against expert-reviewed exam patterns",
+          `Mapping ${course} to the 100M+ Question Bank`,
+          "Identifying the topics that matter most for your exam date",
+          "Building textbook-aligned review steps",
+          "Preparing targeted practice for weak areas",
+          "Adding mock exam checkpoints with next-step guidance"
+        ]
+        : [
+          "Reading uploaded materials to find what your exam is likely to test",
+          `Linking ${course} to ${examContext}`,
+          "Ranking topics by importance, coverage gaps, and prerequisite dependencies",
+          "Choosing targeted practice types: study guide, flashcards, quiz, or mock exam",
+          "Designing weak-spot loops so missed questions change the next review step",
+          "Finalizing the plan logic: review order, practice checkpoints, and test-day focus"
+        ];
       shell(`
         <div class="prediction-loading-screen">
           <header class="prediction-topbar">
@@ -11721,7 +11731,7 @@
                 <path d="M15 5L8 12l7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
-            <h1 class="prediction-title">Finalizing your plan</h1>
+            <h1 class="prediction-title">${title}</h1>
           </header>
           <main class="prediction-content" aria-label="Creating exam prediction">
             <section class="prediction-visual" aria-hidden="true">
@@ -11739,7 +11749,6 @@
             <section class="prediction-steps" aria-label="Prediction generation progress">
               ${tasks.map((task, index) => predictionLoadingStep(task, index)).join("")}
             </section>
-            <p class="prediction-footnote">This usually takes a few minutes</p>
           </main>
         </div>
       `, { flow: true, back: false });
