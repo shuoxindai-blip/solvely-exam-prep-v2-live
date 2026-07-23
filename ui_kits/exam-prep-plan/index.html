@@ -11395,7 +11395,7 @@
       const uploadIndex = uploadedMaterialFileCount() + 1;
       const suffix = uploadIndex > 1 ? `-${uploadIndex}` : "";
       const photoBatch = source === "Camera & Photos";
-      const photoSource = photoBatch || source === "Take Photo" || source === "Photo" || source === "Photos" || source === "Photo Library";
+      const photoSource = photoBatch || source === "Photo" || source === "Photos" || source === "Photo Library";
       const baseFile = photoBatch ? "3 photos added" : photoSource ? material.file.replace(/\.[^.]+$/, ".jpg") : material.file;
       const file = {
         name: material.name,
