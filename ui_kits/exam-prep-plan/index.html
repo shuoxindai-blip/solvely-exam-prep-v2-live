@@ -4199,15 +4199,29 @@
       animation: spin 900ms linear infinite;
     }
 
-    .upload-check {
+    .upload-delete-btn {
       width: 22px;
       height: 22px;
       border-radius: 50%;
+      border: 0;
       display: grid;
       place-items: center;
-      background: color-mix(in oklch, var(--svy-secondary) 12%, white);
-      color: var(--blue);
-      font-weight: 900;
+      background: #f2f5f9;
+      color: #7b8797;
+      font-size: 18px;
+      font-weight: 760;
+      line-height: 1;
+      cursor: pointer;
+      transition: background 160ms var(--ease), color 160ms var(--ease), transform 160ms var(--ease);
+    }
+
+    .upload-delete-btn:active {
+      transform: scale(.94);
+    }
+
+    .upload-delete-btn:hover {
+      background: #e8eef6;
+      color: #4d5b6c;
     }
 
     .add-more-btn {
@@ -4220,6 +4234,32 @@
       color: var(--blue);
       font-weight: 760;
       cursor: pointer;
+    }
+
+    .phone-toast {
+      position: absolute;
+      left: 24px;
+      right: 24px;
+      bottom: 96px;
+      z-index: 180;
+      min-height: 42px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 14px;
+      background: rgba(20, 31, 48, .92);
+      color: #fff;
+      font: 760 13px/1.25 var(--svy-font-body);
+      text-align: center;
+      box-shadow: 0 16px 34px rgba(15, 23, 42, .24);
+      animation: toastIn 180ms var(--ease);
+      pointer-events: none;
+    }
+
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .sheet-backdrop {
@@ -9056,6 +9096,10 @@
       { id: "course", label: "Study plan" }
     ];
 
+    const MAX_UPLOAD_FILE_COUNT = 10;
+    const SOLUTION_HISTORY_MATERIAL_NAME = "Solution History";
+    let toastTimer = null;
+
     const state = {
       step: "onboarding",
       onboardingIntroStage: 0,
@@ -9083,6 +9127,7 @@
       setupExamDateSheet: false,
       uploadingFile: null,
       uploadedFiles: [],
+      toastMessage: "",
       examCountry: "United States",
       lastMaterialName: "",
       loadingPhase: "reviewing",
@@ -11030,18 +11075,20 @@
       return `
         <div class="upload-stack">
           ${state.uploadingFile ? uploadFileRow(state.uploadingFile, true) : ""}
-          ${state.uploadedFiles.map((file) => uploadFileRow(file, false)).join("")}
+          ${state.uploadedFiles.map((file, index) => uploadFileRow(file, false, index)).join("")}
           ${state.uploadedFiles.length ? `<button class="add-more-btn" type="button" onclick="openAdditionalMaterialSheet()">+ Add more</button>` : ""}
         </div>
       `;
     }
 
-    function uploadFileRow(file, loading) {
+    function uploadFileRow(file, loading, index = -1) {
       return `
         <div class="upload-file">
           <span class="file-icon">${file.icon}</span>
           <span><strong>${file.file}</strong><small>${loading ? "Uploading to Solvely..." : `${file.name} · Ready for review`}</small></span>
-          <span class="${loading ? "upload-spinner" : "upload-check"}">${loading ? "" : "✓"}</span>
+          ${loading
+            ? `<span class="upload-spinner" aria-label="Uploading"></span>`
+            : `<button class="upload-delete-btn" type="button" onclick="deleteUploadedFile(${index})" aria-label="Remove uploaded file">×</button>`}
         </div>
       `;
     }
@@ -11233,7 +11280,7 @@
     }
 
     function selectMaterial(name) {
-      if (name === "Solution History") {
+      if (name === SOLUTION_HISTORY_MATERIAL_NAME) {
         setStep("solutionHistory");
         return;
       }
@@ -11241,7 +11288,7 @@
     }
 
     function completeSolutionHistorySelection() {
-      const name = "Solution History";
+      const name = SOLUTION_HISTORY_MATERIAL_NAME;
       state.materials.add(name);
       if (!state.uploadedFiles.some((file) => file.name === name)) {
         state.uploadedFiles.push({
@@ -11269,6 +11316,10 @@
     }
 
     function openAdditionalMaterialSheet() {
+      if (uploadedMaterialFileCount() >= MAX_UPLOAD_FILE_COUNT) {
+        showToast(`You can upload up to ${MAX_UPLOAD_FILE_COUNT} files.`);
+        return;
+      }
       state.uploadSheet = {
         name: "Additional Material",
         sub: "Add another input to improve plan targeting",
@@ -11278,8 +11329,34 @@
       render();
     }
 
+    function uploadedMaterialFileCount() {
+      const completedCount = state.uploadedFiles.filter((file) => file.name !== SOLUTION_HISTORY_MATERIAL_NAME).length;
+      const uploadingCount = state.uploadingFile && state.uploadingFile.name !== SOLUTION_HISTORY_MATERIAL_NAME ? 1 : 0;
+      return completedCount + uploadingCount;
+    }
+
+    function showToast(message) {
+      state.toastMessage = message;
+      window.clearTimeout(toastTimer);
+      render();
+      toastTimer = window.setTimeout(() => {
+        state.toastMessage = "";
+        render();
+      }, 2400);
+    }
+
     function closeMaterialSheet() {
       state.uploadSheet = null;
+      render();
+    }
+
+    function deleteUploadedFile(index) {
+      const removed = state.uploadedFiles[index];
+      if (!removed) return;
+      state.uploadedFiles.splice(index, 1);
+      if (!state.uploadedFiles.some((file) => file.name === removed.name)) {
+        state.materials.delete(removed.name);
+      }
       render();
     }
 
@@ -11302,15 +11379,21 @@
     }
 
     function startMaterialUpload(name, source) {
-      if (source === "Solution History") {
+      if (source === SOLUTION_HISTORY_MATERIAL_NAME) {
         openSolutionHistoryFromSheet();
+        return;
+      }
+      if (uploadedMaterialFileCount() >= MAX_UPLOAD_FILE_COUNT) {
+        state.uploadSheet = null;
+        showToast(`You can upload up to ${MAX_UPLOAD_FILE_COUNT} files.`);
         return;
       }
       const isAdditional = name === "Additional Material";
       const material = isAdditional
         ? { name, icon: additionalMaterialIcon(source), file: additionalMaterialFile(source) }
         : materialOptions.find((option) => option.name === name) || materialOptions[0];
-      const suffix = state.uploadedFiles.length ? `-${state.uploadedFiles.length + 1}` : "";
+      const uploadIndex = uploadedMaterialFileCount() + 1;
+      const suffix = uploadIndex > 1 ? `-${uploadIndex}` : "";
       const baseFile = source === "Take Photo" || source === "Photo" || source === "Photos" ? material.file.replace(/\.[^.]+$/, ".jpg") : material.file;
       const file = {
         name: material.name,
@@ -12587,6 +12670,11 @@
       `;
     }
 
+    function renderToast() {
+      if (!state.toastMessage) return;
+      phone.insertAdjacentHTML("beforeend", `<div class="phone-toast" role="status">${escapeHtml(state.toastMessage)}</div>`);
+    }
+
     function render() {
       renderCountrySwitcher();
       renderStudySetSwitcher();
@@ -12601,6 +12689,7 @@
       if (state.step === "result") renderResult(false);
       if (state.step === "map") renderResult(true);
       if (state.step === "course") renderCourse();
+      renderToast();
     }
 
     window.setStep = setStep;
@@ -12634,6 +12723,7 @@
     window.completeSolutionHistorySelection = completeSolutionHistorySelection;
     window.updateMaterialQuestion = updateMaterialQuestion;
     window.openAdditionalMaterialSheet = openAdditionalMaterialSheet;
+    window.deleteUploadedFile = deleteUploadedFile;
     window.openSolutionHistoryFromSheet = openSolutionHistoryFromSheet;
     window.continueSetup = continueSetup;
     window.backSetupStep = backSetupStep;
