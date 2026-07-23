@@ -9653,7 +9653,7 @@
       { type: "group", label: "Study home and materials" },
       { id: "study-home", label: "Study home", note: "For You and banner CTA", isActive: () => state.step === "home" },
       { id: "upload-materials", label: "Upload materials", note: "Exam name/date and upload entry", isActive: () => state.step === "setup" && !state.uploadSheet && !state.setupExamDateSheet },
-      { id: "upload-sheet", label: "Upload sheet", note: "Choose Files / Take Photo / History", isActive: () => state.step === "setup" && Boolean(state.uploadSheet) },
+      { id: "upload-sheet", label: "Upload sheet", note: "iPhone Files / Camera & Photos / History", isActive: () => state.step === "setup" && Boolean(state.uploadSheet) },
       { id: "solution-history", label: "Solution history", note: "Select solved questions", isActive: () => state.step === "solutionHistory" },
       { id: "reviewing", label: "Reviewing materials", note: "Reading files loading state", isActive: () => state.step === "prepLoading" },
       { id: "outline", label: "Outline preview", note: "Preview card and topics", isActive: () => state.step === "outline" },
@@ -11154,33 +11154,33 @@
       if (material.name === "Additional Material") {
         return [
           { label: "Files", sub: "Upload PDFs, documents, notes, or exam outlines", icon: "FILE" },
-          { label: "Photos", sub: "Add photos of worksheets, textbook pages, or notes", icon: "IMG" },
+          { label: "Camera & Photos", sub: "Add photos of worksheets, textbook pages, or notes", icon: "IMG" },
           { label: "Solution History", sub: "Select solved Solvely questions to guide exam prep", icon: "🕘", action: "openSolutionHistoryFromSheet()" }
         ];
       }
       if (material.name === "Upload Photos/Files") {
         return [
-          { label: "Choose Files", sub: "Upload PDFs, documents, notes, or exam outlines", icon: "FILE" },
-          { label: "Take Photo", sub: "Capture a worksheet, textbook page, or notes", icon: "CAM" },
+          { label: "iPhone Files", sub: "Upload PDFs, documents, notes, or exam outlines", icon: "FILE" },
+          { label: "Camera & Photos", sub: "Capture or select one or more study photos", icon: "IMG" },
           { label: "Solution History", sub: "Select solved Solvely questions to guide exam prep", icon: "🕘", action: "openSolutionHistoryFromSheet()" }
         ];
       }
       if (material.name === "Take photos") {
         return [
           { label: "Photo Library", sub: "Pick an existing worksheet image", icon: "IMG" },
-          { label: "Take Photo", sub: "Capture a new page now", icon: "CAM" },
-          { label: "Choose Files", sub: "Attach an image or PDF", icon: "FILE" }
+          { label: "Camera & Photos", sub: "Capture or select one or more study photos", icon: "IMG" },
+          { label: "iPhone Files", sub: "Attach an image or PDF", icon: "FILE" }
         ];
       }
       if (material.name === "Lecture notes") {
         return [
           { label: "Paste Text", sub: "Paste class notes or a transcript", icon: "TXT" },
-          { label: "Choose Files", sub: "Attach notes as PDF, DOC, or TXT", icon: "FILE" }
+          { label: "iPhone Files", sub: "Attach notes as PDF, DOC, or TXT", icon: "FILE" }
         ];
       }
       return [
-        { label: "Choose Files", sub: "Upload PDF, image, or document", icon: "FILE" },
-        { label: "Take Photo", sub: "Capture a page with your camera", icon: "CAM" },
+        { label: "iPhone Files", sub: "Upload PDF, image, or document", icon: "FILE" },
+        { label: "Camera & Photos", sub: "Capture or select one or more study photos", icon: "IMG" },
         { label: "Paste Text", sub: "Paste copied material", icon: "TXT" }
       ];
     }
@@ -11394,10 +11394,12 @@
         : materialOptions.find((option) => option.name === name) || materialOptions[0];
       const uploadIndex = uploadedMaterialFileCount() + 1;
       const suffix = uploadIndex > 1 ? `-${uploadIndex}` : "";
-      const baseFile = source === "Take Photo" || source === "Photo" || source === "Photos" ? material.file.replace(/\.[^.]+$/, ".jpg") : material.file;
+      const photoBatch = source === "Camera & Photos";
+      const photoSource = photoBatch || source === "Take Photo" || source === "Photo" || source === "Photos" || source === "Photo Library";
+      const baseFile = photoBatch ? "3 photos added" : photoSource ? material.file.replace(/\.[^.]+$/, ".jpg") : material.file;
       const file = {
         name: material.name,
-        icon: material.icon,
+        icon: photoSource ? "IMG" : material.icon,
         file: suffix ? baseFile.replace(/(\.[^.]+)$/, `${suffix}$1`) : baseFile
       };
       state.uploadSheet = null;
@@ -11416,6 +11418,7 @@
     function additionalMaterialIcon(source) {
       return {
         Files: "FILE",
+        "Camera & Photos": "IMG",
         Photos: "IMG",
         PDF: "PDF",
         Photo: "IMG",
@@ -11427,6 +11430,7 @@
     function additionalMaterialFile(source) {
       return {
         Files: "additional-material.pdf",
+        "Camera & Photos": "3 photos added",
         Photos: "additional-material.jpg",
         PDF: "additional-material.pdf",
         Photo: "additional-material.jpg",
