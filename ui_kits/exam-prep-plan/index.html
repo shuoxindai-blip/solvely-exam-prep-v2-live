@@ -63,8 +63,7 @@
       margin: 0;
     }
 
-    .country-switcher,
-    .study-set-switcher {
+    .country-switcher {
       display: grid;
       gap: 10px;
       padding: 14px;
@@ -74,8 +73,7 @@
       box-shadow: var(--svy-shadow-card);
     }
 
-    .country-switcher label,
-    .study-set-switcher label {
+    .country-switcher label {
       display: grid;
       gap: 6px;
       color: var(--svy-fg);
@@ -100,42 +98,9 @@
       box-shadow: 0 0 0 3px color-mix(in oklch, var(--svy-primary) 12%, transparent);
     }
 
-    .country-switcher small,
-    .study-set-switcher small {
+    .country-switcher small {
       color: var(--svy-muted);
       font: 700 12px/1.35 var(--svy-font-body);
-    }
-
-    .experiment-note {
-      color: var(--svy-muted);
-      font: 700 11px/1.35 var(--svy-font-body);
-    }
-
-    .variant-toggle {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6px;
-      padding: 4px;
-      border-radius: 16px;
-      background: color-mix(in oklch, var(--svy-bg) 78%, var(--svy-surface));
-      border: 1px solid var(--svy-border);
-    }
-
-    .variant-toggle button {
-      min-height: 36px;
-      border: 0;
-      border-radius: 12px;
-      background: transparent;
-      color: var(--svy-muted);
-      font: 800 12px/1.15 var(--svy-font-body);
-      cursor: pointer;
-      transition: background 160ms var(--ease), color 160ms var(--ease), box-shadow 160ms var(--ease);
-    }
-
-    .variant-toggle button.active {
-      background: var(--svy-surface);
-      color: var(--svy-fg);
-      box-shadow: 0 8px 18px rgba(35, 47, 70, .08);
     }
 
     .flow-rail {
@@ -9073,7 +9038,6 @@
     <aside class="notes">
       <h1>Exam Prep Plan Creation</h1>
       <div class="country-switcher" id="country-switcher"></div>
-      <div class="study-set-switcher" id="study-set-switcher"></div>
       <div class="flow-rail" id="rail"></div>
     </aside>
 
@@ -9147,7 +9111,6 @@
       courseView: "topics",
       studyPlanFilter: "all",
       studyPlanBannerDismissed: false,
-      studySetVariant: "scheme1",
       schemeOneSelectedTopic: "cell-1",
       studySetTodayDone: false
     };
@@ -9248,7 +9211,6 @@
     const phone = document.getElementById("phone");
     const rail = document.getElementById("rail");
     const countrySwitcher = document.getElementById("country-switcher");
-    const studySetSwitcher = document.getElementById("study-set-switcher");
     const visibleSetupStages = [2];
 
     function setStep(step) {
@@ -9542,41 +9504,9 @@
       `;
     }
 
-    function renderStudySetSwitcher() {
-      const variants = [
-        { id: "scheme1", label: "实验组 1", note: "Study Plan 使用卡片方案 · 商业化弹窗不显示价格" },
-        { id: "scheme2", label: "实验组 2", note: "Study Plan 使用卡片方案 · 商业化弹窗显示价格" }
-      ];
-      const activeVariant = variants.find((variant) => variant.id === state.studySetVariant) || variants[0];
-      studySetSwitcher.innerHTML = `
-        <label>
-          Experiment group preview
-          <div class="variant-toggle" role="tablist" aria-label="Preview Study Plan experiment group">
-            ${variants.map((variant) => `
-              <button
-                class="${state.studySetVariant === variant.id ? "active" : ""}"
-                type="button"
-                role="tab"
-                aria-selected="${state.studySetVariant === variant.id}"
-                onclick="setStudySetVariant('${variant.id}')"
-              >${variant.label}</button>
-            `).join("")}
-          </div>
-          <small>${activeVariant.note}</small>
-          <span class="experiment-note">仅用于 demo 预览。正式版两组使用同一个 Study Plan 卡片方案，差异仅在商业化弹窗价格展示。</span>
-        </label>
-      `;
-    }
-
     function setExamCountry(country) {
       if (!countryExamOptions[country]) return;
       state.examCountry = country;
-      render();
-    }
-
-    function setStudySetVariant(variant) {
-      if (!["scheme1", "scheme2"].includes(variant)) return;
-      state.studySetVariant = variant;
       render();
     }
 
@@ -9664,14 +9594,13 @@
       { id: "outline", label: "Outline preview", note: "Preview card and topics", isActive: () => state.step === "outline" },
       { id: "reviewing", label: "Finalizing plan", note: "Confirmed outline loading", isActive: () => state.step === "prepLoading" && state.loadingPhase === "finalizing" },
       { type: "group", label: "Study plan and paywall" },
-      { id: "study-plan-learn", label: "Study Plan - Learn", note: "All high-yield topics", isActive: () => state.step === "course" && state.courseView === "topics" && !state.learnToolSheet && !state.monetizationSheet && state.studyPlanFilter === "all" },
+      { id: "study-plan-learn", label: "Study Plan - Topics", note: "All high-yield topics", isActive: () => state.step === "course" && state.courseView === "topics" && !state.learnToolSheet && !state.monetizationSheet && state.studyPlanFilter === "all" },
       { id: "study-plan-core", label: "Core topics", note: "Most likely to appear", isActive: () => state.step === "course" && state.courseView === "topics" && state.studyPlanFilter === "core" && !state.learnToolSheet && !state.monetizationSheet },
       { id: "study-plan-likely", label: "Likely topics", note: "Likely exam coverage", isActive: () => state.step === "course" && state.courseView === "topics" && state.studyPlanFilter === "likely" && !state.learnToolSheet && !state.monetizationSheet },
       { id: "study-plan-possible", label: "Possible topics", note: "Possible exam coverage", isActive: () => state.step === "course" && state.courseView === "topics" && state.studyPlanFilter === "possible" && !state.learnToolSheet && !state.monetizationSheet },
-      { id: "study-plan-test", label: "Study Plan - Test", note: "Final Mock Exam entry", isActive: () => state.step === "course" && state.courseView === "exams" },
+      { id: "study-plan-test", label: "Study Plan - Mock Exam", note: "Mock exam cards", isActive: () => state.step === "course" && state.courseView === "exams" },
       { id: "learn-tool", label: "Learn tool sheet", note: "Choose Study Guide / Flashcard / Quiz", isActive: () => state.step === "course" && state.learnToolSheet },
-      { id: "paywall-hidden", label: "Paywall - no price", note: "Experiment group 1", isActive: () => state.step === "course" && state.monetizationSheet && state.studySetVariant === "scheme1" },
-      { id: "paywall-price", label: "Paywall - price", note: "Experiment group 2", isActive: () => state.step === "course" && state.monetizationSheet && state.studySetVariant === "scheme2" }
+      { id: "paywall-price", label: "Paywall", note: "Price offer", isActive: () => state.step === "course" && state.monetizationSheet }
     ];
 
     function seedDemoContext() {
@@ -9786,9 +9715,8 @@
       } else if (pageId === "learn-tool") {
         state.step = "course";
         state.learnToolSheet = true;
-      } else if (pageId === "paywall-hidden" || pageId === "paywall-price") {
+      } else if (pageId === "paywall-price") {
         state.step = "course";
-        state.studySetVariant = pageId === "paywall-price" ? "scheme2" : "scheme1";
         state.monetizationSheet = true;
       }
 
@@ -11484,7 +11412,7 @@
 
     function renderPrepLoading() {
       const copy = state.loadingPhase === "finalizing"
-        ? ["Finalizing your study plan", "Solvely is turning your confirmed outline into Learn and Test steps."]
+        ? ["Finalizing your study plan", "Solvely is turning your confirmed outline into Topics and Mock Exam steps."]
         : state.loadingPhase === "creating"
           ? ["Drafting your outline", "Solvely is turning your material into reviewable topics."]
           : ["Reviewing your study material", "Solvely is reading the files before it drafts a plan."];
@@ -11905,8 +11833,8 @@
             </div>
           </header>
           <div class="set-view-tabs" role="tablist" aria-label="Study plan views">
-            <button class="set-view-tab ${state.courseView === "topics" ? "active" : ""}" type="button" onclick="setCourseView('topics')">Learn</button>
-            <button class="set-view-tab ${state.courseView === "exams" ? "active" : ""}" type="button" onclick="setCourseView('exams')">Test</button>
+            <button class="set-view-tab ${state.courseView === "topics" ? "active" : ""}" type="button" onclick="setCourseView('topics')">Topics</button>
+            <button class="set-view-tab ${state.courseView === "exams" ? "active" : ""}" type="button" onclick="setCourseView('exams')">Mock Exam</button>
           </div>
           ${state.courseView === "exams" ? schemeTwoExamContent() : schemeTwoLearnContent(content)}
         </div>
@@ -12493,7 +12421,6 @@
     }
 
     function appendMonetizationSheet() {
-      const shouldShowPrice = state.studySetVariant === "scheme2";
       phone.insertAdjacentHTML("beforeend", `
         <div class="monetization-mask" role="presentation">
           <section class="monetization-sheet" onclick="event.stopPropagation()" role="dialog" aria-label="Unlock premium study plan">
@@ -12540,18 +12467,16 @@
                 ${monetizationBenefit(figmaAssets.paywallPracticeIcon, "Targeted practice for weak areas")}
                 ${monetizationBenefit(figmaAssets.paywallReportIcon, "Mock scores with next-step guidance")}
               </div>
-              ${shouldShowPrice ? `
-                <div class="monetization-price-row" aria-label="Intro price">
-                  <span class="monetization-offer-copy">
-                    <span class="monetization-offer-label">First week offer</span>
-                    <span class="monetization-price-old">$6.99</span>
-                  </span>
-                  <span class="monetization-price-current">
-                    <strong class="monetization-price">$1.99</strong>
-                    <span class="monetization-save">72% OFF</span>
-                  </span>
-                </div>
-              ` : ""}
+              <div class="monetization-price-row" aria-label="Intro price">
+                <span class="monetization-offer-copy">
+                  <span class="monetization-offer-label">First week offer</span>
+                  <span class="monetization-price-old">$6.99</span>
+                </span>
+                <span class="monetization-price-current">
+                  <strong class="monetization-price">$1.99</strong>
+                  <span class="monetization-save">72% OFF</span>
+                </span>
+              </div>
               <button class="monetization-continue" type="button">Unlock My Full Plan</button>
               <button class="monetization-later" type="button" onclick="closeMonetizationSheet()">Maybe Later</button>
             </div>
@@ -12698,7 +12623,6 @@
 
     function render() {
       renderCountrySwitcher();
-      renderStudySetSwitcher();
       renderRail();
       if (state.step === "onboarding") renderOnboarding();
       if (state.step === "home") renderHome();
@@ -12717,7 +12641,6 @@
     window.jumpToDemoPage = jumpToDemoPage;
     window.startOnboarding = startOnboarding;
     window.setExamCountry = setExamCountry;
-    window.setStudySetVariant = setStudySetVariant;
     window.selectOnboardingGoal = selectOnboardingGoal;
     window.selectOnboardingIntroOption = selectOnboardingIntroOption;
     window.selectExamDays = selectExamDays;
