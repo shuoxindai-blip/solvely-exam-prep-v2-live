@@ -2651,6 +2651,14 @@
       color: #3b82ff;
     }
 
+    .figma-set-target {
+      width: 32px;
+      height: 32px;
+      display: block;
+      color: #007aff;
+      filter: drop-shadow(0 5px 10px rgba(0, 122, 255, .16));
+    }
+
     .figma-set-icon.orange {
       width: 25px;
       height: 24px;
@@ -3373,6 +3381,11 @@
       color: #111;
       font: 700 16px/1.25 var(--svy-font-body);
       letter-spacing: -0.01em;
+    }
+
+    .plan-date-trigger strong.placeholder {
+      color: #8d96a3;
+      font-weight: 650;
     }
 
     .plan-date-chevron {
@@ -4905,6 +4918,10 @@
       font: 650 12px/1.4 var(--svy-font-body);
     }
 
+    .outline-algo-banner {
+      margin: 0 0 2px;
+    }
+
     .outline-section {
       display: grid;
       gap: 9px;
@@ -5036,6 +5053,30 @@
       font-size: 12px;
       letter-spacing: 1px;
       font-weight: 850;
+    }
+
+    .topic-priority-tag.core {
+      background: #ffe0e7;
+      border-color: #ffc8d4;
+      color: #e74d77;
+      font-size: 11px;
+      letter-spacing: -.01em;
+    }
+
+    .topic-priority-tag.likely {
+      background: #fff5df;
+      border-color: #f6dda8;
+      color: #a15b05;
+      font-size: 11px;
+      letter-spacing: -.01em;
+    }
+
+    .topic-priority-tag.possible {
+      background: #eef7ff;
+      border-color: #d8edff;
+      color: #1f93e5;
+      font-size: 11px;
+      letter-spacing: -.01em;
     }
 
     .outline-bottom-actions {
@@ -7580,9 +7621,10 @@
 
     .mock-exam-entry {
       display: grid;
-      grid-template-columns: 24px 313px;
-      gap: 8px;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
       align-items: stretch;
+      width: 100%;
     }
 
     .mock-exam-entry .set-progress::after {
@@ -7602,11 +7644,14 @@
     }
 
     .mock-exam-card {
+      width: 100%;
       min-height: 154px;
       border-radius: 22px;
-      border: 1px solid #ffe3a1;
-      background: linear-gradient(180deg, #fff8df 0%, #fff 100%);
-      box-shadow: 0 14px 24px rgba(255, 179, 25, .14), 0 0 2px rgba(0,0,0,.06);
+      border: 1px solid #e4e8ef;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(219,234,255,.95) 0, rgba(232,242,255,.72) 30%, rgba(255,255,255,0) 58%),
+        linear-gradient(135deg, #fff 0%, #fff 60%, #eef6ff 100%);
+      box-shadow: 0 14px 28px rgba(45, 67, 112, .08), 0 0 2px rgba(0,0,0,.04);
       padding: 16px;
       display: grid;
       gap: 12px;
@@ -7619,11 +7664,87 @@
       letter-spacing: -0.01em;
     }
 
+    .mock-exam-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .mock-exam-likelihood {
+      min-height: 24px;
+      border-radius: 999px;
+      padding: 0 9px;
+      display: inline-flex;
+      align-items: center;
+      background: #fff5df;
+      border: 1px solid #f6dda8;
+      color: #a15b05;
+      font: 850 10px/1 var(--svy-font-body);
+      letter-spacing: .02em;
+      white-space: nowrap;
+      text-transform: uppercase;
+    }
+
+    .mock-exam-likelihood.very-high {
+      background: #ffe0e7;
+      border-color: #ffc8d4;
+      color: #e74d77;
+    }
+
     .mock-exam-card p {
       margin: 0;
       color: #5d636b;
       font: 400 14px/20px var(--svy-font-body);
       letter-spacing: -0.01em;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .mock-exam-meta {
+      margin: -2px 0 0;
+      color: #8f939a;
+      font: 700 12px/18px var(--svy-font-body);
+    }
+
+    .mock-exam-state-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 2px;
+    }
+
+    .mock-exam-state {
+      display: grid;
+      gap: 3px;
+      color: #6b7280;
+      font: 700 12px/1.2 var(--svy-font-body);
+    }
+
+    .mock-exam-state span {
+      color: #a8adb5;
+      font-weight: 900;
+    }
+
+    .mock-exam-progress {
+      display: inline-grid;
+      grid-template-columns: auto auto;
+      align-items: center;
+      gap: 5px;
+      color: #6b7280;
+    }
+
+    .mock-exam-progress strong {
+      color: #111;
+      font: 850 22px/1 var(--svy-font-display);
+      letter-spacing: -.02em;
+    }
+
+    .mock-exam-progress span {
+      font: 750 11px/13px var(--svy-font-body);
     }
 
     .mock-exam-tags {
@@ -7927,35 +8048,75 @@
       flex: 0 0 auto;
     }
 
-    .scheme-two-sort-btn {
+    .scheme-two-topic-tabs {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 7px;
+      margin: -4px 0 16px;
+    }
+
+    .scheme-two-topic-tab {
       min-height: 34px;
-      border: 1px solid #dce8f5;
+      border: 1px solid #e6edf5;
       border-radius: 999px;
-      background: #f7fbff;
-      color: #0f5ea8;
-      padding: 0 11px 0 12px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      background: #f8fafc;
+      color: #657184;
+      padding: 0 8px;
       font: 750 12px/1 var(--svy-font-body);
       letter-spacing: -.01em;
-      box-shadow: 0 8px 18px rgba(17, 76, 140, .06);
+      box-shadow: 0 8px 18px rgba(17, 76, 140, .04);
       cursor: pointer;
     }
 
-    .scheme-two-sort-btn::before {
-      content: "";
-      width: 14px;
-      height: 14px;
-      background: url("data:image/svg+xml,%3Csvg width='14' height='14' viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M3 4h8M3 7h5.8M3 10h3.3' stroke='%230A84FF' stroke-width='1.7' stroke-linecap='round'/%3E%3Cpath d='M10.8 7.2v3.2m0 0l1.4-1.4m-1.4 1.4L9.4 9' stroke='%230A84FF' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+    .scheme-two-topic-tab.active {
+      border-color: #0a84ff;
+      background: #eaf4ff;
+      color: #075fb3;
+      box-shadow: 0 10px 20px rgba(10,132,255,.13);
+    }
+
+    .scheme-two-algo-banner {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: start;
+      gap: 9px;
+      margin: -4px 0 16px;
+      border: 1px solid #dcecff;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #f6fbff, #eef7ff);
+      padding: 11px 10px 11px 12px;
+      color: #31516f;
+      box-shadow: 0 10px 22px rgba(10, 132, 255, .07);
+    }
+
+    .scheme-two-algo-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #0a84ff;
+      color: #fff;
+      font: 850 12px/1 var(--svy-font-body);
       flex: 0 0 auto;
     }
 
-    .scheme-two-sort-btn::after {
-      content: "⌄";
-      color: #4b83bd;
-      font: 900 13px/1 var(--svy-font-body);
-      transform: translateY(-1px);
+    .scheme-two-algo-banner p {
+      margin: 0;
+      color: #31516f;
+      font: 650 12px/17px var(--svy-font-body);
+      letter-spacing: -.01em;
+    }
+
+    .scheme-two-algo-close {
+      width: 24px;
+      height: 24px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(255,255,255,.72);
+      color: #6b7280;
+      font: 850 16px/1 var(--svy-font-body);
+      cursor: pointer;
     }
 
     .scheme-two-section {
@@ -8014,16 +8175,36 @@
       gap: 12px;
     }
 
-    .scheme-two-stars {
+    .scheme-two-possibility {
       display: inline-flex;
       align-items: center;
-      gap: 3px;
+      justify-content: center;
+      min-height: 28px;
+      border-radius: 999px;
+      padding: 0 12px;
+      border: 1px solid rgba(10,132,255,.18);
+      background: #edf6ff;
+      color: #0a66c2;
+      font: 800 12px/1 var(--svy-font-body);
+      letter-spacing: -.01em;
     }
 
-    .scheme-two-stars img {
-      width: 18px;
-      height: 18px;
-      display: block;
+    .scheme-two-possibility.core {
+      border-color: #ffc8d4;
+      background: #ffe0e7;
+      color: #e74d77;
+    }
+
+    .scheme-two-possibility.likely {
+      border-color: rgba(245,158,11,.22);
+      background: #fff5df;
+      color: #a15b05;
+    }
+
+    .scheme-two-possibility.possible {
+      border-color: #d8edff;
+      background: #eef7ff;
+      color: #1f93e5;
     }
 
     .scheme-two-tools {
@@ -8864,11 +9045,13 @@
       outlineVariant: 0,
       outlineChangeSheet: false,
       requestChangeText: "",
+      outlineBannerDismissed: false,
       learnToolSheet: false,
       monetizationSheet: false,
       selectedLearnTool: "Study Guide",
       courseView: "topics",
-      studyPlanSort: "unit",
+      studyPlanFilter: "all",
+      studyPlanBannerDismissed: false,
       studySetVariant: "scheme1",
       schemeOneSelectedTopic: "cell-1",
       studySetTodayDone: false
@@ -9381,8 +9564,10 @@
       { id: "outline", label: "Outline preview", note: "Preview card and topics", isActive: () => state.step === "outline" },
       { id: "generating", label: "Finalizing plan", note: "Generation progress", isActive: () => state.step === "generating" },
       { type: "group", label: "Study plan and paywall" },
-      { id: "study-plan-learn", label: "Study Plan - Learn", note: "Unit order topic cards", isActive: () => state.step === "course" && state.courseView === "topics" && !state.learnToolSheet && !state.monetizationSheet && state.studyPlanSort === "unit" },
-      { id: "study-plan-priority", label: "Priority sort", note: "Importance-first topic order", isActive: () => state.step === "course" && state.courseView === "topics" && state.studyPlanSort === "priority" && !state.learnToolSheet && !state.monetizationSheet },
+      { id: "study-plan-learn", label: "Study Plan - Learn", note: "All high-yield topics", isActive: () => state.step === "course" && state.courseView === "topics" && !state.learnToolSheet && !state.monetizationSheet && state.studyPlanFilter === "all" },
+      { id: "study-plan-core", label: "Core topics", note: "Most likely to appear", isActive: () => state.step === "course" && state.courseView === "topics" && state.studyPlanFilter === "core" && !state.learnToolSheet && !state.monetizationSheet },
+      { id: "study-plan-likely", label: "Likely topics", note: "Likely exam coverage", isActive: () => state.step === "course" && state.courseView === "topics" && state.studyPlanFilter === "likely" && !state.learnToolSheet && !state.monetizationSheet },
+      { id: "study-plan-possible", label: "Possible topics", note: "Possible exam coverage", isActive: () => state.step === "course" && state.courseView === "topics" && state.studyPlanFilter === "possible" && !state.learnToolSheet && !state.monetizationSheet },
       { id: "study-plan-test", label: "Study Plan - Test", note: "Final Mock Exam entry", isActive: () => state.step === "course" && state.courseView === "exams" },
       { id: "learn-tool", label: "Learn tool sheet", note: "Choose Study Guide / Flashcard / Quiz", isActive: () => state.step === "course" && state.learnToolSheet },
       { id: "paywall-hidden", label: "Paywall - no price", note: "Experiment group 1", isActive: () => state.step === "course" && state.monetizationSheet && state.studySetVariant === "scheme1" },
@@ -9413,7 +9598,7 @@
       state.monetizationSheet = false;
       state.selectedLearnTool = state.selectedLearnTool || "Study Guide";
       state.courseView = "topics";
-      state.studyPlanSort = "unit";
+      state.studyPlanFilter = "all";
       state.uploadSheet = null;
     }
 
@@ -9489,9 +9674,9 @@
         seedUploadedMaterial();
       } else if (pageId === "study-plan-learn") {
         state.step = "course";
-      } else if (pageId === "study-plan-priority") {
+      } else if (pageId === "study-plan-core" || pageId === "study-plan-likely" || pageId === "study-plan-possible") {
         state.step = "course";
-        state.studyPlanSort = "priority";
+        state.studyPlanFilter = pageId.replace("study-plan-", "");
       } else if (pageId === "study-plan-test") {
         state.step = "course";
         state.courseView = "exams";
@@ -10147,13 +10332,14 @@
               <div class="figma-set-list">
                 <article class="figma-set-card">
                   <span class="figma-set-icon">
-                    <svg class="figma-set-mic" viewBox="0 0 25 25" aria-hidden="true" focusable="false">
-                      <path d="M12.5 2.25c-2.42 0-4.38 1.96-4.38 4.38v5.2c0 2.42 1.96 4.38 4.38 4.38s4.38-1.96 4.38-4.38v-5.2c0-2.42-1.96-4.38-4.38-4.38Z" fill="currentColor"/>
-                      <path d="M4.82 10.35v1.48c0 4.24 3.44 7.68 7.68 7.68s7.68-3.44 7.68-7.68v-1.48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                      <path d="M12.5 19.52v2.7M8.9 22.22h7.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <svg class="figma-set-target" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+                      <circle cx="16" cy="16" r="13" fill="#eaf4ff"></circle>
+                      <circle cx="16" cy="16" r="9" fill="#fff" stroke="currentColor" stroke-width="2"></circle>
+                      <circle cx="16" cy="16" r="4.2" fill="#007aff"></circle>
+                      <path d="M21.3 10.7l5.2-5.2M23.6 5.4h2.9v2.9" fill="none" stroke="#ff9f0a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
                   </span>
-                  <div><h3>Creating a paywall with products and Components</h3><p>2024/12/12, 20:39</p></div>
+                  <div><h3>AP Biology Exam Prep Plan</h3><p>2024/12/12, 20:39</p></div>
                 </article>
                 <article class="figma-set-card">
                   <span class="figma-set-icon orange"><img src="${figmaAssets.setImage}" alt=""></span>
@@ -10220,24 +10406,33 @@
     }
 
     function examPrepPlanLabel() {
-      const examWindow = state.onboardingExamDays || "3 days";
+      const examWindow = prepWindowForDisplay();
       const [amount, unit = "days"] = examWindow.split(" ");
       const singularUnit = unit.replace(/s$/, "");
       return `${amount}-${singularUnit.charAt(0).toUpperCase()}${singularUnit.slice(1)} Prep Plan`;
     }
 
     function examPrepStarterTitle() {
-      const examWindow = state.onboardingExamDays || "3 days";
+      const examWindow = prepWindowForDisplay();
       const [amount, unit = "days"] = examWindow.split(" ");
       const singularUnit = unit.replace(/s$/, "");
       return `${amount}-${singularUnit.charAt(0).toUpperCase()}${singularUnit.slice(1)} Exam Prep Starter`;
     }
 
     function examPrepPlanDuration() {
-      return (state.onboardingExamDays || "3 days")
+      return prepWindowForDisplay()
         .split(" ")
         .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
         .join(" ");
+    }
+
+    function isDailyStudyPath() {
+      return state.onboardingGoal === "daily";
+    }
+
+    function prepWindowForDisplay() {
+      if (isDailyStudyPath() && !state.onboardingExamDays) return "7 days";
+      return state.onboardingExamDays || "3 days";
     }
 
     function toIsoDate(date) {
@@ -10298,10 +10493,16 @@
 
     function setupExamDateValue() {
       if (state.onboardingExamDate) return state.onboardingExamDate;
+      if (!state.onboardingExamDays) return "";
       const today = new Date(2026, 6, 21);
       const amount = Number.parseInt(state.onboardingExamDays, 10);
-      const days = Number.isFinite(amount) && amount > 0 ? amount : 3;
+      if (!Number.isFinite(amount) || amount <= 0) return "";
+      const days = amount;
       return toIsoDate(new Date(today.getFullYear(), today.getMonth(), today.getDate() + days));
+    }
+
+    function setupExamDateDisplay() {
+      return setupExamDateValue() || "Select exam date";
     }
 
     function escapeHtml(value) {
@@ -10512,7 +10713,7 @@
             <span class="plan-edit-icon" aria-hidden="true">📅</span>
             <button class="plan-date-trigger" type="button" onclick="openSetupExamDateSheet()" aria-label="Edit exam date">
               <span>Exam Date</span>
-              <strong>${escapeHtml(setupExamDateValue())}</strong>
+              <strong class="${setupExamDateValue() ? "" : "placeholder"}">${escapeHtml(setupExamDateDisplay())}</strong>
             </button>
             <span class="plan-date-chevron" aria-hidden="true">›</span>
           </div>
@@ -11221,7 +11422,7 @@
     function topicsPreview(sections) {
       return `
         <div class="outline-section-list">
-          <p class="outline-rating-note">Topics are rated by exam importance from 1 to 5 stars. 5 stars means highest priority.</p>
+          ${outlineAlgoBanner()}
           ${sections.map((section, sectionIndex) => `
             <section class="outline-section">
               <div class="outline-section-title">
@@ -11251,23 +11452,39 @@
       `;
     }
 
+    function outlineAlgoBanner() {
+      if (state.outlineBannerDismissed) return "";
+      return `
+        <div class="scheme-two-algo-banner outline-algo-banner" role="note">
+          <span class="scheme-two-algo-icon" aria-hidden="true">i</span>
+          <p>Solvely’s algorithm identified the most exam-likely topics based on your materials and exam format.</p>
+          <button class="scheme-two-algo-close" type="button" onclick="dismissOutlineBanner()" aria-label="Dismiss outline topic explanation">×</button>
+        </div>
+      `;
+    }
+
     function outlinePriorityTag(sectionIndex, lessonIndex) {
-      const ratings = {
-        "0-0": 5,
-        "0-1": 4,
-        "0-2": 3,
-        "1-0": 5,
+      const topicOrders = {
+        "0-0": 0,
+        "0-1": 1,
+        "0-2": 2,
+        "1-0": 3,
         "1-1": 4
       };
-      const rating = ratings[`${sectionIndex}-${lessonIndex}`] || 3;
-      return ["★".repeat(rating), "stars", rating];
+      const meta = topicPossibilityMeta(topicOrders[`${sectionIndex}-${lessonIndex}`] || 0);
+      return [possibilityTagText(meta.possibility, meta.score), meta.possibility];
     }
 
     function priorityTag(tag) {
       const [label, type = ""] = tag;
       const rating = tag[2];
-      const ariaLabel = type === "stars" ? `AI importance rating: ${rating} out of 5 stars` : label;
+      const ariaLabel = type === "stars" ? `AI importance rating: ${rating} out of 5 stars` : `${label} exam possibility`;
       return `<span class="topic-priority-tag ${type}" aria-label="${ariaLabel}">${label}</span>`;
+    }
+
+    function dismissOutlineBanner() {
+      state.outlineBannerDismissed = true;
+      render();
     }
 
     function studySetPriorityTag(tag, status) {
@@ -11547,51 +11764,97 @@
         {
           title: "Unit 1 · Cell Biology",
           topics: [
-            { rating: 3, tools: ["study", "quiz", "empty"], unitOrder: 0 },
-            { rating: 1, tools: ["quiz", "empty", "empty"], unitOrder: 1 }
+            { tools: ["study", "quiz", "empty"], unitOrder: 0 },
+            { tools: ["quiz", "empty", "empty"], unitOrder: 1 }
           ]
         },
         {
           title: "Unit 2 · Cell Biology",
           topics: [
-            { rating: 3, tools: ["empty", "empty", "empty"], unitOrder: 2 },
-            { rating: 1, tools: ["empty", "empty", "empty"], unitOrder: 3 }
+            { tools: ["empty", "empty", "empty"], unitOrder: 2 },
+            { tools: ["empty", "empty", "empty"], unitOrder: 3 },
+            { tools: ["empty", "empty", "empty"], unitOrder: 4 }
           ]
         }
       ];
     }
 
-    function studyPlanSortLabel() {
-      return state.studyPlanSort === "priority" ? "Sort: Priority first" : "Sort: Unit order";
+    function topicPossibilityMeta(order = 0) {
+      const metas = [
+        { possibility: "core", score: 98 },
+        { possibility: "likely", score: 89 },
+        { possibility: "possible", score: 78 },
+        { possibility: "core", score: 94 },
+        { possibility: "likely", score: 84 }
+      ];
+      return metas[order] || { possibility: "possible", score: 72 };
     }
 
-    function schemeTwoSortControl() {
-      const next = state.studyPlanSort === "priority" ? "unit" : "priority";
-      const nextLabel = next === "priority" ? "Priority first" : "Unit order";
-      const currentLabel = state.studyPlanSort === "priority" ? "Priority first" : "Unit order";
+    function studyPlanFilterOptions() {
+      return [
+        { value: "all", label: "All" },
+        { value: "core", label: "Core" },
+        { value: "likely", label: "Likely" },
+        { value: "possible", label: "Possible" }
+      ];
+    }
+
+    function possibilityLabel(value) {
+      const option = studyPlanFilterOptions().find((item) => item.value === value);
+      return option ? option.label : "Possible";
+    }
+
+    function possibilityScore(value, score) {
+      return `${score || topicPossibilityMeta().score}%`;
+    }
+
+    function possibilityScoreValue(topic) {
+      return topicPossibilityMeta(topic.unitOrder).score;
+    }
+
+    function possibilityTagText(value, score) {
+      return `${possibilityScore(value, score)} · ${possibilityLabel(value)}`;
+    }
+
+    function schemeTwoTopicFilter() {
       return `
-        <div class="scheme-two-sort-row">
-          <h2 class="scheme-two-sort-title">High-Yield Topics</h2>
-          <button class="scheme-two-sort-btn" type="button" onclick="setStudyPlanSort('${next}')" aria-label="Current sort: ${currentLabel}. Tap to switch to ${nextLabel}">
-            ${studyPlanSortLabel()}
-          </button>
+        <div class="scheme-two-topic-tabs" role="tablist" aria-label="Topic possibility filter">
+          ${studyPlanFilterOptions().map((option) => `
+            <button
+              class="scheme-two-topic-tab ${state.studyPlanFilter === option.value ? "active" : ""}"
+              type="button"
+              role="tab"
+              aria-selected="${state.studyPlanFilter === option.value}"
+              onclick="setStudyPlanFilter('${option.value}')"
+            >
+              ${option.label}
+            </button>
+          `).join("")}
         </div>
+        ${state.studyPlanBannerDismissed ? "" : `
+          <div class="scheme-two-algo-banner" role="note">
+            <span class="scheme-two-algo-icon" aria-hidden="true">i</span>
+            <p>Solvely’s algorithm identified the most exam-likely topics based on your materials and exam format.</p>
+            <button class="scheme-two-algo-close" type="button" onclick="dismissStudyPlanBanner()" aria-label="Dismiss topic explanation">×</button>
+          </div>
+        `}
       `;
     }
 
     function schemeTwoLearnContent(content) {
       const groups = schemeTwoTopicGroups();
-      const sections = state.studyPlanSort === "priority"
-        ? [{
+      const sections = state.studyPlanFilter === "all"
+        ? groups
+        : [{
             title: "",
             topics: groups
-              .flatMap((group) => group.topics.map((topic) => ({ ...topic, sectionTitle: group.title })))
-              .sort((a, b) => (b.rating - a.rating) || (a.unitOrder - b.unitOrder))
-          }]
-        : groups;
+              .flatMap((group) => group.topics)
+              .filter((topic) => topicPossibilityMeta(topic.unitOrder).possibility === state.studyPlanFilter)
+              .sort((a, b) => (possibilityScoreValue(b) - possibilityScoreValue(a)) || (a.unitOrder - b.unitOrder))
+          }];
       return `
         <div class="scheme-two-list">
-          ${schemeTwoSortControl()}
+          ${schemeTwoTopicFilter()}
           ${sections.map((section) => `
             <section class="scheme-two-section">
               ${section.title ? `<h2 class="scheme-two-title">${section.title}</h2>` : ""}
@@ -11603,7 +11866,8 @@
     }
 
     function schemeTwoTopicCard(topic, index) {
-      const rating = topic.rating || 1;
+      const meta = topicPossibilityMeta(topic.unitOrder);
+      const possibility = meta.possibility;
       const tools = topic.tools || ["empty", "empty", "empty"];
       return `
         <button class="scheme-two-card" type="button" onclick="openLearnToolSheet()" aria-label="Choose learning tool for Verbs & Conjugations">
@@ -11612,7 +11876,7 @@
             <p>How cells grow and reproduce, from mitosis to meiosis</p>
           </div>
           <div class="scheme-two-card-foot">
-            <span class="scheme-two-stars" aria-label="${rating} star priority">${studySetStarRow(rating)}</span>
+            <span class="scheme-two-possibility ${possibility}" aria-label="${meta.score}% ${possibilityLabel(possibility)} possibility">${possibilityTagText(possibility, meta.score)}</span>
             <span class="scheme-two-tools" aria-label="Available study tools">
               ${tools.map((tool) => schemeTwoToolIcon(tool)).join("")}
             </span>
@@ -11624,9 +11888,6 @@
     function schemeTwoExamContent() {
       return `
         <div class="scheme-two-list">
-          <div class="scheme-two-sort-row">
-            <h2 class="scheme-two-sort-title">Exam</h2>
-          </div>
           <section class="scheme-two-section">
             ${mockExamEntry()}
           </section>
@@ -11639,8 +11900,13 @@
       render();
     }
 
-    function setStudyPlanSort(sort) {
-      state.studyPlanSort = sort === "priority" ? "priority" : "unit";
+    function setStudyPlanFilter(filter) {
+      state.studyPlanFilter = studyPlanFilterOptions().some((option) => option.value === filter) ? filter : "all";
+      render();
+    }
+
+    function dismissStudyPlanBanner() {
+      state.studyPlanBannerDismissed = true;
       render();
     }
 
@@ -11954,26 +12220,61 @@
     }
 
     function mockExamEntry() {
+      const exams = [
+        {
+          title: "Mock Exam 1",
+          likelihood: "≥90% LIKELY",
+          likelihoodClass: "very-high",
+          description: "Must-know questions that mirror the real test. Get score report and weak spot feedback.",
+          meta: "37 mins · 28 Questions · Predicted likelihood: ≥90%",
+          state: "not-started",
+          cta: "Start exam"
+        },
+        {
+          title: "Mock Exam 2",
+          likelihood: "80–90% LIKELY",
+          likelihoodClass: "",
+          description: "Highly likely questions for focused practice. Continue for score insights.",
+          meta: "36 mins · 22 Questions · Predicted likelihood: 80–90%",
+          state: "in-progress",
+          cta: "Continue"
+        }
+      ];
+      return exams.map((exam) => mockExamCard(exam)).join("");
+    }
+
+    function mockExamCard(exam) {
+      const stateBlock = exam.state === "in-progress"
+        ? `
+          <div class="mock-exam-state">
+            <span class="mock-exam-progress"><strong>0</strong><span>/22<br>Questions</span></span>
+            <strong>In progress · Jul 23, 2026</strong>
+          </div>
+        `
+        : `
+          <div class="mock-exam-state">
+            <span>—</span>
+            <strong>Not started</strong>
+          </div>
+        `;
       return `
         <article class="mock-exam-entry">
-          <div class="set-progress"><span class="mock-exam-marker">★</span></div>
           <div class="mock-exam-card">
-            <div>
-              <h3>Final Mock Exam</h3>
-              <p>Take a full-length mock exam that mirrors the real test, then get your final readiness analysis.</p>
+            <div class="mock-exam-head">
+              <h3>${exam.title}</h3>
             </div>
-            <div class="mock-exam-tags" aria-label="Mock exam outputs">
-              <span>Full score report</span>
-              <span>Weak spot breakdown</span>
-              <span>Tutor feedback</span>
+            <p>${exam.description}</p>
+            <div class="mock-exam-meta">${exam.meta}</div>
+            <div class="mock-exam-state-row">
+              ${stateBlock}
+              <button class="mock-exam-btn" type="button">
+                ${exam.cta}
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M5 12h12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+                  <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
             </div>
-            <button class="mock-exam-btn" type="button">
-              Start
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M5 12h12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
-                <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
           </div>
         </article>
       `;
