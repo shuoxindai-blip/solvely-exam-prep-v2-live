@@ -12519,9 +12519,9 @@
                 </div>
               </div>
               <div class="monetization-benefits">
-                ${monetizationBenefit(figmaAssets.paywallPlanIcon, "Daily Study Plan", "A personalized schedule based on your exam date and progress.")}
-                ${monetizationBenefit(figmaAssets.paywallPracticeIcon, "Weak Area Practice", "Targeted practice based on your mistakes.")}
-                ${monetizationBenefit(figmaAssets.paywallReportIcon, "Pass Prediction Report", "Realistic mock tests with score prediction and next steps.")}
+                ${monetizationBenefit(figmaAssets.paywallPlanIcon, "Personalized plan for your exam date.")}
+                ${monetizationBenefit(figmaAssets.paywallPracticeIcon, "Targeted practice for weak areas.")}
+                ${monetizationBenefit(figmaAssets.paywallReportIcon, "Mock scores with next-step guidance.")}
               </div>
               ${shouldShowPrice ? `
                 <div class="monetization-price-row" aria-label="Intro price">
@@ -12543,13 +12543,13 @@
       `);
     }
 
-    function monetizationBenefit(icon, title, copy) {
+    function monetizationBenefit(icon, title, copy = "") {
       return `
         <div class="monetization-benefit">
           <span class="monetization-benefit-icon"><img src="${icon}" alt=""></span>
           <span class="monetization-benefit-copy">
             <strong>${title}</strong>
-            <span>${copy}</span>
+            ${copy ? `<span>${copy}</span>` : ""}
           </span>
           <img class="monetization-check" src="${figmaAssets.paywallCheckIcon}" alt="">
         </div>
