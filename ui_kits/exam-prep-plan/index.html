@@ -7919,6 +7919,27 @@
       text-wrap: balance;
     }
 
+    .mock-exam-brief {
+      display: grid;
+      gap: 6px;
+    }
+
+    .mock-exam-brief h2 {
+      margin: 0;
+      color: #111827;
+      font: 900 22px/1.08 var(--svy-font-display);
+      letter-spacing: -.04em;
+      text-wrap: balance;
+    }
+
+    .mock-exam-brief p {
+      margin: 0;
+      color: #4d5b6f;
+      font: 680 13px/1.36 var(--svy-font-body);
+      letter-spacing: -.012em;
+      text-wrap: pretty;
+    }
+
     .mock-exam-visual {
       position: relative;
       z-index: 1;
@@ -8208,6 +8229,38 @@
       margin-top: 2px;
       color: #6b7280;
       font: 600 12px/1.32 var(--svy-font-body);
+    }
+
+    .mock-exam-cta-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0;
+      padding: 11px 0 10px;
+      border-top: 1px solid #e7edf5;
+      border-bottom: 1px solid #e7edf5;
+    }
+
+    .mock-exam-cta-stat {
+      display: grid;
+      justify-items: center;
+      gap: 3px;
+      text-align: center;
+    }
+
+    .mock-exam-cta-stat + .mock-exam-cta-stat {
+      border-left: 1px solid #e7edf5;
+    }
+
+    .mock-exam-cta-stat span {
+      color: #6d7788;
+      font: 760 10.5px/1.1 var(--svy-font-body);
+      letter-spacing: -.01em;
+    }
+
+    .mock-exam-cta-stat strong {
+      color: #111827;
+      font: 900 21px/1 var(--svy-font-display);
+      letter-spacing: -.035em;
     }
 
     .mock-exam-primary {
@@ -12795,7 +12848,10 @@
     function mockExamEntry() {
       return `
         <section class="mock-exam-landing" aria-label="Mock Exam preview">
-          <p class="mock-exam-lede">Must-know questions that mirror the real test, plus score report and weak spot feedback.</p>
+          <div class="mock-exam-brief">
+            <h2>Mock exam built from your materials</h2>
+            <p>Must-know questions that mirror the real test, plus score report and weak spot feedback after completion.</p>
+          </div>
           <div class="mock-exam-landing-hero">
             <div class="mock-exam-visual" aria-hidden="true">
               <svg class="mock-exam-screenshot" viewBox="0 0 900 340" role="img" aria-label="Uploaded materials become a predicted mock exam report">
@@ -12878,7 +12934,7 @@
             </div>
           </div>
           <div class="mock-exam-after">
-            <h3>What you get after the exam</h3>
+            <h3>After you finish, Solvely shows</h3>
             <div class="mock-exam-after-list">
               <div class="mock-exam-after-item">
                 <span class="mock-exam-after-icon">
@@ -12913,6 +12969,20 @@
                 <span class="mock-exam-after-copy">
                   <strong>Next-step plan</strong>
                 </span>
+              </div>
+            </div>
+            <div class="mock-exam-cta-stats" aria-label="Mock exam details">
+              <div class="mock-exam-cta-stat">
+                <span>Exam duration</span>
+                <strong>37m</strong>
+              </div>
+              <div class="mock-exam-cta-stat">
+                <span>Likelihood</span>
+                <strong>91%</strong>
+              </div>
+              <div class="mock-exam-cta-stat">
+                <span>Questions</span>
+                <strong>28</strong>
               </div>
             </div>
             <button class="mock-exam-primary" type="button" onclick="startMockExamLoading('Mock Exam')">
