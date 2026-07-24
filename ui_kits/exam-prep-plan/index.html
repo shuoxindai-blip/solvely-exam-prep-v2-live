@@ -3294,35 +3294,72 @@
       letter-spacing: -0.01em;
     }
 
-    .course-shortcut-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
+    .course-option-list,
+    .course-search-results {
+      display: grid;
+      gap: 9px;
     }
 
-    .course-shortcut-chip {
-      min-height: 34px;
+    .course-option {
+      min-height: 48px;
       border: 1px solid #dde8f4;
-      border-radius: 999px;
+      border-radius: 16px;
       background: #fff;
       color: #1d2430;
-      padding: 0 13px;
-      font: 700 13px/1 var(--svy-font-body);
+      padding: 0 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      text-align: left;
+      font: 760 14px/1.2 var(--svy-font-body);
       letter-spacing: -0.01em;
       cursor: pointer;
-      box-shadow: 0 6px 14px rgba(45, 67, 112, .04);
+      box-shadow: 0 8px 18px rgba(45, 67, 112, .05);
       transition: border-color 160ms var(--ease), background 160ms var(--ease), color 160ms var(--ease), transform 160ms var(--ease);
     }
 
-    .course-shortcut-chip:active {
+    .course-option:active {
       transform: scale(.97);
     }
 
-    .course-shortcut-chip.selected {
+    .course-option.selected {
       border-color: #007aff;
       background: #eef6ff;
       color: #007aff;
       box-shadow: 0 8px 18px rgba(0, 122, 255, .1);
+    }
+
+    .course-other-wrap {
+      position: relative;
+      z-index: 32;
+      margin-top: 2px;
+    }
+
+    .course-other-card {
+      margin: 0;
+    }
+
+    .course-search-results {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(100% + 8px);
+      z-index: 42;
+      margin: 0;
+      padding: 8px;
+      border: 1px solid #dbe8f6;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, .98);
+      box-shadow: 0 18px 38px rgba(45, 67, 112, .16);
+      backdrop-filter: blur(10px);
+    }
+
+    .course-search-results .course-option {
+      min-height: 42px;
+      border-radius: 14px;
+      background: #f8fbff;
+      font-size: 13px;
     }
 
     .wizard-input-card.prefilled-topic-card {
@@ -4979,20 +5016,25 @@
 
     .outline-section {
       display: grid;
-      gap: 9px;
+      gap: 10px;
+      border: 1px solid var(--svy-border);
+      border-radius: 20px;
+      background: rgba(255,255,255,.96);
+      padding: 14px 16px;
+      box-shadow: 0 10px 24px rgba(45, 67, 112, .06);
     }
 
     .outline-section-title {
-      min-height: 68px;
-      border: 1px solid var(--svy-border);
-      border-radius: 20px;
-      background: color-mix(in oklch, var(--svy-secondary) 8%, white);
-      padding: 14px 16px;
+      min-height: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      padding: 0;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 24px;
+      grid-template-columns: minmax(0, 1fr);
       align-items: center;
       gap: 8px;
-      box-shadow: 0 10px 24px rgba(45, 67, 112, .06);
+      box-shadow: none;
     }
 
     .outline-section-title h2 {
@@ -5011,21 +5053,26 @@
     }
 
     .outline-lesson {
-      min-height: 48px;
-      border: 1px solid var(--svy-border);
-      border-radius: 16px;
-      background: rgba(255,255,255,.96);
-      padding: 0 14px;
+      min-height: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      padding: 10px 0 0;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 22px;
-      align-items: center;
+      grid-template-columns: minmax(0, 1fr);
+      align-items: start;
       gap: 8px;
       color: var(--svy-fg);
       font-size: 14px;
       font-weight: 540;
       text-align: left;
-      box-shadow: 0 6px 16px rgba(45, 67, 112, .045);
+      box-shadow: none;
       transition: background 160ms var(--ease), border-color 160ms var(--ease), box-shadow 160ms var(--ease);
+    }
+
+    .outline-lesson + .outline-lesson {
+      border-top: 1px solid #edf2f8;
+      padding-top: 12px;
     }
 
     .outline-lesson-main {
@@ -5044,18 +5091,7 @@
 
     .outline-lesson-title {
       min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .outline-lesson.expanded {
-      min-height: 78px;
-      align-items: start;
-      padding-top: 13px;
-      background: #fff;
-      border-color: color-mix(in oklch, var(--svy-secondary) 34%, var(--svy-border));
-      box-shadow: 0 14px 28px rgba(45, 67, 112, .08);
+      white-space: normal;
     }
 
     .outline-lesson p {
@@ -7833,6 +7869,364 @@
       box-shadow: 0 10px 22px rgba(0, 122, 255, .22);
     }
 
+    .mock-exam-landing {
+      display: grid;
+      gap: 12px;
+      padding: 0;
+      border-radius: 0;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+    }
+
+    .mock-exam-landing-hero {
+      position: relative;
+      overflow: visible;
+      border-radius: 0;
+      padding: 0;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+    }
+
+    .mock-exam-landing-hero h2 {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      max-width: 284px;
+      color: #0e1b3d;
+      font: 860 27px/1.05 var(--svy-font-display);
+      letter-spacing: -.04em;
+      text-wrap: balance;
+    }
+
+    .mock-exam-landing-hero p {
+      position: relative;
+      z-index: 1;
+      margin: 9px 0 0;
+      max-width: 292px;
+      color: #5b6472;
+      font: 650 13px/1.45 var(--svy-font-body);
+      letter-spacing: -.01em;
+    }
+
+    .mock-exam-lede {
+      margin: 0;
+      max-width: 318px;
+      color: #273449;
+      font: 780 14.5px/1.26 var(--svy-font-body);
+      letter-spacing: -.02em;
+      text-wrap: balance;
+    }
+
+    .mock-exam-visual {
+      position: relative;
+      z-index: 1;
+      min-height: 0;
+      margin-top: 0;
+      border-radius: 0;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      overflow: visible;
+      display: block;
+      padding: 0;
+    }
+
+    .mock-exam-screenshot {
+      display: block;
+      width: calc(100% + 28px);
+      height: auto;
+      margin: -2px -14px -4px;
+      filter: drop-shadow(0 14px 26px rgba(38, 74, 124, .12));
+    }
+
+    .mock-doc-stack {
+      position: relative;
+      left: auto;
+      top: auto;
+      width: 110px;
+      height: 112px;
+      margin-left: 4px;
+    }
+
+    .mock-doc {
+      position: absolute;
+      inset: 0;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid #dbe5f2;
+      box-shadow: 0 10px 18px rgba(42, 66, 105, .12);
+      transform: rotate(-9deg) translate(-8px, 4px);
+    }
+
+    .mock-doc:nth-child(2) {
+      transform: rotate(-3deg) translate(3px, -2px);
+    }
+
+    .mock-doc:nth-child(3) {
+      background: #1f2732;
+      border-color: #293443;
+      color: #fff;
+      transform: rotate(4deg) translate(19px, 10px);
+      display: grid;
+      align-content: center;
+      justify-items: start;
+      padding: 12px;
+      gap: 5px;
+    }
+
+    .mock-doc-line {
+      height: 4px;
+      border-radius: 99px;
+      background: #d7e2ef;
+    }
+
+    .mock-doc-line.short {
+      width: 48px;
+    }
+
+    .mock-doc-line.long {
+      width: 72px;
+    }
+
+    .mock-doc:nth-child(3) strong {
+      font: 850 12px/1.1 var(--svy-font-display);
+      letter-spacing: -.02em;
+    }
+
+    .mock-doc:nth-child(3) span {
+      width: 54px;
+      height: 3px;
+      border-radius: 99px;
+      background: rgba(255,255,255,.42);
+    }
+
+    .mock-flow-arrow {
+      position: absolute;
+      left: 116px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 31px;
+      height: 31px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #fff;
+      color: #1677f2;
+      border: 1px solid #d9e7fb;
+      box-shadow: 0 8px 16px rgba(22, 119, 242, .14);
+      font: 900 18px/1 var(--svy-font-display);
+    }
+
+    .mock-report-preview {
+      position: relative;
+      right: auto;
+      top: auto;
+      width: 100%;
+      min-height: 0;
+      border-radius: 16px;
+      background: #fff;
+      border: 1px solid #dfe8f3;
+      box-shadow: 0 16px 26px rgba(42, 66, 105, .14);
+      padding: 12px;
+      display: grid;
+      gap: 7px;
+    }
+
+    .mock-report-preview h3 {
+      margin: 0;
+      color: #17223a;
+      font: 850 11px/1.2 var(--svy-font-body);
+      letter-spacing: -.01em;
+    }
+
+    .mock-report-kpis {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+
+    .mock-report-kpis span {
+      min-height: 28px;
+      border-radius: 9px;
+      background: #eef6ff;
+      color: #1677f2;
+      display: grid;
+      place-items: center;
+      gap: 2px;
+      padding: 4px 2px;
+      font: 850 10px/1 var(--svy-font-body);
+    }
+
+    .mock-report-kpis strong {
+      color: #1677f2;
+      font: 900 11px/1 var(--svy-font-body);
+    }
+
+    .mock-report-kpis em {
+      color: #5f789e;
+      font: 780 7.5px/1 var(--svy-font-body);
+      font-style: normal;
+    }
+
+    .mock-report-bars {
+      display: grid;
+      gap: 5px;
+    }
+
+    .mock-report-bars span {
+      height: 5px;
+      border-radius: 99px;
+      background: linear-gradient(90deg, #1677f2 var(--bar), #dbeafe var(--bar));
+    }
+
+    .mock-exam-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      padding: 1px 0 2px;
+    }
+
+    .mock-exam-metric {
+      min-height: 50px;
+      border-radius: 0;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      padding: 6px 8px;
+      display: grid;
+      align-content: center;
+      gap: 4px;
+      text-align: center;
+    }
+
+    .mock-exam-metric + .mock-exam-metric {
+      border-left: 1px solid rgba(125, 150, 184, .18);
+    }
+
+    .mock-exam-metric strong {
+      color: #111827;
+      font: 900 22px/1 var(--svy-font-display);
+      letter-spacing: -.035em;
+    }
+
+    .mock-exam-metric span {
+      color: #7b8491;
+      font: 750 11px/1.18 var(--svy-font-body);
+    }
+
+    .mock-exam-summary {
+      border-radius: 20px;
+      background: #fff;
+      border: 1px solid #e4eaf2;
+      box-shadow: 0 12px 22px rgba(45, 67, 112, .06);
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .mock-exam-summary p {
+      margin: 0;
+      color: #273449;
+      font: 720 12.5px/1.32 var(--svy-font-body);
+      letter-spacing: -.01em;
+    }
+
+    .mock-exam-summary span {
+      color: #6b7280;
+      font: 760 12px/1.3 var(--svy-font-body);
+      letter-spacing: -.01em;
+    }
+
+    .mock-exam-after {
+      border-radius: 0;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      padding: 0;
+      display: grid;
+      gap: 8px;
+      margin-top: 1px;
+    }
+
+    .mock-exam-after h3 {
+      margin: 0;
+      color: #111827;
+      font: 850 15px/1.15 var(--svy-font-display);
+      letter-spacing: -.03em;
+    }
+
+    .mock-exam-after-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 7px;
+    }
+
+    .mock-exam-after-item {
+      display: grid;
+      grid-template-columns: 1fr;
+      justify-items: center;
+      gap: 5px;
+      align-items: start;
+      min-height: 50px;
+      border-radius: 0;
+      background: transparent;
+      border: 0;
+      padding: 0 4px;
+      box-shadow: none;
+    }
+
+    .mock-exam-after-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: #eef6ff;
+      color: #1677f2;
+    }
+
+    .mock-exam-after-icon svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .mock-exam-after-copy strong {
+      display: block;
+      color: #17223a;
+      font: 820 10.5px/1.14 var(--svy-font-body);
+      letter-spacing: -.01em;
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    .mock-exam-after-copy span {
+      display: block;
+      margin-top: 2px;
+      color: #6b7280;
+      font: 600 12px/1.32 var(--svy-font-body);
+    }
+
+    .mock-exam-primary {
+      width: 100%;
+      min-height: 48px;
+      border: 0;
+      border-radius: 999px;
+      background: #007aff;
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 20px;
+      font: 750 17px/1 "Poppins", var(--svy-font-display);
+      cursor: pointer;
+      box-shadow: 0 14px 26px rgba(0, 122, 255, .24);
+    }
+
     .figma-set-screen {
       padding: 0 20px 34px;
       background: #f6f8fb;
@@ -8223,6 +8617,13 @@
       gap: 12px;
     }
 
+    .scheme-two-card-progress {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
     .scheme-two-possibility {
       display: inline-flex;
       align-items: center;
@@ -8258,36 +8659,62 @@
     .scheme-two-tools {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
     }
 
     .scheme-two-tool {
-      width: 36px;
-      height: 36px;
+      --tool-progress: 0;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       border: 0;
-      background: transparent;
+      background: conic-gradient(#1677f2 calc(var(--tool-progress) * 1%), #e5edf7 0);
+      color: #8a96a8;
       display: grid;
       place-items: center;
       position: relative;
+      font: 850 11px/1 var(--svy-font-body);
+      transition: background 160ms var(--ease), border-color 160ms var(--ease), color 160ms var(--ease), box-shadow 160ms var(--ease);
     }
 
-    .scheme-two-tool img {
+    .scheme-two-tool::before {
+      content: "";
       position: absolute;
-      inset: 0;
-      width: 36px;
-      height: 36px;
+      inset: 4px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: inset 0 0 0 1px rgba(139, 151, 169, .14);
+    }
+
+    .scheme-two-tool.completed {
+      --tool-progress: 100;
+      color: #1677f2;
+      box-shadow: 0 8px 18px rgba(22, 119, 242, .12);
+    }
+
+    .scheme-two-tool.partial {
+      color: #1677f2;
+      box-shadow: 0 8px 18px rgba(22, 119, 242, .08);
+    }
+
+    .scheme-two-tool.empty {
+      opacity: .96;
+      background: conic-gradient(#c9d4e3 calc(var(--tool-progress) * 1%), #e5edf7 0);
+      color: #9aa6b7;
+    }
+
+    .scheme-two-tool svg {
+      width: 18px;
+      height: 18px;
       display: block;
+      position: relative;
+      z-index: 1;
     }
 
-    .scheme-two-tool img.scheme-two-tool-glyph {
-      inset: 8px;
-      width: 20px;
-      height: 20px;
-    }
-
-    .scheme-two-tool.empty img {
-      opacity: .98;
+    .scheme-two-tool.empty::after {
+      content: attr(data-label);
+      position: relative;
+      z-index: 1;
     }
 
     .learn-tool-mask {
@@ -9108,6 +9535,7 @@
       learnToolSheet: false,
       monetizationSheet: false,
       selectedLearnTool: "Study Guide",
+      mockExamTitle: "",
       courseView: "topics",
       studyPlanFilter: "all",
       studyPlanBannerDismissed: false,
@@ -9119,6 +9547,7 @@
     let generatingTimer = null;
     let generatingReadyTimer = null;
     let generatingScrollTimers = [];
+    let mockExamLoadingTimer = null;
 
     const materialOptions = [
       { name: "Upload Photos/Files", sub: "Add slides, textbooks, practice exams, notes, outlines, or syllabus.", icon: "📎", file: "study-material.pdf" },
@@ -9215,6 +9644,7 @@
 
     function setStep(step) {
       if (step !== "prepLoading") clearLoadingTimers();
+      if (step !== "mockExamLoading") clearMockExamLoadingTimer();
       clearGeneratingTimer();
       state.step = step;
       render();
@@ -9388,6 +9818,13 @@
       generatingScrollTimers = [];
     }
 
+    function clearMockExamLoadingTimer() {
+      if (mockExamLoadingTimer) {
+        window.clearTimeout(mockExamLoadingTimer);
+        mockExamLoadingTimer = null;
+      }
+    }
+
     function scheduleGeneratingRedirect() {
       generatingReadyTimer = window.setTimeout(() => {
         if (state.step !== "generating") return;
@@ -9460,8 +9897,9 @@
         setup: "home",
         solutionHistory: "setup",
         prepLoading: "setup",
-        outline: "setup",
+        outline: "home",
         generating: state.generatingPurpose === "reviewing" ? "setup" : "outline",
+        mockExamLoading: "course",
         course: "prepLoading"
       }[state.step] || steps[Math.max(0, stepIndex() - 1)].id;
       setStep(previousStep);
@@ -9599,6 +10037,7 @@
       { id: "study-plan-likely", label: "Likely topics", note: "Likely exam coverage", isActive: () => state.step === "course" && state.courseView === "topics" && state.studyPlanFilter === "likely" && !state.learnToolSheet && !state.monetizationSheet },
       { id: "study-plan-possible", label: "Possible topics", note: "Possible exam coverage", isActive: () => state.step === "course" && state.courseView === "topics" && state.studyPlanFilter === "possible" && !state.learnToolSheet && !state.monetizationSheet },
       { id: "study-plan-test", label: "Study Plan - Mock Exam", note: "Mock exam cards", isActive: () => state.step === "course" && state.courseView === "exams" },
+      { id: "mock-exam-loading", label: "Mock Exam loading", note: "Generating predicted exam", isActive: () => state.step === "mockExamLoading" },
       { id: "learn-tool", label: "Learn tool sheet", note: "Choose Study Guide / Flashcard / Quiz", isActive: () => state.step === "course" && state.learnToolSheet },
       { id: "paywall-price", label: "Paywall", note: "Price offer", isActive: () => state.step === "course" && state.monetizationSheet }
     ];
@@ -9712,6 +10151,11 @@
       } else if (pageId === "study-plan-test") {
         state.step = "course";
         state.courseView = "exams";
+      } else if (pageId === "mock-exam-loading") {
+        state.step = "mockExamLoading";
+        state.courseView = "exams";
+        state.monetizationSheet = false;
+        state.mockExamTitle = "Mock Exam";
       } else if (pageId === "learn-tool") {
         state.step = "course";
         state.learnToolSheet = true;
@@ -10649,7 +11093,39 @@
         ...subjectAreaShortcuts(),
         ...countryExamPriority(),
         ...(localizedSubjectOptions[state.examCountry] || localizedSubjectOptions["United States"])
-      ], 10);
+      ], 6);
+    }
+
+    function examSearchPool() {
+      return uniqueShortcuts([
+        ...subjectAreaShortcuts(),
+        ...countryExamPriority(),
+        ...(countryExamOptions[state.examCountry] || countryExamOptions["United States"]),
+        ...(localizedSubjectOptions[state.examCountry] || localizedSubjectOptions["United States"])
+      ], 24);
+    }
+
+    function fuzzyExamMatches(query, limit = 5) {
+      const normalizedQuery = query.trim().toLowerCase();
+      if (!normalizedQuery) return [];
+      const scoreOption = (option) => {
+        const normalizedOption = option.toLowerCase();
+        if (normalizedOption === normalizedQuery) return 100;
+        if (normalizedOption.startsWith(normalizedQuery)) return 80;
+        if (normalizedOption.includes(normalizedQuery)) return 60;
+        let queryIndex = 0;
+        for (const char of normalizedOption) {
+          if (char === normalizedQuery[queryIndex]) queryIndex += 1;
+          if (queryIndex === normalizedQuery.length) return 40;
+        }
+        return 0;
+      };
+      return examSearchPool()
+        .map((option) => ({ option, score: scoreOption(option) }))
+        .filter((item) => item.score > 0 && item.option !== state.topic)
+        .sort((a, b) => b.score - a.score || a.option.localeCompare(b.option))
+        .slice(0, limit)
+        .map((item) => item.option);
     }
 
     function renderSetup() {
@@ -10669,24 +11145,34 @@
     }
 
     function courseExamPage() {
-      const shortcuts = selectedExamShortcuts();
-      const placeholderExamples = shortcuts.slice(0, 3).join(", ");
+      const options = selectedExamShortcuts();
+      const searchMatches = fuzzyExamMatches(state.topic);
+      const placeholderExamples = options.slice(0, 3).join(", ");
       return `
         <p class="plan-input-kicker">Exam Goal</p>
         <h1 class="plan-input-title">What are you preparing for?</h1>
-        <p class="plan-input-copy">Enter your course, exam, or subject, or choose a quick pick below. Solvely will use it to create a personalized exam prep plan for you.</p>
-        <div class="wizard-input-card course-exam-input">
-          <label for="custom-exam-input">Course, Exam, or Subject</label>
-          <input id="custom-exam-input" value="${escapeHtml(state.topic)}" oninput="updateTopicInput(this.value)" placeholder="Type here, e.g. ${escapeHtml(placeholderExamples)}">
-        </div>
+        <p class="plan-input-copy">Choose the closest course, exam, or subject below. If you do not see the right one, add it in Others and Solvely will still create a personalized exam prep plan.</p>
         <section class="course-shortcut-section" aria-label="Common exam and subject shortcuts">
-          <p class="course-shortcut-label">Quick picks</p>
-          <div class="course-shortcut-grid">
-            ${shortcuts.map((shortcut) => `
-              <button class="course-shortcut-chip ${state.topic === shortcut ? "selected" : ""}" type="button" onclick="selectTopic(${escapeJsArg(shortcut)})">${escapeHtml(shortcut)}</button>
+          <p class="course-shortcut-label">Popular options</p>
+          <div class="course-option-list">
+            ${options.map((option) => `
+              <button class="course-option ${state.topic === option ? "selected" : ""}" type="button" onclick="selectTopic(${escapeJsArg(option)})">${escapeHtml(option)}</button>
             `).join("")}
           </div>
         </section>
+        <div class="course-other-wrap">
+          <div class="wizard-input-card course-exam-input course-other-card">
+            <label for="custom-exam-input">Others</label>
+            <input id="custom-exam-input" value="${escapeHtml(state.topic)}" oninput="updateTopicInput(this.value)" placeholder="Type your exam or subject, e.g. ${escapeHtml(placeholderExamples)}">
+          </div>
+          ${searchMatches.length ? `
+            <div class="course-search-results" aria-label="Matching exam and subject suggestions">
+              ${searchMatches.map((match) => `
+                <button class="course-option" type="button" onclick="selectTopic(${escapeJsArg(match)})">${escapeHtml(match)}</button>
+              `).join("")}
+            </div>
+          ` : ""}
+        </div>
       `;
     }
 
@@ -11494,23 +11980,19 @@
             <section class="outline-section">
               <div class="outline-section-title">
                 <div><h2>${section.title}</h2><small>${section.count}</small></div>
-                <span>⌃</span>
               </div>
               ${section.lessons.map((lesson, lessonIndex) => {
-                const key = `${sectionIndex}-${lessonIndex}`;
-                const expanded = state.editingTopicIndex === key;
                 const tag = outlinePriorityTag(sectionIndex, lessonIndex);
                 return `
-                  <button class="outline-lesson ${expanded ? "expanded" : ""}" type="button" onclick="toggleOutlineLesson('${key}')">
+                  <article class="outline-lesson">
                     <span class="outline-lesson-main">
                       <span class="outline-lesson-row">
                         <span class="outline-lesson-title">${lesson[0]}</span>
                         ${tag ? priorityTag(tag) : ""}
                       </span>
-                      ${expanded ? `<p>${lesson[1]}</p>` : ""}
+                      <p>${lesson[1]}</p>
                     </span>
-                    <span>${expanded ? "⌃" : "⌄"}</span>
-                  </button>
+                  </article>
                 `;
               }).join("")}
             </section>
@@ -11562,11 +12044,6 @@
       };
       const rating = tag ? ratingMap[tag[1]] || 3 : (status === "upcoming" ? 3 : 4);
       return priorityTag(["★".repeat(rating), "stars", rating]);
-    }
-
-    function toggleOutlineLesson(key) {
-      state.editingTopicIndex = state.editingTopicIndex === key ? null : key;
-      render();
     }
 
     function createCourseFromOutline() {
@@ -11784,10 +12261,6 @@
       scheme1LearnArrow: "/ui_kits/exam-prep-plan/assets/study-set/scheme1-learn-arrow.svg",
       scheme2Back: "/ui_kits/exam-prep-plan/assets/study-set/scheme2-back.svg",
       scheme2Star: "/ui_kits/exam-prep-plan/assets/study-set/scheme2-star.svg",
-      scheme2ToolBg: "/ui_kits/exam-prep-plan/assets/study-set/scheme2-tool-bg.svg",
-      scheme2ToolStudy: "/ui_kits/exam-prep-plan/assets/study-set/scheme2-tool-study.svg",
-      scheme2ToolQuiz: "/ui_kits/exam-prep-plan/assets/study-set/scheme2-tool-quiz.svg",
-      scheme2ToolEmpty: "/ui_kits/exam-prep-plan/assets/study-set/scheme2-tool-empty.png",
       todaySheetChevronLeft: "/ui_kits/exam-prep-plan/assets/study-set/today-sheet-chevron-left.svg",
       todaySheetChevronRight: "/ui_kits/exam-prep-plan/assets/study-set/today-sheet-chevron-right.svg",
       todaySheetClose: "/ui_kits/exam-prep-plan/assets/study-set/today-sheet-close.svg",
@@ -11799,17 +12272,30 @@
       return Array.from({ length: count }, () => `<img src="${studySetAssets.scheme2Star}" alt="" aria-hidden="true">`).join("");
     }
 
-    function schemeTwoToolIcon(type = "empty") {
-      const icon = type === "study" ? studySetAssets.scheme2ToolStudy : type === "quiz" ? studySetAssets.scheme2ToolQuiz : studySetAssets.scheme2ToolEmpty;
-      if (type === "empty") {
-        return `<span class="scheme-two-tool empty"><img src="${icon}" alt="" aria-hidden="true"></span>`;
-      }
-      return `
-        <span class="scheme-two-tool">
-          <img src="${studySetAssets.scheme2ToolBg}" alt="" aria-hidden="true">
-          <img class="scheme-two-tool-glyph" src="${icon}" alt="" aria-hidden="true">
-        </span>
-      `;
+    function schemeTwoToolSlots(toolProgress = {}) {
+      const slots = [
+        {
+          type: "study",
+          label: "Study Guide",
+          icon: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5.5h9.8A2.2 2.2 0 0 1 18 7.7v10.8H7.8A2.8 2.8 0 0 1 5 15.7V6.5a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8.5 9h6M8.5 12h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`
+        },
+        {
+          type: "flashcard",
+          label: "Flashcard",
+          icon: `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="7" width="12" height="10" rx="2.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 4.8h8.5a2.5 2.5 0 0 1 2.5 2.5V14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8.5 11h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`
+        },
+        {
+          type: "quiz",
+          label: "Quiz",
+          icon: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5.5h10a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="2"/><path d="m8.5 12 2.1 2.1 4.9-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+        }
+      ];
+      return slots.map((slot) => {
+        const progress = Math.max(0, Math.min(100, Number(toolProgress[slot.type] || 0)));
+        const stateClass = progress >= 100 ? "completed" : progress > 0 ? "partial" : "empty";
+        const status = progress >= 100 ? "Completed" : progress > 0 ? `${progress}% complete` : "Not started";
+        return `<span class="scheme-two-tool ${stateClass}" style="--tool-progress:${progress}" data-label="${slot.label.slice(0, 1)}" aria-label="${status} ${slot.label}">${progress > 0 ? slot.icon : ""}</span>`;
+      }).join("");
     }
 
     function renderCourse() {
@@ -11849,16 +12335,16 @@
         {
           title: "Unit 1 · Cell Biology",
           topics: [
-            { tools: ["study", "quiz", "empty"], unitOrder: 0 },
-            { tools: ["quiz", "empty", "empty"], unitOrder: 1 }
+            { toolProgress: { study: 100, flashcard: 58, quiz: 0 }, unitOrder: 0 },
+            { toolProgress: { study: 34, flashcard: 0, quiz: 100 }, unitOrder: 1 }
           ]
         },
         {
           title: "Unit 2 · Cell Biology",
           topics: [
-            { tools: ["empty", "empty", "empty"], unitOrder: 2 },
-            { tools: ["empty", "empty", "empty"], unitOrder: 3 },
-            { tools: ["empty", "empty", "empty"], unitOrder: 4 }
+            { toolProgress: { study: 0, flashcard: 42, quiz: 0 }, unitOrder: 2 },
+            { toolProgress: { study: 76, flashcard: 0, quiz: 0 }, unitOrder: 3 },
+            { toolProgress: { study: 0, flashcard: 0, quiz: 0 }, unitOrder: 4 }
           ]
         }
       ];
@@ -11953,7 +12439,7 @@
     function schemeTwoTopicCard(topic, index) {
       const meta = topicPossibilityMeta(topic.unitOrder);
       const possibility = meta.possibility;
-      const tools = topic.tools || ["empty", "empty", "empty"];
+      const toolProgress = topic.toolProgress || {};
       return `
         <button class="scheme-two-card" type="button" onclick="openLearnToolSheet()" aria-label="Choose learning tool for Verbs & Conjugations">
           <div>
@@ -11961,9 +12447,11 @@
             <p>How cells grow and reproduce, from mitosis to meiosis</p>
           </div>
           <div class="scheme-two-card-foot">
-            <span class="scheme-two-possibility ${possibility}" aria-label="${meta.score}% ${possibilityLabel(possibility)} possibility">${possibilityTagText(possibility, meta.score)}</span>
-            <span class="scheme-two-tools" aria-label="Available study tools">
-              ${tools.map((tool) => schemeTwoToolIcon(tool)).join("")}
+            <span class="scheme-two-card-progress">
+              <span class="scheme-two-possibility ${possibility}" aria-label="${meta.score}% ${possibilityLabel(possibility)} possibility">${possibilityTagText(possibility, meta.score)}</span>
+            </span>
+            <span class="scheme-two-tools" aria-label="Study Guide, Flashcard, and Quiz tool progress">
+              ${schemeTwoToolSlots(toolProgress)}
             </span>
           </div>
         </button>
@@ -12305,27 +12793,138 @@
     }
 
     function mockExamEntry() {
-      const exams = [
-        {
-          title: "Mock Exam 1",
-          likelihood: "≥90% LIKELY",
-          likelihoodClass: "very-high",
-          description: "Must-know questions that mirror the real test. Get score report and weak spot feedback.",
-          meta: "37 mins · 28 Questions · Predicted likelihood: ≥90%",
-          state: "not-started",
-          cta: "Start exam"
-        },
-        {
-          title: "Mock Exam 2",
-          likelihood: "80–90% LIKELY",
-          likelihoodClass: "",
-          description: "Highly likely questions for focused practice. Continue for score insights.",
-          meta: "36 mins · 22 Questions · Predicted likelihood: 80–90%",
-          state: "in-progress",
-          cta: "Continue"
-        }
-      ];
-      return exams.map((exam) => mockExamCard(exam)).join("");
+      return `
+        <section class="mock-exam-landing" aria-label="Mock Exam preview">
+          <p class="mock-exam-lede">Must-know questions that mirror the real test, plus score report and weak spot feedback.</p>
+          <div class="mock-exam-landing-hero">
+            <div class="mock-exam-visual" aria-hidden="true">
+              <svg class="mock-exam-screenshot" viewBox="0 0 900 340" role="img" aria-label="Uploaded materials become a predicted mock exam report">
+                <defs>
+                  <filter id="mockShotShadow" x="-20%" y="-20%" width="140%" height="150%">
+                    <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#1f3a5c" flood-opacity=".16"/>
+                  </filter>
+                  <filter id="mockDocShadow" x="-30%" y="-30%" width="160%" height="170%">
+                    <feDropShadow dx="0" dy="16" stdDeviation="12" flood-color="#182338" flood-opacity=".18"/>
+                  </filter>
+                </defs>
+                <g transform="translate(30 24)">
+                  <g opacity=".9" filter="url(#mockDocShadow)">
+                    <rect x="0" y="30" width="120" height="210" rx="8" fill="#fff" stroke="#dce5ef" transform="rotate(-17 60 135)"/>
+                    <rect x="26" y="12" width="122" height="224" rx="8" fill="#fff" stroke="#dce5ef" transform="rotate(-9 87 124)"/>
+                    <rect x="72" y="18" width="132" height="220" rx="9" fill="#fff" stroke="#dce5ef" transform="rotate(5 138 128)"/>
+                    <path d="M30 66h66M22 86h78M18 106h70M11 126h86M5 146h76" stroke="#a7d79d" stroke-width="5" stroke-linecap="round" transform="rotate(-17 60 135)"/>
+                    <path d="M91 62h72M90 82h54M91 113h70M91 133h46M91 164h72" stroke="#d6deea" stroke-width="5" stroke-linecap="round" transform="rotate(-9 87 124)"/>
+                    <path d="M112 58h68M112 82h48M113 118h76M113 142h58" stroke="#d6deea" stroke-width="5" stroke-linecap="round" transform="rotate(5 138 128)"/>
+                  </g>
+                  <g filter="url(#mockDocShadow)" transform="translate(176 52) rotate(4)">
+                    <rect width="190" height="222" rx="9" fill="#24282f" stroke="#111827" stroke-width="2"/>
+                    <path d="M34 34h104M34 52h78M34 76h96" stroke="#3e4652" stroke-width="3" stroke-linecap="round"/>
+                    <text x="34" y="108" fill="#fff" font-family="Inter, system-ui, sans-serif" font-size="25" font-weight="850">BIO 101:</text>
+                    <text x="34" y="138" fill="#fff" font-family="Inter, system-ui, sans-serif" font-size="25" font-weight="850">Intro to Biology</text>
+                    <text x="34" y="174" fill="#9099a8" font-family="Inter, system-ui, sans-serif" font-size="9" font-weight="650">Review notes, workbook and syllabus</text>
+                    <path d="M34 191h74" stroke="#666f7b" stroke-width="5" stroke-linecap="round"/>
+                    <path d="M34 204h52" stroke="#555e69" stroke-width="5" stroke-linecap="round"/>
+                  </g>
+                </g>
+                <g transform="translate(410 148)">
+                  <circle cx="24" cy="24" r="24" fill="#fff" stroke="#9dcbff" stroke-width="2"/>
+                  <path d="M14 24h19M27 15l9 9-9 9" fill="none" stroke="#1677f2" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                </g>
+                <g transform="translate(510 30)" filter="url(#mockShotShadow)">
+                  <rect width="350" height="270" rx="18" fill="#fff" stroke="#dfe8f4"/>
+                  <rect x="18" y="17" width="9" height="9" rx="2.5" fill="#b9a2ff"/>
+                  <text x="34" y="27" fill="#17223a" font-family="Inter, system-ui, sans-serif" font-size="15" font-weight="850">BIO 101: Intro to Biology</text>
+                  <text x="18" y="51" fill="#667286" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="650">Prediction based on uploaded materials and exam format</text>
+                  <path d="M18 70h314" stroke="#edf1f7" stroke-width="2"/>
+                  <g transform="translate(20 88)">
+                    <rect width="44" height="44" rx="12" fill="#eaf4ff"/>
+                    <path d="M22 11v20M14 20h16" stroke="#1677f2" stroke-width="4" stroke-linecap="round"/>
+                    <text x="55" y="17" fill="#516074" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="760">Exam duration</text>
+                    <text x="55" y="38" fill="#17223a" font-family="Inter, system-ui, sans-serif" font-size="19" font-weight="900">37m</text>
+                  </g>
+                  <g transform="translate(140 88)">
+                    <circle cx="22" cy="22" r="22" fill="#eaf4ff"/>
+                    <circle cx="22" cy="22" r="15" fill="none" stroke="#1677f2" stroke-width="6"/>
+                    <circle cx="22" cy="22" r="6" fill="#ffd45a"/>
+                    <text x="55" y="17" fill="#516074" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="760">Likelihood</text>
+                    <text x="55" y="38" fill="#17223a" font-family="Inter, system-ui, sans-serif" font-size="19" font-weight="900">91%</text>
+                  </g>
+                  <g transform="translate(260 88)">
+                    <rect width="44" height="44" rx="12" fill="#eaf4ff"/>
+                    <path d="M15 15h14M15 23h14M15 31h10" stroke="#1677f2" stroke-width="3" stroke-linecap="round"/>
+                    <text x="55" y="17" fill="#516074" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="760">Questions</text>
+                    <text x="55" y="38" fill="#17223a" font-family="Inter, system-ui, sans-serif" font-size="19" font-weight="900">28</text>
+                  </g>
+                  <text x="20" y="158" fill="#17223a" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="850">Likely Exam Topics</text>
+                  <g transform="translate(20 172)" stroke-linecap="round" stroke-width="7">
+                    <path d="M0 0h292" stroke="#e5eef9" opacity=".8"/>
+                    <path d="M0 22h292" stroke="#e5eef9" opacity=".8"/>
+                    <path d="M0 44h292" stroke="#e5eef9" opacity=".8"/>
+                    <path d="M0 66h292" stroke="#e5eef9" opacity=".8"/>
+                    <path d="M0 0h250" stroke="#1677f2"/>
+                    <path d="M0 22h236" stroke="#1677f2"/>
+                    <path d="M0 44h218" stroke="#1677f2"/>
+                    <path d="M0 66h204" stroke="#1677f2"/>
+                  </g>
+                  <g transform="translate(20 246)">
+                    <rect width="310" height="38" rx="12" fill="#eaf5ff"/>
+                    <text x="18" y="16" fill="#5593d7" font-family="Inter, system-ui, sans-serif" font-size="10" font-weight="760">A full-length mock covering likely topics.</text>
+                    <text x="18" y="31" fill="#1677f2" font-family="Inter, system-ui, sans-serif" font-size="15" font-weight="900">Full-length Mock Exam</text>
+                    <circle cx="292" cy="19" r="11" fill="#fff"/>
+                    <path d="M288 19h7M293 15l4 4-4 4" fill="none" stroke="#1677f2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div class="mock-exam-after">
+            <h3>What you get after the exam</h3>
+            <div class="mock-exam-after-list">
+              <div class="mock-exam-after-item">
+                <span class="mock-exam-after-icon">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M5 19V5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+                    <path d="M8 16h3V9H8v7Zm5 0h3V6h-3v10Zm5 0h3v-5h-3v5Z" fill="currentColor"/>
+                  </svg>
+                </span>
+                <span class="mock-exam-after-copy">
+                  <strong>Score diagnosis</strong>
+                </span>
+              </div>
+              <div class="mock-exam-after-item">
+                <span class="mock-exam-after-icon">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 4.5v15M4.5 12h15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+                    <circle cx="12" cy="12" r="7.2" stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                </span>
+                <span class="mock-exam-after-copy">
+                  <strong>Weak-spot drills</strong>
+                </span>
+              </div>
+              <div class="mock-exam-after-item">
+                <span class="mock-exam-after-icon">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M5 16.5c4.8-.4 8.5-2.7 11.5-7.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+                    <path d="M13 8.5h4v4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M5 19h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+                  </svg>
+                </span>
+                <span class="mock-exam-after-copy">
+                  <strong>Next-step plan</strong>
+                </span>
+              </div>
+            </div>
+            <button class="mock-exam-primary" type="button" onclick="startMockExamLoading('Mock Exam')">
+              Start Exam
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+                <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </section>
+      `;
     }
 
     function mockExamCard(exam) {
@@ -12352,7 +12951,7 @@
             <div class="mock-exam-meta">${exam.meta}</div>
             <div class="mock-exam-state-row">
               ${stateBlock}
-              <button class="mock-exam-btn" type="button">
+              <button class="mock-exam-btn" type="button" onclick="startMockExamLoading(${escapeJsArg(exam.title)})">
                 ${exam.cta}
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path d="M5 12h12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
@@ -12363,6 +12962,60 @@
           </div>
         </article>
       `;
+    }
+
+    function startMockExamLoading(examTitle) {
+      state.mockExamTitle = examTitle || "Mock Exam";
+      state.courseView = "exams";
+      state.monetizationSheet = false;
+      setStep("mockExamLoading");
+      mockExamLoadingTimer = window.setTimeout(() => {
+        if (state.step !== "mockExamLoading") return;
+        mockExamLoadingTimer = null;
+        state.step = "course";
+        state.courseView = "exams";
+        state.monetizationSheet = true;
+        render();
+      }, 4200);
+    }
+
+    function renderMockExamLoading() {
+      const examTitle = escapeHtml(state.mockExamTitle || "Mock Exam");
+      const tasks = [
+        "Selecting predicted high-yield questions",
+        "Balancing topics, timing, and difficulty",
+        "Assembling a real-exam-style question order",
+        "Preparing mock scores with next-step guidance"
+      ];
+      shell(`
+        <div class="prediction-loading-screen">
+          <header class="prediction-topbar">
+            <button class="prediction-back" type="button" onclick="goBack()" aria-label="Back">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M15 5L8 12l7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <h1 class="prediction-title">Building your ${examTitle}</h1>
+          </header>
+          <main class="prediction-content" aria-label="Creating mock exam">
+            <section class="prediction-visual" aria-hidden="true">
+              <span class="prediction-dot" style="left:158px;top:26px"></span>
+              <svg class="prediction-wave" viewBox="0 0 312 90">
+                <path class="gold" d="M4 58 C45 74 70 15 110 56 C151 96 159 0 206 42 C238 70 268 61 308 56"/>
+                <path class="blue" d="M3 50 C40 33 65 78 99 56 C131 34 156 53 193 59 C231 66 251 37 308 48"/>
+              </svg>
+              <article class="prediction-mini-card prediction-card-grade"><strong>90%</strong><span></span><span></span></article>
+              <article class="prediction-mini-card prediction-card-note"><span></span><span></span><span></span></article>
+              <article class="prediction-mini-card prediction-card-chart"></article>
+              <article class="prediction-mini-card prediction-card-doc"><span></span><span></span><span></span></article>
+              <article class="prediction-mini-card prediction-card-bars"></article>
+            </section>
+            <section class="prediction-steps" aria-label="Mock exam generation progress">
+              ${tasks.map((task, index) => predictionLoadingStep(task, index)).join("")}
+            </section>
+          </main>
+        </div>
+      `, { flow: true, back: false });
     }
 
     function openLearnToolSheet() {
@@ -12634,6 +13287,7 @@
       if (state.step === "result") renderResult(false);
       if (state.step === "map") renderResult(true);
       if (state.step === "course") renderCourse();
+      if (state.step === "mockExamLoading") renderMockExamLoading();
       renderToast();
     }
 
@@ -12671,13 +13325,13 @@
     window.openSolutionHistoryFromSheet = openSolutionHistoryFromSheet;
     window.continueSetup = continueSetup;
     window.backSetupStep = backSetupStep;
-    window.toggleOutlineLesson = toggleOutlineLesson;
     window.createCourseFromOutline = createCourseFromOutline;
     window.setCourseView = setCourseView;
     window.selectSchemeOneTopic = selectSchemeOneTopic;
     window.openLearnToolSheet = openLearnToolSheet;
     window.closeLearnToolSheet = closeLearnToolSheet;
     window.selectLearnTool = selectLearnTool;
+    window.startMockExamLoading = startMockExamLoading;
     window.openMonetizationSheet = openMonetizationSheet;
     window.closeMonetizationSheet = closeMonetizationSheet;
     window.state = state;
